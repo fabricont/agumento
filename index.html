@@ -5,13 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>test</title>
+    <title>Agumento</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="gsap-public/minified/gsap.min.js"></script>
-    <script src="gsap-public/minified/ScrollTrigger.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarpanch&family=Saira:wght@100;300;600&display=swap"
@@ -217,17 +216,12 @@
 <body>
 
     <div id="app">
-        <form @submit.prevent="importtodb">
-            <input type="file" name="file" />
-            <input type="submit" value="import" />
-        </form>
-        <a @click="exportdb">Export data</a>
         <div class="bg-slate-900 text-neutral-content">
             <div id="main" class="min-h-screen relative z-10 loading">
                 <nav class="px-2 sm:px-4 py-2.5">
                     <div class="container flex flex-wrap justify-between items-center mx-auto">
                         <a class="flex items-center">
-                            <span class="text-white self-center text-xl font-semibold whitespace-nowrap">coWos</span>
+                            <span class="text-white self-center text-xl font-semibold whitespace-nowrap">Agumento</span>
                         </a>
                         <div class="flex md:order-2">
                             <button type="button" @click="newsheetmodal = true"
@@ -264,8 +258,8 @@
                                         class="svg-filtered block text-lg py-2 pr-4 pl-3 text-white hover:text-indigo-200">About</a>
                                 </li>
                                 <li>
-                                    <a @click="setCurrentPage('cowos-programs')"
-                                        class="svg-filtered block text-lg py-2 pr-4 pl-3 text-white hover:text-indigo-200">coWos
+                                    <a @click="setCurrentPage('agumento-programs')"
+                                        class="svg-filtered block text-lg py-2 pr-4 pl-3 text-white hover:text-indigo-200">Agumento
                                         programs</a>
                                 </li>
                                 <li>
@@ -289,7 +283,7 @@
                                         role="alert">
                                         <span
                                             class="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">New</span>
-                                        <span class="text-sm font-medium">coWos premade programs</span>
+                                        <span class="text-sm font-medium">Agumento premade programs</span>
                                         <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
@@ -328,7 +322,7 @@
                                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                                     </path>
                                                 </svg>
-                                                My coWos
+                                                My sheets
                                             </span>
                                         </button>
                                     </div>
@@ -459,6 +453,27 @@
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                <form class="my-6 space-y-6" @submit.prevent="importtodb">
+                                    <label class="block">
+                                        <span class="sr-only">Data file</span>
+                                        <input type="file" name="file" class="block w-full text-sm text-slate-500
+                                          file:mr-4 file:py-2 file:px-4
+                                          file:rounded-full file:border-0
+                                          file:text-sm file:font-semibold
+                                          file:bg-indigo-50 file:text-indigo-700
+                                          hover:file:bg-indigo-100
+                                        "/>
+                                    </label>
+                                    <button type="submit"
+                                        class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Import</button>
+                                </form>
+                                <div class="my-3">
+                                    <button type="button" @click="exportdb"
+                                        class="svg-filtered text-white bg-gradient-to-br from-indigo-800 to-cyan-500 focus:ring-4 focus:outline-none focus:ring-indigo-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                        type="button">Export data</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="pb-12 relative" v-else-if="currentPage == 'about'">
                             <div class="container mx-auto py-8">
@@ -496,7 +511,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pb-12 relative" v-else-if="currentPage == 'cowos-programs'">
+                        <div class="pb-12 relative" v-else-if="currentPage == 'agumento-programs'">
                             <div>
                                 <div v-for="sheet in data.sheets">
                                     <div class="my-8">
@@ -659,7 +674,7 @@
                 </div>
                 <footer class="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
                     <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="."
-                            class="hover:underline">coWos</a>
+                            class="hover:underline">Agumento</a>
                     </span>
                     <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
                         <li>
@@ -669,7 +684,7 @@
                             <a @click="setCurrentPage('about')" class="mr-4 hover:underline md:mr-6">about</a>
                         </li>
                         <li>
-                            <a @click="setCurrentPage('cowos-programs')" class="mr-4 hover:underline md:mr-6">coWos
+                            <a @click="setCurrentPage('agumento-programs')" class="mr-4 hover:underline md:mr-6">Agumento
                                 programs</a>
                         </li>
                         <li>
@@ -773,10 +788,10 @@
                 </div>
             </Transition>
         </div>
-        <!--<div class="lines-v1"></div>
+        <div class="lines-v1"></div>
         <div class="lines-v2"></div>
         <div class="lines-h1"></div>
-        <div class="lines-h2"></div>-->
+        <div class="lines-h2"></div>
     </div>
     <svg width="0" height="0">
         <filter id='noise' x='0%' y='0%' width='100%' height='100%'>
