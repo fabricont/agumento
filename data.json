@@ -1,29 +1,49 @@
 {
 	"plans":[
 		{
-			"category": "cat1",
-			"title": "Title cat1",
-			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
+			"category": "push",
+			"title": "Push exercises",
+			"description": "Exercises for chest, biceps, triceps, shoulders",
 			"modules": [
 				{
 					"key": "agu-1",
-					"title": "Title easy",
+					"title": "AGU PUSH v1",
 					"exs": [
 						{
-							"id": "ex1",
-							"name": "exe 1",
-							"description": "lorem ipsum dolor sit amet"
+							"id": "pe1",
+							"name": "Push ups 201",
+							"description": "2sec down / 0sec rest / 1sec up",
+							"reps": "x8-12"
 						},
 						{
-							"id": "ex2",
-							"name": "exe 2",
-							"description": "lorem ipsum dolor sit amet consect"
+							"id": "pe2",
+							"name": "Diamond push ups",
+							"description": "close hands",
+							"reps": "x5-8"
+						},
+						{
+							"id": "pe3",
+							"name": "Elevated push ups",
+							"description": "Elevate your feet to work mainly on chest and shoulder",
+							"reps": "x8-12"
+						},
+						{
+							"id": "pe4",
+							"name": "Push ups to plank",
+							"description": "transition between push ups and plank hold",
+							"reps": "x8-12"
+						},
+						{
+							"id": "pe5",
+							"name": "Pike push ups",
+							"description": "Foundamental exercise for shoulder stenght",
+							"reps": "x8-12"
 						}
 					]
 				},
 				{
 					"key": "agu-2",
-					"title": "Title inter",
+					"title": "AGU PUSH v2",
 					"exs": [
 						{
 							"id": "ex1",
