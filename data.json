@@ -8,52 +8,74 @@
 				{
 					"key": "agu-1",
 					"title": "AGU PUSH v1",
+					"description": "v1 strength building",
 					"exs": [
 						{
-							"id": "pe1",
+							"id": "apv10",
 							"name": "Push ups 201",
 							"description": "2sec down / 0sec rest / 1sec up",
-							"reps": "x8-12"
+							"reps": "x8-10"
 						},
 						{
-							"id": "pe2",
+							"id": "apv11",
 							"name": "Diamond push ups",
 							"description": "close hands",
 							"reps": "x5-8"
 						},
 						{
-							"id": "pe3",
+							"id": "apv12",
 							"name": "Elevated push ups",
 							"description": "Elevate your feet to work mainly on chest and shoulder",
-							"reps": "x8-12"
+							"reps": "x8-10"
 						},
 						{
-							"id": "pe4",
+							"id": "apv13",
 							"name": "Push ups to plank",
 							"description": "transition between push ups and plank hold",
-							"reps": "x8-12"
+							"reps": "x8-10"
 						},
 						{
-							"id": "pe5",
+							"id": "apv14",
 							"name": "Pike push ups",
 							"description": "Foundamental exercise for shoulder stenght",
-							"reps": "x8-12"
+							"reps": "x8"
 						}
 					]
 				},
 				{
 					"key": "agu-2",
 					"title": "AGU PUSH v2",
+					"description": "v2 strength building",
 					"exs": [
 						{
-							"id": "ex1",
-							"name": "exe 1",
-							"description": "lorem ipsum dolor sit amet"
+							"id": "apv20",
+							"name": "Deep push ups 201",
+							"description": "v1 push ups with increased ROM",
+							"reps": "x10-12"
 						},
 						{
-							"id": "ex2",
-							"name": "exe 2",
-							"description": "lorem ipsum dolor sit amet consect"
+							"id": "apv21",
+							"name": "Diamond push ups",
+							"description": "close hands",
+							"reps": "x10-12"
+						},
+						{
+							"id": "apv22",
+							"name": "Elevated Pike push ups",
+							"description": "Harder version of pike push ups",
+							"reps": "x8-10"
+						},
+						{
+							"id": "apv23",
+							"name": "Dips",
+							"description": "Focus on shoulder and chest",
+							"reps": "x10-12"
+						},
+						{
+							"id": "apv23",
+							"name": "Pike push ups",
+							"description": "Foundamental exercise for shoulder stenght",
+							"reps": "x10-12"
 						}
 					]
 				}
@@ -67,6 +89,7 @@
 				{
 					"key": "agu-3",
 					"title": "Title 1",
+					"description": "v3 strength building",
 					"exs": [
 						{
 							"id": "ex1",
@@ -90,6 +113,7 @@
 				{
 					"key": "agu-4",
 					"title": "Title 12",
+					"description": "v4 strength building",
 					"exs": [
 						{
 							"id": "ex1",

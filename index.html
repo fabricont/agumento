@@ -172,6 +172,37 @@
             }
         }*/
 
+        @keyframes agumood {
+            0% {
+                text-shadow: 1px 1px 15px #03eefb;
+                color: #03eefb;
+            }
+            2.5%{
+                text-shadow: 1px 1px 15px transparent;
+                color: #fff;
+            }
+            3% {
+                text-shadow: 1px 1px 15px #03eefb;
+                color: #03eefb;
+            }
+            3.5% {
+                text-shadow: 1px 1px 15px transparent;
+                color: #fff;
+            }
+            45% {
+                text-shadow: 1px 1px 15px #03eefb;
+                color: #03eefb;
+            }
+            80%{
+                text-shadow: 1px 1px 15px #03eefb;
+                color: #03eefb;
+            }
+            100%{
+                text-shadow: 1px 1px 15px transparent;
+                color: #fff;
+            }
+        }
+
         .modal-mask {
             position: fixed;
             z-index: 9998;
@@ -224,6 +255,10 @@
             text-shadow: 1px 1px 15px #ff5ec2; /*fc2bad*/
             color: #ff5ec2;
         }
+        .sand-glow{
+            text-shadow: 1px 1px 15px #ffcb00;
+            color: #ffcb00;
+        }
         ul li a:hover{
             text-shadow: 1px 1px 15px #03eefb;
             color: #03eefb;
@@ -233,6 +268,9 @@
             background: #03eefb!important;
             color: black!important;
             filter: drop-shadow(0px 0px 10px #03eefb);
+        }
+        .agumood{
+            animation: agumood 3s ease-in-out infinite alternate-reverse;
         }
     </style>
 </head>
@@ -361,13 +399,13 @@
                                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
                                                 {{module.title}}</h5>
                                         </a>
-                                        <p class="mb-3 font-normal text-slate-400">
-                                            Here are the biggest enterprise technology acquisitions of 2021 so far, in
-                                            reverse chronological order.
+                                        <p class="mb-3 font-normal sand-glow">
+                                            {{module.description}}
                                         <ul>
                                             <li v-for="ex in module.exs" class="mb-3 font-normal text-slate-400">
-                                                {{ ex.name }}
+                                                <strong class="text-slate-200">{{ ex.name }}</strong>
                                                 <p class="text-sm">{{ ex.description }}</p>
+                                                <p class="text-sm">Reps:&nbsp;<strong class="text-slate-200">x{{ ex.reps }}</strong></p>
                                             </li>
                                         </ul>
                                         </p>
@@ -433,13 +471,13 @@
                                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
                                                 {{module.title}}</h5>
                                         </a>
-                                        <p class="mb-3 font-normal text-slate-400">
-                                            Here are the biggest enterprise technology acquisitions of 2021 so far, in
-                                            reverse chronological order.
+                                        <p class="mb-3 font-normal sand-glow">
+                                            {{module.description}}
                                         <ul>
                                             <li v-for="ex in module.exs" class="mb-3 font-normal text-slate-400">
-                                                {{ ex.name }}
+                                                <strong class="text-slate-200">{{ ex.name }}</strong>
                                                 <p class="text-sm">{{ ex.description }}</p>
+                                                <p class="text-sm">Reps:&nbsp;<strong class="text-slate-200">{{ ex.reps }}</strong></p>
                                             </li>
                                         </ul>
                                         </p>
@@ -517,17 +555,14 @@
                         <div class="pb-12 relative" v-else-if="currentPage == 'my-programs'">
                             <div class="container mx-auto py-8">
                                 <h2 class="text-white mb-2 text-2xl font-bold lg:text-3xl md:mb-2">
-                                    My saved modules
+                                    My sheets
                                 </h2>
                                 <div v-if="mysheets.length" v-for="sheet in mysheets" class="my-4">
                                     <a @click="setCurrentPage(sheet.key)"
-                                        class="block p-6 max-w-sm rounded-lg border shadow-md bg-gray-800 border-gray-700 hover:bg-gray-700">
+                                        class="block p-6 max-w-sm rounded-lg border shadow-md border-gray-700 dark-purple-800">
                                         <h5
                                             class="mb-2 text-2xl font-bold tracking-tight text-white">
                                             {{sheet.title}}</h5>
-                                        <p class="font-normal text-gray-400">Here are the biggest
-                                            enterprise technology acquisitions of 2021 so far, in reverse chronological
-                                            order.</p>
                                         <span @click="removefromdb(sheet.key, 'mysheets')"
                                             class="inline-flex items-center mt-5 py-2 px-4 text-sm font-medium rounded-lg border focus:z-10 focus:ring-4 focus:outline-none focus:text-cyan-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 focus:ring-gray-700">Remove</span>
                                     </a>
@@ -587,7 +622,7 @@
                                                                 class="text-white mb-2 text-2xl font-medium lg:text-3xl md:mb-2">
                                                                 My modules</h3>
                                                         </div>
-                                                        <div class="grid grid-cols-2 gap-4 h-full">
+                                                        <div class="flex flex-wrap gap-4 h-full">
                                                             <div class="p-6 max-w-sm dark-purple-800 rounded-lg border border-slate-600 shadow-md"
                                                                 v-for="module in sheet.assignedModules">
                                                                 <a href="#">
@@ -595,10 +630,8 @@
                                                                         class="mb-2 text-2xl font-bold tracking-tight text-white">
                                                                         {{module.title}}</h5>
                                                                 </a>
-                                                                <p class="mb-3 font-normal text-slate-400">
-                                                                    Here are the biggest enterprise technology
-                                                                    acquisitions of 2021 so far, in reverse
-                                                                    chronological order.
+                                                                <p class="mb-3 font-normal sand-glow">
+                                                                    {{module.description}}
                                                                 <ul>
                                                                     <li v-for="ex in module.exs"
                                                                         class="mb-3 font-normal text-slate-400">
@@ -647,7 +680,7 @@
                                                             </ol>
                                                         </div>
                                                         <div v-else>
-                                                            <p class="text-slate-400">No goals created yet</p>
+                                                            <p class="pt-4 pink-glow">No goals created yet</p>
                                                         </div>
                                                         <a @click="newgoalform()"
                                                             class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-white bg-cyan-600 rounded-lg hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300">
@@ -687,7 +720,7 @@
                                                 </div>
                                             </div>
                                             <div v-else>
-                                                <p class="text-slate-400">No modules assigned yet</p>
+                                                <p class="pt-4 pink-glow">No modules assigned yet</p>
                                             </div>
                                         </div>
                                     </div>
@@ -696,8 +729,8 @@
                         </div>
                     </Transition>
                 </div>
-                <footer class="p-4 shadow md:flex md:items-center md:justify-between md:p-6 bg-gray-800">
-                    <span class="text-sm sm:text-center text-gray-400">© 2022 <a href="."
+                <footer class="p-4 shadow md:flex md:items-center md:justify-between md:p-6">
+                    <span class="text-sm sm:text-center text-gray-400 agumood">© 2022 <a href="."
                             class="hover:underline">Agumento</a>
                     </span>
                     <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-400 sm:mt-0">
@@ -785,8 +818,8 @@
                                         </div>
                                         <div v-if="editmodule">
                                             <div class="flex" v-for="(modex, index) in editmodule.exs">
-                                                <select v-model="modex.name" :name="'exec_'+index" class="exe-select border mb-3 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white mr-3">
-                                                    <option v-for="exl in allexs" :value="exl.id">{{ exl.name }}</option>
+                                                <select v-model="index" :name="'exec_'+index" class="exe-select border mb-3 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white mr-3">
+                                                    <option v-for="(exl, index) in allexs" :value="index">{{ exl.name }}</option>
                                                 </select>
                                                 <input type="number" :value="modex.reps" :name="'exec_'+index+'_reps'" class="border mb-3 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white flex-1 w-24">
                                             </div>
@@ -886,7 +919,7 @@
             },
             async dbSetup() {
                 return new Promise((resolve, reject) => {
-                    let request = window.indexedDB.open("MyTestDatabase", 7);
+                    let request = window.indexedDB.open("agumentodb", 9);
 
                     request.onerror = event => {
                         reject('db not allowed')
@@ -896,6 +929,20 @@
                     };
 
                     request.onupgradeneeded = event => {
+
+                        //DB CLEAN
+                        var DBDeleteRequest = window.indexedDB.deleteDatabase("MyTestDatabase");
+
+                        DBDeleteRequest.onerror = function(event) {
+                            console.log("Error deleting database.");
+                        };
+
+                        DBDeleteRequest.onsuccess = function(event) {
+                            console.log("Database deleted successfully");
+
+                            console.log(event.result); // should be undefined
+                        };
+
 
                         let dbtoupgrade = event.target.result;
                         let objectStore
@@ -1120,6 +1167,7 @@
                     };
 
                     this.mysheets = await this.getsheets()
+                    this.newsheetmodal = false
                 }
             },
             async addmoduletodb(event) {
@@ -1135,8 +1183,9 @@
 
                     let moduletitle = event.target.mymodule.value
                     let modulekey = event.target.modulekey.value
-                    let excslist = [];
-                    [...event.target.elements].map(el => { if (el.classList.contains('exe-select')) excslist.push({ name: el.value, reps: document.getElementsByName(el.name + '_reps')[0].value }) });
+                    let excslist = []
+                    allexs = this.allexs;
+                    [...event.target.elements].map(el => { if (el.classList.contains('exe-select')) excslist.push({ name: allexs[parseInt(el.value)].name, description: allexs[parseInt(el.value)].description, reps: document.getElementsByName(el.name + '_reps')[0].value }) });
 
                     console.log(event.target.action.value)
                     if (event.target.action.value == 'edit') {
@@ -1429,9 +1478,9 @@
                 temp.textContent = '---'
                 input.append(temp)
 
-                this.allexs.map( ex => {
+                this.allexs.map( (ex, index) => {
                     temp = document.createElement('option')
-                    temp.setAttribute('value', ex.id)
+                    temp.setAttribute('value', index)
                     temp.textContent = ex.name
                     input.append(temp)
                 } )
