@@ -6,6 +6,7 @@
 			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
 			"modules": [
 				{
+					"key": "agu-1",
 					"title": "Title easy",
 					"exs": [
 						{
@@ -21,6 +22,7 @@
 					]
 				},
 				{
+					"key": "agu-2",
 					"title": "Title inter",
 					"exs": [
 						{
@@ -43,6 +45,7 @@
 			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
 			"modules": [
 				{
+					"key": "agu-3",
 					"title": "Title 1",
 					"exs": [
 						{
@@ -65,6 +68,7 @@
 			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
 			"modules": [
 				{
+					"key": "agu-4",
 					"title": "Title 12",
 					"exs": [
 						{

@@ -110,7 +110,7 @@
         }
 
         .filter-hover {
-            filter: url(#noise);
+            filter: url(#noise) drop-shadow(0px 0px 10px #03eefb)!important;
         }
 
         .lines-v1 {
@@ -152,7 +152,7 @@
 
         }
 
-        @keyframes movev {
+        /*@keyframes movev {
             0% {
                 background-position-y: 0;
             }
@@ -170,7 +170,7 @@
             100% {
                 background-position-x: 500px;
             }
-        }
+        }*/
 
         .modal-mask {
             position: fixed;
@@ -210,13 +210,37 @@
             -webkit-transform: scale(1.1);
             transform: scale(1.1);
         }
+        .dark-purple{
+            background: #0a002d;
+        }
+        .dark-purple-800{
+            background: #190c46;
+        }
+        .blue-glow{
+            text-shadow: 1px 1px 15px #03eefb;
+            color: #03eefb;
+        }
+        .pink-glow{
+            text-shadow: 1px 1px 15px #ff5ec2; /*fc2bad*/
+            color: #ff5ec2;
+        }
+        ul li a:hover{
+            text-shadow: 1px 1px 15px #03eefb;
+            color: #03eefb;
+            transition: .3s ease-out;
+        }
+        .svg-filtered{
+            background: #03eefb!important;
+            color: black!important;
+            filter: drop-shadow(0px 0px 10px #03eefb);
+        }
     </style>
 </head>
 
 <body>
 
     <div id="app">
-        <div class="bg-slate-900 text-neutral-content">
+        <div class="dark-purple text-neutral-content px-4">
             <div id="main" class="min-h-screen relative z-10 loading">
                 <nav class="px-2 sm:px-4 py-2.5">
                     <div class="container flex flex-wrap justify-between items-center mx-auto">
@@ -225,19 +249,19 @@
                         </a>
                         <div class="flex md:order-2">
                             <button type="button" @click="newsheetmodal = true"
-                                class="svg-filtered text-white bg-gradient-to-br from-indigo-800 to-cyan-500 focus:ring-4 focus:outline-none focus:ring-indigo-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                class="svg-filtered text-white focus:ring-4 focus:outline-none focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                                 type="button">Get started</button>
-                            <button data-collapse-toggle="mobile-menu-4" type="button"
-                                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                                aria-controls="mobile-menu-4" aria-expanded="false">
+                            <button data-collapse-toggle="mobile-menu" type="button"
+                                @click="mobilemenuopen ? mobilemenuopen = false : mobilemenuopen = true" class="inline-flex items-center p-2 text-sm text-slate-300 rounded-lg md:hidden hover:dark-purple-800 focus:outline-none focus:ring-2 focus:ring-slate-600 h-10"
+                                aria-controls="mobile-menu" aria-expanded="false">
                                 <span class="sr-only">Open main menu</span>
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                <svg :class="[mobilemenuopen ? 'hidden' : '']" class="w-6 h-6 menu-responsive-show" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                <svg :class="[!mobilemenuopen ? 'hidden' : '']" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -245,26 +269,26 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
-                            id="mobile-menu-4">
+                        <div :class="[!mobilemenuopen ? 'hidden' : '']" class="justify-between items-center w-full md:flex md:w-auto md:order-1"
+                            id="mobile-menu">
                             <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                                 <li>
                                     <a @click="setCurrentPage('home')"
-                                        class="svg-filtered block text-lg py-2 pr-4 pl-3 text-white hover:text-indigo-200"
+                                        class="block text-lg py-2 pr-4 pl-3 text-white"
                                         aria-current="page">Home</a>
                                 </li>
                                 <li>
                                     <a @click="setCurrentPage('about')"
-                                        class="svg-filtered block text-lg py-2 pr-4 pl-3 text-white hover:text-indigo-200">About</a>
+                                        class="block text-lg py-2 pr-4 pl-3 text-white">About</a>
                                 </li>
                                 <li>
                                     <a @click="setCurrentPage('agumento-programs')"
-                                        class="svg-filtered block text-lg py-2 pr-4 pl-3 text-white hover:text-indigo-200">Agumento
+                                        class="block text-lg py-2 pr-4 pl-3 text-white">Agumento
                                         programs</a>
                                 </li>
                                 <li>
                                     <a @click="setCurrentPage('my-programs')"
-                                        class="svg-filtered block text-lg py-2 pr-4 pl-3 text-white hover:text-indigo-200">My
+                                        class="block text-lg py-2 pr-4 pl-3 text-white">My
                                         programs</a>
                                 </li>
                             </ul>
@@ -279,7 +303,7 @@
                             <section>
                                 <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
                                     <a href="#"
-                                        class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                                        class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm rounded-full bg-gray-800 text-white hover:bg-gray-700"
                                         role="alert">
                                         <span
                                             class="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">New</span>
@@ -295,13 +319,13 @@
                                         class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl text-white">
                                         Get your Workouts done</h1>
                                     <p
-                                        class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+                                        class="mb-8 text-lg font-normal text-slate-300 lg:text-xl sm:px-16 xl:px-48">
                                         Work hard, reach your goals, build your custom training program with modular
                                         approach, do only exercises you like!</p>
                                     <div
                                         class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                                         <a href="#"
-                                            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                                            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-900">
                                             How it works
                                             <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -311,19 +335,16 @@
                                             </svg>
                                         </a>
                                         <button
-                                            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-slate-900 rounded-lg group bg-gradient-to-br from-indigo-800 to-cyan-500 group-hover:from-indigo-800 group-hover:to-cyan-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-indigo-800 shadow-lg shadow-cyan-900/90">
-                                            <span
-                                                class="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                                <svg class="inline-block mr-2 -ml-1 w-5 h-5" fill="none"
-                                                    stroke="currentColor" viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                                                    </path>
-                                                </svg>
-                                                My sheets
-                                            </span>
+                                            class="relative inline-flex items-center justify-center svg-filtered text-white focus:ring-4 focus:outline-none focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                            <svg class="inline-block mr-2 -ml-1 w-5 h-5" fill="none"
+                                                stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                                </path>
+                                            </svg>
+                                            My sheets
                                         </button>
                                     </div>
                                 </div>
@@ -333,8 +354,8 @@
                                 <h2 class="text-white mb-8 text-2xl font-bold lg:text-3xl">
                                     My custom modules
                                 </h2>
-                                <div class="flex gap-4" v-if="mymodules.length">
-                                    <div class="p-6 h-full max-w-sm bg-slate-800 rounded-lg border border-slate-600 shadow-md"
+                                <div class="flex gap-4 flex-wrap" v-if="mymodules.length">
+                                    <div class="p-6 h-full max-w-sm dark-purple-800 rounded-lg border border-slate-600 shadow-md"
                                         v-for="(module, moduleindex) in mymodules">
                                         <a href="#">
                                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
@@ -350,10 +371,10 @@
                                             </li>
                                         </ul>
                                         </p>
-                                        <button @click="assignmodule(module.key)"
-                                            class="w-full my-5 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-slate-900 rounded-lg group bg-gradient-to-br from-indigo-800 to-cyan-500 group-hover:from-indigo-800 group-hover:to-cyan-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-indigo-800 shadow-lg shadow-cyan-900/90">
+                                        <button v-if="mysheets.length" @click="assignmodule(module.key)"
+                                            class="w-full my-5 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-cyan-800 to-cyan-500 group-hover:from-cyan-800 group-hover:to-cyan-500 hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-cyan-800 shadow-lg shadow-cyan-900/90">
                                             <span
-                                                class="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                                class="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                                 Add to sheet
                                                 <svg class="inline-block ml-2 -mr-1 w-4 h-4" fill="currentColor"
                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -363,13 +384,14 @@
                                                 </svg>
                                             </span>
                                         </button>
+                                        <p class="pt-4 pink-glow" v-else>Get started by creating your first sheet</p>
                                         <form v-if="assigning == module.key" class="my-6 space-y-6" action="#"
                                             @submit.prevent="assigntosheet">
                                             <div>
                                                 <label for="mysheets"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sheets</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-300">Sheets</label>
                                                 <select name="sheet"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                                    class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-cyan-500 focus:border-cyan-500">
                                                     <option v-for="(sheet, index) in mysheets" :value="sheet.key">
                                                         {{sheet.title}}</option>
                                                 </select>
@@ -377,21 +399,21 @@
                                                 <input type="hidden" name="moduleindex" :value="moduleindex" />
                                             </div>
                                             <button type="submit"
-                                                class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Add</button>
+                                                class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-800">Add</button>
                                         </form>
                                         <button @click="moduleformtype = 'edit'; newmodulemodal = true; editmodule = JSON.parse(JSON.stringify(module))" type="button"
-                                            class="cursor-pointer inline-flex items-center mt-5 mr-2 py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-indigo-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                                            class="cursor-pointer inline-flex items-center mt-5 mr-2 py-2 px-4 text-sm font-medium rounded-lg border focus:z-10 focus:ring-4 focus:outline-none focus:text-cyan-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 focus:ring-gray-700"
                                             type="button">Edit module</button>
                                         <span @click="removefromdb(module.key, 'mymodules')"
-                                            class="cursor-pointer inline-flex items-center mt-5 py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-indigo-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Remove</span>
+                                            class="cursor-pointer inline-flex items-center mt-5 mr-2 py-2 px-4 text-sm font-medium rounded-lg border focus:z-10 focus:ring-4 focus:outline-none focus:text-cyan-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 focus:ring-gray-700">Remove</span>
                                     </div>
                                 </div>
                                 <div v-else>
-                                    <p class="text-slate-400">No modules created yet</p>
+                                    <p class="pink-glow">No modules created yet</p>
                                 </div>
                                 <div class="my-5">
                                     <button type="button" @click="newmodulemodal = true; editmodule = {}"
-                                        class="svg-filtered text-white bg-gradient-to-br from-indigo-800 to-cyan-500 focus:ring-4 focus:outline-none focus:ring-indigo-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                        class="svg-filtered text-white bg-gradient-to-br from-cyan-800 to-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                                         type="button">Add your module</button>
                                 </div>
                             </div>
@@ -404,8 +426,8 @@
                                         {{element.description}}
                                     </p>
                                 </div>
-                                <div class="flex gap-4">
-                                    <div class="p-6 h-full max-w-sm bg-slate-800 rounded-lg border border-slate-600 shadow-md"
+                                <div class="flex gap-4 flex-wrap">
+                                    <div class="p-6 h-full max-w-sm dark-purple-800 rounded-lg border border-slate-600 shadow-md"
                                         v-for="(module, moduleindex) in element.modules">
                                         <a href="#">
                                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
@@ -421,10 +443,10 @@
                                             </li>
                                         </ul>
                                         </p>
-                                        <button @click="assignmodule(module.key)"
-                                            class="w-full my-5 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-slate-900 rounded-lg group bg-gradient-to-br from-indigo-800 to-cyan-500 group-hover:from-indigo-800 group-hover:to-cyan-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-indigo-800 shadow-lg shadow-cyan-900/90">
+                                        <button v-if="mysheets.length" @click="assignmodule(module.key)"
+                                            class="w-full my-5 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-cyan-800 to-cyan-500 group-hover:from-cyan-800 group-hover:to-cyan-500 hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-cyan-800 shadow-lg shadow-cyan-900/90">
                                             <span
-                                                class="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                                class="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                                 Add to sheet
                                                 <svg class="inline-block ml-2 -mr-1 w-4 h-4" fill="currentColor"
                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -434,13 +456,14 @@
                                                 </svg>
                                             </span>
                                         </button>
+                                        <p class="pt-4 pink-glow" v-else>Get started by creating your first sheet</p>
                                         <form v-if="assigning == module.key" class="my-6 space-y-6" action="#"
                                             @submit.prevent="assigntosheet">
                                             <div>
                                                 <label for="mysheets"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sheets</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-300">Sheets</label>
                                                 <select name="sheet"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                                    class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-cyan-500 focus:border-cyan-500">
                                                     <option v-for="(sheet, index) in mysheets" :value="sheet.key">
                                                         {{sheet.title}}</option>
                                                 </select>
@@ -448,30 +471,9 @@
                                                 <input type="hidden" name="moduleindex" :value="moduleindex" />
                                             </div>
                                             <button type="submit"
-                                                class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Add</button>
+                                                class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-800">Add</button>
                                         </form>
                                     </div>
-                                </div>
-                            </div>
-                            <div>
-                                <form class="my-6 space-y-6" @submit.prevent="importtodb">
-                                    <label class="block">
-                                        <span class="sr-only">Data file</span>
-                                        <input type="file" name="file" class="block w-full text-sm text-slate-500
-                                          file:mr-4 file:py-2 file:px-4
-                                          file:rounded-full file:border-0
-                                          file:text-sm file:font-semibold
-                                          file:bg-indigo-50 file:text-indigo-700
-                                          hover:file:bg-indigo-100
-                                        "/>
-                                    </label>
-                                    <button type="submit"
-                                        class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Import</button>
-                                </form>
-                                <div class="my-3">
-                                    <button type="button" @click="exportdb"
-                                        class="svg-filtered text-white bg-gradient-to-br from-indigo-800 to-cyan-500 focus:ring-4 focus:outline-none focus:ring-indigo-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                                        type="button">Export data</button>
                                 </div>
                             </div>
                         </div>
@@ -490,25 +492,47 @@
                                     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
                                     mollit anim id est laborum</p>
                             </div>
+                            <div>
+                                <form class="my-6 space-y-6" @submit.prevent="importtodb">
+                                    <label class="block">
+                                        <span class="sr-only">Data file</span>
+                                        <input type="file" name="file" class="block w-full text-sm text-slate-500
+                                          file:mr-4 file:py-2 file:px-4
+                                          file:rounded-full file:border-0
+                                          file:text-sm file:font-semibold
+                                          file:bg-cyan-50 file:text-cyan-700
+                                          hover:file:bg-cyan-100
+                                        "/>
+                                    </label>
+                                    <button type="submit"
+                                        class="svg-filtered text-white focus:ring-4 focus:outline-none focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Import</button>
+                                </form>
+                                <div class="my-3">
+                                    <button type="button" @click="exportdb"
+                                        class="svg-filtered text-white focus:ring-4 focus:outline-none focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                        type="button">Export data</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="pb-12 relative" v-else-if="currentPage == 'my-programs'">
                             <div class="container mx-auto py-8">
                                 <h2 class="text-white mb-2 text-2xl font-bold lg:text-3xl md:mb-2">
                                     My saved modules
                                 </h2>
-                                <div v-for="sheet in mysheets" class="my-4">
+                                <div v-if="mysheets.length" v-for="sheet in mysheets" class="my-4">
                                     <a @click="setCurrentPage(sheet.key)"
-                                        class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                        class="block p-6 max-w-sm rounded-lg border shadow-md bg-gray-800 border-gray-700 hover:bg-gray-700">
                                         <h5
-                                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                            class="mb-2 text-2xl font-bold tracking-tight text-white">
                                             {{sheet.title}}</h5>
-                                        <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest
+                                        <p class="font-normal text-gray-400">Here are the biggest
                                             enterprise technology acquisitions of 2021 so far, in reverse chronological
                                             order.</p>
                                         <span @click="removefromdb(sheet.key, 'mysheets')"
-                                            class="inline-flex items-center mt-5 py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-indigo-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Remove</span>
+                                            class="inline-flex items-center mt-5 py-2 px-4 text-sm font-medium rounded-lg border focus:z-10 focus:ring-4 focus:outline-none focus:text-cyan-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 focus:ring-gray-700">Remove</span>
                                     </a>
                                 </div>
+                                <p class="pt-4 pink-glow" v-else>No sheets created yet</p>
                             </div>
                         </div>
                         <div class="pb-12 relative" v-else-if="currentPage == 'agumento-programs'">
@@ -520,7 +544,7 @@
                                         </h2>
                                         <div class="relative overflow-x-auto shadow-md rounded-lg">
                                             <table
-                                                class="w-full text-sm text-left text-gray-400 bg-slate-800 table-auto my-4"
+                                                class="w-full text-sm text-left text-gray-400 dark-purple-800 table-auto my-4"
                                                 v-for="(set, key) in sheet.modules">
                                                 <thead class="text-xs uppercase bg-gray-700 text-gray-400">
                                                     <tr>
@@ -532,7 +556,7 @@
                                                             #</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="bg-slate-800">
+                                                <tbody class="dark-purple-800">
                                                     <tr v-for="(el, key) in data.plans[set.type].modules[set.id].exs"
                                                         class="border-b bg-gray-800 border-gray-700">
                                                         <td class="border-b border-slate-600 p-4 pl-8 text-slate-400">
@@ -564,7 +588,7 @@
                                                                 My modules</h3>
                                                         </div>
                                                         <div class="grid grid-cols-2 gap-4 h-full">
-                                                            <div class="p-6 max-w-sm bg-slate-800 rounded-lg border border-slate-600 shadow-md"
+                                                            <div class="p-6 max-w-sm dark-purple-800 rounded-lg border border-slate-600 shadow-md"
                                                                 v-for="module in sheet.assignedModules">
                                                                 <a href="#">
                                                                     <h5
@@ -584,7 +608,7 @@
                                                                 </ul>
                                                                 </p>
                                                                 <a @click="deletemodule(sheet.key, module.key)"
-                                                                    class="inline-flex items-center mt-5 py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-indigo-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                                                    class="inline-flex items-center mt-5 py-2 px-4 text-sm font-medium rounded-lg border focus:z-10 focus:ring-4 focus:outline-none focus:text-cyan-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 focus:ring-gray-700">
                                                                     Remove
                                                                 </a>
                                                             </div>
@@ -599,17 +623,17 @@
                                                         <div v-if="sheet.goals">
                                                             <ol class="relative border-l border-gray-700 py-4">
                                                                 <li class="mb-10 ml-4" v-for="goal in sheet.goals">
-                                                                    <div :class="[goal.reached ? 'bg-indigo-300 shadow-md' : 'bg-gray-700']"
+                                                                    <div :class="[goal.reached ? 'bg-cyan-300 shadow-md' : 'bg-gray-700']"
                                                                         class="absolute w-3 h-3 rounded-full mt-1.5 -left-1.5 border border-gray-900">
                                                                     </div>
                                                                     <h3
-                                                                        class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                        class="text-lg font-semibold text-white">
                                                                         {{goal.title}}</h3>
                                                                     <p
-                                                                        class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                                                                        class="mb-4 text-base font-normal text-gray-400">
                                                                         {{goal.message}}</p>
                                                                     <a @click="setgoalreached(sheet.key, goal.title)"
-                                                                        class="inline-flex items-center py-2 px-4 mr-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-indigo-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Set
+                                                                        class="inline-flex items-center py-2 px-4 mr-3 text-sm font-medium rounded-lg border focus:z-10 focus:ring-4 focus:outline-none focus:text-cyan-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 focus:ring-gray-700">Set
                                                                         as reached <svg class="ml-2 w-3 h-3"
                                                                             fill="currentColor" viewBox="0 0 20 20"
                                                                             xmlns="http://www.w3.org/2000/svg">
@@ -618,7 +642,7 @@
                                                                                 clip-rule="evenodd"></path>
                                                                         </svg></a>
                                                                     <a @click="deletegoal(sheet.key, goal.title)"
-                                                                        class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-indigo-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Remove</a>
+                                                                        class="inline-flex items-center mt-5 py-2 px-4 text-sm font-medium rounded-lg border focus:z-10 focus:ring-4 focus:outline-none focus:text-cyan-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700 focus:ring-gray-700">Remove</a>
                                                                 </li>
                                                             </ol>
                                                         </div>
@@ -626,7 +650,7 @@
                                                             <p class="text-slate-400">No goals created yet</p>
                                                         </div>
                                                         <a @click="newgoalform()"
-                                                            class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
+                                                            class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-white bg-cyan-600 rounded-lg hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300">
                                                             Add new goal
                                                             <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor"
                                                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -640,24 +664,24 @@
                                                             <div>
                                                                 <div class="pb-4">
                                                                     <label for="goal_title"
-                                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
+                                                                        class="block mb-2 text-sm font-medium text-gray-300">Title</label>
                                                                     <input type="text" id="goal_title" name="goal_title"
-                                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                                        class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-cyan-500 focus:border-cyan-500"
                                                                         placeholder="HSPU" required>
                                                                 </div>
                                                                 <div class="pb-4">
                                                                     <label for="motivation_message"
-                                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
+                                                                        class="block mb-2 text-sm font-medium text-gray-400">Your
                                                                         motivation</label>
                                                                     <textarea id="motivation_message"
                                                                         name="motivation_message" rows="4"
-                                                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                                        class="block p-2.5 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-cyan-500 focus:border-cyan-500"
                                                                         placeholder="Your motivation message..."></textarea>
                                                                 </div>
                                                                 <input type="hidden" name="key" :value="sheet.key" />
                                                             </div>
                                                             <button type="submit"
-                                                                class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Add</button>
+                                                                class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-800">Add</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -672,11 +696,11 @@
                         </div>
                     </Transition>
                 </div>
-                <footer class="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
-                    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="."
+                <footer class="p-4 shadow md:flex md:items-center md:justify-between md:p-6 bg-gray-800">
+                    <span class="text-sm sm:text-center text-gray-400">© 2022 <a href="."
                             class="hover:underline">Agumento</a>
                     </span>
-                    <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+                    <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-400 sm:mt-0">
                         <li>
                             <a @click="setCurrentPage('home')" class="mr-4 hover:underline md:mr-6">Home</a>
                         </li>
@@ -699,7 +723,7 @@
                     <div class="modal-wrapper relative w-full">
                         <div class="modal-container relative max-w-md h-full md:h-auto rounded-lg shadow bg-gray-700">
                             <button type="button" @click="newsheetmodal = false"
-                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white">
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -708,18 +732,18 @@
                                 </svg>
                             </button>
                             <div class="py-6 px-6 lg:px-8">
-                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Register new sheet
+                                <h3 class="mb-4 text-xl font-medium text-white">Register new sheet
                                 </h3>
                                 <form class="space-y-6" action="#" @submit.prevent="newSheet">
                                     <div>
                                         <label for="mysheet"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
+                                            class="block mb-2 text-sm font-medium text-gray-300">Title</label>
                                         <input type="text" name="mysheet" id="mysheet"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            class="border text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white"
                                             placeholder="My first sheet" required>
                                     </div>
                                     <button type="submit"
-                                        class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Assign</button>
+                                        class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-800">Assign</button>
                                 </form>
                             </div>
                         </div>
@@ -732,7 +756,7 @@
                     <div class="modal-wrapper relative w-full">
                         <div class="modal-container relative max-w-md h-full md:h-auto rounded-lg shadow bg-gray-700">
                             <button type="button" @click="newmodulemodal = false"
-                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white">
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -741,46 +765,46 @@
                                 </svg>
                             </button>
                             <div class="py-6 px-6 lg:px-8">
-                                <h3 v-if="editmodule" class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                                <h3 v-if="editmodule" class="mb-4 text-xl font-medium text-white">
                                     Edit module</h3>
-                                <h3 v-else class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                                <h3 v-else class="mb-4 text-xl font-medium text-white">
                                     Register new module</h3>
                                 <form id="newModuleForm" class="space-y-6" action="#" @submit.prevent="addmoduletodb">
                                     <div class="form-inner">
                                         <div>
                                             <label for="mysheet"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
+                                                class="block mb-2 text-sm font-medium text-gray-300">Title</label>
                                             <input type="text" name="mymodule" id="mymodule"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                class="border text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white"
                                                 placeholder="My first module" :value="[editmodule.title ? editmodule.title : '']" required>
                                             <input type="hidden" name="modulekey" :value="[editmodule.key ? editmodule.key : '']" />
                                         </div>
                                         <div class="form-inner-excs py-4">
                                             <label for="mysheet"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Exercises</label>
+                                                class="block mb-2 text-sm font-medium text-gray-300">Exercises</label>
                                         </div>
                                         <div v-if="editmodule">
                                             <div class="flex" v-for="(modex, index) in editmodule.exs">
-                                                <select v-model="modex.name" :name="'exec_'+index" class="exe-select border mb-3 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white mr-3">
+                                                <select v-model="modex.name" :name="'exec_'+index" class="exe-select border mb-3 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white mr-3">
                                                     <option v-for="exl in allexs" :value="exl.id">{{ exl.name }}</option>
                                                 </select>
-                                                <input type="number" :value="modex.reps" :name="'exec_'+index+'_reps'" class="border mb-3 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white flex-1 w-24">
+                                                <input type="number" :value="modex.reps" :name="'exec_'+index+'_reps'" class="border mb-3 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white flex-1 w-24">
                                             </div>
                                             <a @click="appendinput(modalexec++)"
-                                                class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
+                                                class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-white bg-cyan-600 rounded-lg hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300">
                                                 Add exercise
                                             </a>
                                         </div>
                                         <div v-else>
                                             <a @click="appendinput(modalexec++)"
-                                                class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
+                                                class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-white bg-cyan-600 rounded-lg hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300">
                                                 Add exercise
                                             </a>
                                         </div>
                                     </div>
                                     <input type="hidden" name="action" :value="moduleformtype" />
                                     <button type="submit"
-                                        class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Assign</button>
+                                        class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-800">Assign</button>
                                 </form>
                             </div>
                         </div>
@@ -821,7 +845,8 @@
                 moduleformtype: 'add',
                 newsheetmodal: false,
                 newmodulemodal: false, 
-                editmodule: {}
+                editmodule: {},
+                mobilemenuopen: false
             }
         },
         methods: {
@@ -845,7 +870,8 @@
                     })
                 });
 
-                [...document.querySelectorAll('.svg-filtered')].map(el => el.addEventListener('mouseover', () => { el.classList.add('filter-hover'); tl20.restart() }))
+                //set svg filters
+                this.setsvgfilter()
 
                 if (window.location.search) {
                     searchParams = new URLSearchParams(window.location.search);
@@ -1003,15 +1029,19 @@
                 })
             },
             setCurrentPage(page) {
-                this.currentPage = page
-                //goal form close
-                this.goalform = false
                 if ('URLSearchParams' in window) {
                     searchParams = new URLSearchParams(window.location.search);
                     searchParams.set('page', page)
                     newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
                     history.pushState(null, '', newRelativePathQuery);
                 }
+                this.currentPage = page
+                //goal form close
+                this.goalform = false
+                //resp menu close
+                this.mobilemenuopen = false
+                //set svg filters
+                this.setsvgfilter()
             },
             assignmodule(module) {
                 if (this.assigning == module) {
@@ -1392,7 +1422,7 @@
                 //input.setAttribute('value', '')
                 //input.setAttribute('placeholder', 'Exercise')
                 input.setAttribute('name', 'exec_' + count)
-                input.classList.add('exe-select', 'border', 'mb-3', 'text-sm', 'rounded-lg', 'focus:ring-indigo-500', 'focus:border-indigo-500', 'block', 'w-full', 'p-2.5', 'bg-gray-600', 'border-gray-500', 'placeholder-gray-400', 'text-white', 'mr-3')
+                input.classList.add('exe-select', 'border', 'mb-3', 'text-sm', 'rounded-lg', 'focus:ring-cyan-500', 'focus:border-cyan-500', 'block', 'w-full', 'p-2.5', 'bg-gray-600', 'border-gray-500', 'placeholder-gray-400', 'text-white', 'mr-3')
 
                 let temp = document.createElement('option')
                 temp.setAttribute('value', '')
@@ -1410,13 +1440,18 @@
                 reps.setAttribute('type', 'number')
                 reps.setAttribute('value', '5')
                 reps.setAttribute('name', 'exec_' + count + '_reps')
-                reps.classList.add('border', 'mb-3', 'text-sm', 'rounded-lg', 'focus:ring-indigo-500', 'focus:border-indigo-500', 'block', 'w-full', 'p-2.5', 'bg-gray-600', 'border-gray-500', 'placeholder-gray-400', 'text-white', 'flex-1', 'w-24')
+                reps.classList.add('border', 'mb-3', 'text-sm', 'rounded-lg', 'focus:ring-cyan-500', 'focus:border-cyan-500', 'block', 'w-full', 'p-2.5', 'bg-gray-600', 'border-gray-500', 'placeholder-gray-400', 'text-white', 'flex-1', 'w-24')
 
                 row.append(input)
                 row.append(reps)
 
                 document.querySelector('#newModuleForm .form-inner-excs').append(row)
-            }
+            },
+            setsvgfilter(){
+                setTimeout(() => {
+                    [...document.querySelectorAll('.svg-filtered')].map(el => el.addEventListener('mouseover', () => { el.classList.add('filter-hover'); tl20.restart() }))
+                }, 500);
+            },
         },
         mounted() {
             this.setupData()
