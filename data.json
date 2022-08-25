@@ -6,36 +6,36 @@
 			"description": "Exercises for chest, biceps, triceps, shoulders",
 			"modules": [
 				{
-					"key": "agu-1",
-					"title": "AGU PUSH v1",
+					"key": "rupe-1",
+					"title": "RUPE PUSH v1",
 					"description": "v1 strength building",
 					"exs": [
 						{
-							"id": "apv10",
+							"id": "rpv10",
 							"name": "Push ups 201",
 							"description": "2sec down / 0sec rest / 1sec up",
 							"reps": "x8-10"
 						},
 						{
-							"id": "apv11",
+							"id": "rpv11",
 							"name": "Diamond push ups",
 							"description": "close hands",
 							"reps": "x5-8"
 						},
 						{
-							"id": "apv12",
+							"id": "rpv12",
 							"name": "Elevated push ups",
 							"description": "Elevate your feet to work mainly on chest and shoulder",
 							"reps": "x8-10"
 						},
 						{
-							"id": "apv13",
+							"id": "rpv13",
 							"name": "Push ups to plank",
 							"description": "transition between push ups and plank hold",
 							"reps": "x8-10"
 						},
 						{
-							"id": "apv14",
+							"id": "rpv14",
 							"name": "Pike push ups",
 							"description": "Foundamental exercise for shoulder stenght",
 							"reps": "x8"
@@ -43,36 +43,36 @@
 					]
 				},
 				{
-					"key": "agu-2",
-					"title": "AGU PUSH v2",
+					"key": "rupe-2",
+					"title": "RUPE PUSH v2",
 					"description": "v2 strength building",
 					"exs": [
 						{
-							"id": "apv20",
+							"id": "rpv20",
 							"name": "Deep push ups 201",
 							"description": "v1 push ups with increased ROM",
 							"reps": "x10-12"
 						},
 						{
-							"id": "apv21",
+							"id": "rpv21",
 							"name": "Diamond push ups",
 							"description": "close hands",
 							"reps": "x10-12"
 						},
 						{
-							"id": "apv22",
+							"id": "rpv22",
 							"name": "Elevated Pike push ups",
 							"description": "Harder version of pike push ups",
 							"reps": "x8-10"
 						},
 						{
-							"id": "apv23",
+							"id": "rpv23",
 							"name": "Dips",
 							"description": "Focus on shoulder and chest",
 							"reps": "x10-12"
 						},
 						{
-							"id": "apv23",
+							"id": "rpv23",
 							"name": "Pike push ups",
 							"description": "Foundamental exercise for shoulder stenght",
 							"reps": "x10-12"
@@ -87,17 +87,17 @@
 			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
 			"modules": [
 				{
-					"key": "agu-3",
+					"key": "rupe-3",
 					"title": "Title 1",
 					"description": "v3 strength building",
 					"exs": [
 						{
-							"id": "ex1",
+							"id": "aex1",
 							"name": "lge 1",
 							"description": "lorem ipsum dolor sit amet"
 						},
 						{
-							"id": "ex2",
+							"id": "aex2",
 							"name": "lge 2",
 							"description": "lorem ipsum dolor sit amet consect"
 						}
@@ -111,17 +111,17 @@
 			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
 			"modules": [
 				{
-					"key": "agu-4",
+					"key": "rupe-4",
 					"title": "Title 12",
 					"description": "v4 strength building",
 					"exs": [
 						{
-							"id": "ex1",
+							"id": "bex1",
 							"name": "exe 1",
 							"description": "lorem ipsum dolor sit amet"
 						},
 						{
-							"id": "ex2",
+							"id": "bex2",
 							"name": "exe 2",
 							"description": "lorem ipsum dolor sit amet consect"
 						}
@@ -129,20 +129,5 @@
 				}
 			]
 		}
-    ],
-	"sheets": [
-		{
-			"name": "Demo train 1",
-			"modules": [
-				{
-					"type": 0,
-					"id": 1
-				},
-				{
-					"type": 1,
-					"id": 0
-				}
-			]
-		}
-	]
+    ]
 }
