@@ -1240,7 +1240,16 @@
                                 programs</a>
                         </li>
                         <li>
-                            <a @click="setCurrentPage('my-programs', 'page')" class="hover:underline">my sheets</a>
+                            <a @click="setCurrentPage('my-programs', 'page')" class="mr-4 hover:underline md:mr-6">my sheets</a>
+                        </li>
+                        <li>
+                            <a @click="clearDbData('mysheets')" class="mr-4 hover:underline md:mr-6">Clear sheets</a>
+                        </li>
+                        <li>
+                            <a @click="clearDbData('mymodules')" class="mr-4 hover:underline md:mr-6">Clear modules</a>
+                        </li>
+                        <li>
+                            <a @click="clearDbData('myplans')" class="hover:underline">Clear plans</a>
                         </li>
                     </ul>
                 </footer>
@@ -1686,6 +1695,14 @@
                     fileReader.onerror = error => reject(error)
                     fileReader.readAsText(file)
                 })
+            },
+            async clearDbData(trans){
+                let objectStore = await this.getobjectstore(trans, 'readwrite')
+
+                const objectStoreRequest = objectStore.clear();
+                objectStoreRequest.onsuccess = (event) => {
+                    console.log('db clear')
+                }
             },
             setCurrentPage(page) {
                 if ('URLSearchParams' in window) {
@@ -2440,7 +2457,7 @@
 
                 this.allexs.map((ex, index) => {
                     temp = document.createElement('option')
-                    temp.setAttribute('value', ex.name)
+                    temp.setAttribute('value', ex.id)
                     temp.textContent = ex.name
                     input.append(temp)
                 })
