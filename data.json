@@ -1,129 +1,419 @@
 {
 	"plans":[
 		{
-			"category": "push",
-			"title": "Push exercises",
-			"description": "Exercises for chest, biceps, triceps, shoulders",
+			"category": "general",
+			"title": "Starter modules for building strength",
+			"description": "upperbody solid foundamentals",
 			"modules": [
 				{
-					"key": "rupe-1",
-					"title": "RUPE PUSH v1",
-					"description": "v1 strength building",
+					"key": "starter-0",
+					"title": "Upperbody overall starter",
+					"description": "starter strength building",
 					"exs": [
 						{
-							"id": "rpv10",
-							"name": "Push ups 201",
-							"description": "2sec down / 0sec rest / 1sec up",
-							"reps": "x8-10"
+							"id": "mc0",
+							"name": "Mountain climbers",
+							"description": "esercizio per addome, cardio, warmup",
+							"reps": "15-20"
 						},
 						{
-							"id": "rpv11",
-							"name": "Diamond push ups",
-							"description": "close hands",
-							"reps": "x5-8"
+							"id": "kpu1",
+							"name": "Knee push ups",
+							"description": "push ups con ginocchia a terra",
+							"reps": "5-8"
 						},
 						{
-							"id": "rpv12",
-							"name": "Elevated push ups",
-							"description": "Elevate your feet to work mainly on chest and shoulder",
-							"reps": "x8-10"
+							"id": "ipu2",
+							"name": "Incline push ups",
+							"description": "push ups semplificati, mani in posizione sopraelevata rispetto ai piedi",
+							"reps": "8-10"
 						},
 						{
-							"id": "rpv13",
-							"name": "Push ups to plank",
-							"description": "transition between push ups and plank hold",
-							"reps": "x8-10"
+							"id": "pk3",
+							"name": "Plank",
+							"description": "Mantenere la posizione statica",
+							"reps": "30\""
 						},
 						{
-							"id": "rpv14",
-							"name": "Pike push ups",
-							"description": "Foundamental exercise for shoulder stenght",
-							"reps": "x8"
+							"id": "tpu4",
+							"name": "Towel pull ups",
+							"description": "simulare una trazione in posizione prona, con asciugamano",
+							"reps": "5-8"
 						}
 					]
 				},
 				{
-					"key": "rupe-2",
-					"title": "RUPE PUSH v2",
-					"description": "v2 strength building",
+					"key": "starter-1",
+					"title": "Core starter",
+					"description": "starter strength building",
 					"exs": [
 						{
-							"id": "rpv20",
-							"name": "Deep push ups 201",
-							"description": "v1 push ups with increased ROM",
-							"reps": "x10-12"
+							"id": "pk3",
+							"name": "Plank",
+							"description": "Mantenere la posizione statica",
+							"reps": "30\""
 						},
 						{
-							"id": "rpv21",
-							"name": "Diamond push ups",
-							"description": "close hands",
-							"reps": "x10-12"
+							"id": "lf4",
+							"name": "Leg flutters",
+							"description": "posizione supina contrarre addome, sollevare e abbassare le gambe singolarmente in modo alterno",
+							"reps": "5-8 (per gamba)"
 						},
 						{
-							"id": "rpv22",
-							"name": "Elevated Pike push ups",
-							"description": "Harder version of pike push ups",
-							"reps": "x8-10"
+							"id": "lr5",
+							"name": "Leg raises",
+							"description": "posizione supina contrarre addome, sollevare / abbassare a gambe unite",
+							"reps": "8-10"
 						},
 						{
-							"id": "rpv23",
-							"name": "Dips",
-							"description": "Focus on shoulder and chest",
-							"reps": "x10-12"
-						},
-						{
-							"id": "rpv23",
-							"name": "Pike push ups",
-							"description": "Foundamental exercise for shoulder stenght",
-							"reps": "x10-12"
+							"id": "th6",
+							"name": "Tucked hollow",
+							"description": "posizione statica hollow con gambe rannicchiate",
+							"reps": "10-15\""
 						}
 					]
-				}
-			]
-		},
-        {
-			"category": "cat2",
-			"title": "Title cat2",
-			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
-			"modules": [
+				},
 				{
-					"key": "rupe-3",
-					"title": "Title 1",
-					"description": "v3 strength building",
+					"key": "starter-2",
+					"title": "Leg starter",
+					"description": "starter strength building",
 					"exs": [
 						{
-							"id": "aex1",
-							"name": "lge 1",
-							"description": "lorem ipsum dolor sit amet"
+							"id": "sq7",
+							"name": "Squats",
+							"description": "warmup, cardio",
+							"reps": "25-50"
 						},
 						{
-							"id": "aex2",
-							"name": "lge 2",
-							"description": "lorem ipsum dolor sit amet consect"
+							"id": "nrc8",
+							"name": "Nordic reverse curl 70°",
+							"description": "esecuzione nordic reverse con lieve inclinazione",
+							"reps": "5-8"
+						},
+						{
+							"id": "ass9",
+							"name": "ATG split squats (con rialzo)",
+							"description": "potenziameno ginocchia, piede anteriore su rialzo per facilitare l'esecuzione",
+							"reps": "8-10"
+						},
+						{
+							"id": "cr10",
+							"name": "Calf raises",
+							"description": "potenziamento del polpaccio",
+							"reps": "10-15"
+						}
+					]
+				},
+				{
+					"key": "starter-extra",
+					"title": "Starter extra",
+					"description": "esercizi alternativi, starter skills",
+					"exs": [
+						{
+							"id": "fs10e",
+							"name": "Frog stand",
+							"description": "Mantenere la posizione statica",
+							"reps": "5-10\""
 						}
 					]
 				}
 			]
 		},
 		{
-			"category": "cat3",
-			"title": "Title cat3",
-			"description": "lorem ipsum dolor sit amet consect lorem ipsum dolor sit amet consect",
+			"category": "push",
+			"title": "Push focused exercises",
+			"description": "Exercises focused on building push strength",
 			"modules": [
 				{
-					"key": "rupe-4",
-					"title": "Title 12",
-					"description": "v4 strength building",
+					"key": "push-1",
+					"title": "Push v1",
+					"description": "potenziamento spinta v1",
 					"exs": [
 						{
-							"id": "bex1",
-							"name": "exe 1",
-							"description": "lorem ipsum dolor sit amet"
+							"id": "pu11",
+							"name": "Push ups",
+							"description": "corpo linea unica, portare il petto al suolo",
+							"reps": "8-10"
 						},
 						{
-							"id": "bex2",
-							"name": "exe 2",
-							"description": "lorem ipsum dolor sit amet consect"
+							"id": "dpu12",
+							"name": "Diamond push ups",
+							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
+							"reps": "5"
+						},
+						{
+							"id": "epu13",
+							"name": "Elevated push ups",
+							"description": "Posizione dei piedi sopraelevata per aumentare la difficoltà",
+							"reps": "5-8"
+						},
+						{
+							"id": "ptp14",
+							"name": "Push ups to plank",
+							"description": "transizione da push up a posizione di plank, scendendo alternando le braccia",
+							"reps": "5 (per braccio)"
+						}
+					]
+				},
+				{
+					"key": "push-2",
+					"title": "Push v2",
+					"description": "potenziamento spinta v2",
+					"exs": [
+						{
+							"id": "spu15",
+							"name": "Slow push ups",
+							"description": "push ups ad esecuzione lenta, discesa dai 2-5\" salita veloce",
+							"reps": "10-12"
+						},
+						{
+							"id": "dpu12",
+							"name": "Diamond push ups",
+							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
+							"reps": "10-12"
+						},
+						{
+							"id": "ppu16",
+							"name": "Pike push ups",
+							"description": "posizione a V rovesciata per potenziare le spalle ",
+							"reps": "8-10"
+						},
+						{
+							"id": "ds17",
+							"name": "Dips",
+							"description": "potenziamento pettorali e spalle",
+							"reps": "10-12"
+						},
+						{
+							"id": "dpu18",
+							"name": "Deep push ups",
+							"description": "push ups profondi, utilizzare appoggi per poter superare con il petto il punto di appoggio delle mani",
+							"reps": "10-12"
+						}
+					]
+				},
+				{
+					"key": "push-3",
+					"title": "Push v3",
+					"description": "potenziamento spinta v3",
+					"exs": [
+						{
+							"id": "dspu19",
+							"name": "Deep slow push ups",
+							"description": "push ups profondi ad esecuzione lenta, discesa dai 2-5\" salita veloce",
+							"reps": "12"
+						},
+						{
+							"id": "dpu12",
+							"name": "Diamond push ups",
+							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
+							"reps": "12"
+						},
+						{
+							"id": "epu13",
+							"name": "Elevated push ups",
+							"description": "Posizione dei piedi sopraelevata per aumentare la difficoltà",
+							"reps": "12"
+						},
+						{
+							"id": "eppu20",
+							"name": "Elevated pike push ups",
+							"description": "piedi posizionati in posizione soprelevata per aumentare peso sulle spalle",
+							"reps": "8-10"
+						},
+						{
+							"id": "ppu16",
+							"name": "Pike push ups",
+							"description": "posizione a V rovesciata per potenziare le spalle ",
+							"reps": "12"
+						}
+					]
+				},
+				{
+					"key": "push-4",
+					"title": "Push v4",
+					"description": "potenziamento spinta v4",
+					"exs": [
+						{
+							"id": "dspu19",
+							"name": "Deep slow push ups",
+							"description": "push ups profondi ad esecuzione lenta, discesa dai 2-5\" salita veloce",
+							"reps": "12"
+						},
+						{
+							"id": "dpu12",
+							"name": "Diamond push ups",
+							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
+							"reps": "12"
+						},
+						{
+							"id": "rpu20",
+							"name": "Rings push ups",
+							"description": "push ups profondi su anelli per attivare maggiormente il muscolo pettorale",
+							"reps": "10-12"
+						},
+						{
+							"id": "whspu21",
+							"name": "Wall HSPU",
+							"description": "flessione verticale con appoggio al muro, petto al muro",
+							"reps": "3-6"
+						},
+						{
+							"id": "rd22",
+							"name": "Ring dips",
+							"description": "affondi agli anelli, potenziamento muscolare generale",
+							"reps": "6-8"
+						}
+					]
+				},
+				{
+					"key": "push-extra",
+					"title": "Push extra",
+					"description": "esercizi particolari per potenziamento complementare",
+					"exs": [
+						{
+							"id": "fpu23",
+							"name": "Finger push ups",
+							"description": "push ups eseguito sulle dita",
+							"reps": "5-12"
+						},
+						{
+							"id": "fpu24",
+							"name": "Fist push ups",
+							"description": "push ups eseguito sui pugni",
+							"reps": "12"
+						},
+						{
+							"id": "pppu25",
+							"name": "Pseudo planche push ups",
+							"description": "push up eseguito con mani all'altezza dei fianchi posizionate con inclinazione a 45°",
+							"reps": "10-12"
+						},
+						{
+							"id": "oapu26",
+							"name": "One arm push ups",
+							"description": "push up sul singolo braccio",
+							"reps": "3-5 (per braccio)"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "pull",
+			"title": "Pull focused exercises",
+			"description": "Exercises focused on building pull strength",
+			"modules": [
+				{
+					"key": "pull-1",
+					"title": "Pull v1",
+					"description": "potenziamento trazione v1",
+					"exs": [
+						{
+							"id": "apu27",
+							"name": "Australian pull ups",
+							"description": "trazioni alla sbarra con inclinazione variabile, piedi a terra",
+							"reps": "8-10"
+						},
+						{
+							"id": "sm28",
+							"name": "Supermans",
+							"description": "posizione prona, sollevare contemporaneamente, in ripetizioni, parte superiore e gambe del corpo",
+							"reps": "20-30\""
+						},
+						{
+							"id": "cgapu29",
+							"name": "Close grip australian pull ups",
+							"description": "australian pull ups con mani ravvicinate",
+							"reps": "8-10"
+						},
+						{
+							"id": "rp30",
+							"name": "Reverse plank",
+							"description": "posizione statica in plank inverso",
+							"reps": "10-15\""
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "core",
+			"title": "Core focused exercises",
+			"description": "Exercises focused on building core strength",
+			"modules": [
+				{
+					"key": "core-1",
+					"title": "Core v1",
+					"description": "potenziamento addominale v1",
+					"exs": [
+						{
+							"id": "pk3",
+							"name": "Plank",
+							"description": "Mantenere la posizione statica",
+							"reps": "30\""
+						},
+						{
+							"id": "smc31",
+							"name": "Switching mountain climbers",
+							"description": "mountain climbers con torsione addome per rafforzamento muscoli laterali",
+							"reps": "25-30"
+						},
+						{
+							"id": "lr5",
+							"name": "Leg raises",
+							"description": "posizione supina contrarre addome, sollevare / abbassare a gambe unite",
+							"reps": "12-15"
+						},
+						{
+							"id": "hb32",
+							"name": "Hollow body",
+							"description": "Mantenere la posizione statica",
+							"reps": "10-15\""
+						},
+						{
+							"id": "slr33",
+							"name": "Seated leg raises",
+							"description": "sollevare contemporaneamente le gambe distese da una posizione seduta a terra",
+							"reps": "5-8"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "legs",
+			"title": "Legs focused exercises",
+			"description": "Exercises focused on building legs strength",
+			"modules": [
+				{
+					"key": "legs-1",
+					"title": "Legs v1",
+					"description": "potenziamento gambe v1",
+					"exs": [
+						{
+							"id": "sq7",
+							"name": "Squats",
+							"description": "warmup, cardio",
+							"reps": "50"
+						},
+						{
+							"id": "nrc34",
+							"name": "Nordic reverse curl 45°",
+							"description": "esecuzione nordic reverse con inclinazione media",
+							"reps": "8-12"
+						},
+						{
+							"id": "ass35",
+							"name": "ATG split squats",
+							"description": "potenziameno ginocchia e muscolo femorale",
+							"reps": "8-10"
+						},
+						{
+							"id": "olcr36",
+							"name": "One leg calf raises",
+							"description": "potenziamento del polpaccio",
+							"reps": "10-15 (per gamba)"
 						}
 					]
 				}
