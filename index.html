@@ -8,7 +8,7 @@
     <title>RUPE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
-    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/petite-vue"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -33,6 +33,7 @@
         html {
             scroll-behavior: smooth;
         }
+
         html,
         body {
             height: 100%;
@@ -97,22 +98,16 @@
             position: relative;
         }
 
-        .v-enter-active,
-        .v-enter-from {
-            transition-delay: .25s !important;
+        body {
+            position: relative;
         }
 
-        .v-enter-active,
-        .v-leave-active {
-            transition: opacity 0.25s ease;
+        #app, .section {
+            opacity: 1;
+            transition: .3s;
         }
 
-        .v-enter-from,
-        .v-leave-to {
-            opacity: 0;
-        }
-
-        .loading {
+        .loading>#app {
             opacity: 0;
         }
 
@@ -135,7 +130,7 @@
             min-width: calc(25% - 1rem);
         }
 
-        @media(max-width: 1000px){
+        @media(max-width: 1000px) {
             .min-w-25 {
                 min-width: 100%;
                 flex: 1 1 0%;
@@ -184,7 +179,7 @@
             transform: scale(1.1);
         }
 
-        .modal-inner{
+        .modal-inner {
             overflow-y: scroll;
             max-height: 77vh;
         }
@@ -195,50 +190,84 @@
     </style>
 </head>
 
-<body>
+<body class="loading">
 
-    <div id="app">
- 
+    <div id="app" @vue:mounted="setupData">
+
         <!-- drawer component -->
-        <div id="drawer-navigation" aria-hidden="true" class="fixed z-40 h-screen p-4 overflow-y-auto w-80 bg-gray-600 transition-transform left-0 top-0 transform-none" tabindex="-1" aria-labelledby="drawer-navigation-label" aria-modal="true" role="dialog">
+        <div id="drawer-navigation" aria-hidden="true"
+            class="fixed z-40 h-screen p-4 overflow-y-auto w-80 bg-gray-600 transition-transform left-0 top-0 transform-none"
+            tabindex="-1" aria-labelledby="drawer-navigation-label" aria-modal="true" role="dialog">
             <a id="drawer-navigation-label" class="p-2">
                 <span class="mt-1 text-white self-center text-3xl whitespace-nowrap logo">RUPE</span>
             </a>
-            <button type="button" data-drawer-dismiss="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center hover:bg-gray-600 hover:text-white">
-                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            <button type="button" data-drawer-dismiss="drawer-navigation" aria-controls="drawer-navigation"
+                class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center hover:bg-gray-600 hover:text-white">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
                 <span class="sr-only">Close menu</span>
             </button>
             <div class="py-4 overflow-y-auto">
                 <ul class="space-y-2">
                     <li>
                         <a @click="setCurrentPage('home', 'page')"
-                            class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-gray-100" aria-current="page">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>&nbsp;
+                            class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-gray-100"
+                            aria-current="page">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                </path>
+                            </svg>&nbsp;
                             Home
                         </a>
                     </li>
                     <li>
                         <a @click="setCurrentPage('about', 'page')"
                             class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-gray-100">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>&nbsp;
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                                </path>
+                            </svg>&nbsp;
                             About</a>
                     </li>
                     <li>
                         <a @click="setCurrentPage('rupe-modules', 'page')"
                             class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-gray-100">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>&nbsp;
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                                </path>
+                            </svg>&nbsp;
                             RUPE modules</a>
                     </li>
                     <li>
                         <a @click="setCurrentPage('my-programs', 'page')"
                             class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-gray-100">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>&nbsp;
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                </path>
+                            </svg>&nbsp;
                             My sheets</a>
                     </li>
                     <li>
                         <a @click="setCurrentPage('home', 'page')"
                             class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-gray-100">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>&nbsp;
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                </path>
+                            </svg>&nbsp;
                             Stats</a>
                     </li>
                 </ul>
@@ -246,14 +275,19 @@
         </div>
 
         <div class="bg-white text-gray-content">
-            <div id="main" class="min-h-screen relative z-10 loading">
+            <div id="main" class="min-h-screen relative z-10">
                 <nav class="sticky top-0 z-50 bg-white px-2 sm:px-4 py-2.5 bg-gray-800">
                     <div class="container flex flex-wrap justify-between items-center mx-auto sm:px-4">
                         <div class="space-x-6 sm:space-x-12 flex">
-                            <button type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation"
+                            <button type="button" data-drawer-target="drawer-navigation"
+                                data-drawer-show="drawer-navigation" aria-controls="drawer-navigation"
                                 class="inline-flex items-center py-2 text-sm text-gray-200 focus:outline-none h-10">
                                 <span class="sr-only">Open main menu</span>
-                                <svg class="w-6 h-6 menu-responsive-show" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+                                <svg class="w-6 h-6 menu-responsive-show" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h7"></path>
+                                </svg>
                             </button>
                             <a class="inline-flex items-center" @click="setCurrentPage('home', 'page')">
                                 <span class="mt-1 text-white self-center text-3xl whitespace-nowrap logo">RUPE</span>
@@ -276,28 +310,40 @@
 
                 <!-- Content -->
                 <div class="container mx-auto px-2 sm:px-4 sm:py-8 min-h-screen">
-                    <Transition>
+                    <div class="section">
                         <div class="pb-12 relative" v-if="currentPage == 'home'">
                             <section>
                                 <div class="pt-8 pb-2 lg:py-12">
-                                    <a v-if="todayworkout && todayworkout.length" @click="cleanresume(todayworkout)" class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm bg-gray-800 text-white hover:bg-gray-700" role="alert">
-                                        <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-rupe">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                    <a v-if="todayworkout && todayworkout.length" @click="cleanresume(todayworkout)"
+                                        class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm bg-gray-800 text-white hover:bg-gray-700"
+                                        role="alert">
+                                        <div
+                                            class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-rupe">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                            </svg>
                                             <span class="sr-only">Thunder icon</span>
                                         </div>
-                                        <span class="text-sm font-medium ml-3">You have a workout today!</span> 
-                                        <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                        <span class="text-sm font-medium ml-3">You have a workout today!</span>
+                                        <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
                                     </a>
                                     <h1 id="main-heading"
                                         class="mb-4 text-2xl font-bold tracking-tight leading-none md:text-5xl lg:text-6xl text-black">
-                                        Get your <span class="text-transparent bg-clip-text bg-gradient-to-r to-lime-400 from-cyan-500">Workouts</span> done</h1>
+                                        Get your <span
+                                            class="text-transparent bg-clip-text bg-gradient-to-r to-lime-400 from-cyan-500">Workouts</span>
+                                        done</h1>
                                     <p class="mb-3 sm:mb-8 text-md font-normal text-gray-600 max-w-xl lg:text-xl">
                                         RUPE helps you planning your workout, create your custom training program or
                                         choose between predefined modules, work hard and reach your goals</p>
-                                    <div
-                                        class="flex flex-row mb-8 lg:mb-16 space-y-0 sm:justify-start sm:space-x-4">
-                                        <a href="#"
-                                            @click="setCurrentPage('about', 'page')"
+                                    <div class="flex flex-row mb-8 lg:mb-16 space-y-0 sm:justify-start sm:space-x-4">
+                                        <a href="#" @click="setCurrentPage('about', 'page')"
                                             class="inline-flex justify-center items-center px-3 py-1.5 sm:px-5 sm:py-2.5 mr-2 text-base font-medium text-center text-black bg-gray-100 shadow-lg hover:bg-gray-300 focus:ring-4 focus:ring-gray-100">
                                             How it works
                                             <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -307,8 +353,7 @@
                                                     clip-rule="evenodd"></path>
                                             </svg>
                                         </a>
-                                        <button
-                                            @click="setCurrentPage('my-programs', 'page')"
+                                        <button @click="setCurrentPage('my-programs', 'page')"
                                             class="relative inline-flex items-center justify-center bg-sand text-black focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-3 py-1.5 sm:px-5 sm:py-2.5 text-center mr-2 mb-2 shadow-lg">
                                             <svg class="inline-block mr-2 -ml-1 w-5 h-5" fill="none"
                                                 stroke="currentColor" viewBox="0 0 24 24"
@@ -335,8 +380,8 @@
                                 <p class="text-gray-600 mb-6">
                                     Create your sheet and assign modules to build your custom training program
                                 </p>
-                                <div class="my-4 flex gap-4 flex-wrap">
-                                    <div v-if="mysheets.length" v-for="sheet in mysheets" class="min-w-25">
+                                <div v-if="mysheets && mysheets.length" class="my-4 flex gap-4 flex-wrap">
+                                    <div v-for="sheet in mysheets" class="min-w-25">
                                         <div
                                             class="p-4 max-w-sm border shadow-md border-gray-400 bg-gray-200 text-gray-600 sm:p-6">
                                             <a @click="setCurrentPage(sheet.key, 'sheet')" class="block">
@@ -359,8 +404,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="text-sand" v-else>No sheets created yet</p>
                                 </div>
+                                <p class="text-sand" v-else>No sheets created yet</p>
                                 <div class="my-5">
                                     <button type="button" @click="newsheetmodal = true"
                                         class="bg-gray-500 text-white focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 shadow-lg"
@@ -384,7 +429,8 @@
                                     </svg>&nbsp;My modules
                                 </h2>
                                 <p class="text-gray-600 mb-6">
-                                    Create your modules to group some specific exercises and assign them to your sheet or choose between predefined modules
+                                    Create your modules to group some specific exercises and assign them to your sheet
+                                    or choose between predefined modules
                                 </p>
                                 <div class="flex gap-4 flex-wrap flex-col sm:flex-row" v-if="mymodules.length">
                                     <div class="p-3 sm:p-6 h-full max-w-sm bg-gray-100 border border-gray-400 shadow-md flex-1"
@@ -398,9 +444,12 @@
                                         <ul>
                                             <li v-for="ex in module.exs" class="mb-3 font-normal text-gray-500">
                                                 <div v-if="allexs && allexs.find( el => el.id == ex.id )">
-                                                    <strong class="text-lg text-gray-800">{{ allexs.find( el => el.id == ex.id ).name }}</strong>
-                                                    <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id ).description }}</p>
-                                                    <p class="text-sm sm:text-lg">Reps:&nbsp;<strong class="text-gray-800">x{{ ex.reps }}</strong></p>
+                                                    <strong class="text-lg text-gray-800">{{ allexs.find( el => el.id ==
+                                                        ex.id ).name }}</strong>
+                                                    <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id
+                                                        ).description }}</p>
+                                                    <p class="text-sm sm:text-lg">Reps:&nbsp;<strong
+                                                            class="text-gray-800">x{{ ex.reps }}</strong></p>
                                                 </div>
                                             </li>
                                         </ul>
@@ -448,8 +497,7 @@
                                     <p class="text-sand">No modules created yet</p>
                                 </div>
                                 <div class="my-5">
-                                    <button type="button"
-                                        @click="setCurrentPage('rupe-modules', 'page')"
+                                    <button type="button" @click="setCurrentPage('rupe-modules', 'page')"
                                         class="bg-sand text-black focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 sm:px-5 sm:py-2.5 text-center shadow-lg mr-4"
                                         type="button">
                                         <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor"
@@ -515,17 +563,56 @@
                         <div class="pb-12 relative" v-else-if="currentPage == 'about'">
                             <div class="container mx-auto py-8">
                                 <h2 class="text-black mb-2 text-2xl font-bold lg:text-3xl md:mb-2">
-                                    about
+                                    About / How it works
                                 </h2>
-                                <p class="text-gray-500">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                    ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                    fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                    mollit anim id est laborum</p>
+                                <p class="text-gray-500 my-4">
+                                    RUPE (cliff in italy) è un'applicazione che ti permette di creare, organizzare e
+                                    pianificare i tuoi allenamenti.
+                                    L'idea di RUPE è quella di poter generare un qualsiasi tipo di allenamento
+                                    riguardante il calisthenics o più in generale il potenziamento a corpo libero senza
+                                    e con attrezzi, l'approccio risulta quindi modulare e frammentato, organizzato su
+                                    tre strutture principali: <strong>Sheet/Fogli, Modules/Moduli e
+                                        Workouts/Allenamenti</strong>.
+                                </p>
+                                <ul class="my-2">
+                                    <li>Gli <strong>Sheets</strong> sono i contenitori principali dove vengono assegnati
+                                        i moduli e generati i workout, è quindi il punto di partenza per iniziare ad
+                                        usare RUPE.</li>
+                                    <li>I <strong>Modules</strong> sono gruppi di esercizi raggruppati secondo uno scopo
+                                        preciso, ho predisposto Moduli predefiniti dove ho riportato i miei allenamenti
+                                        personali che ho praticato nelle varie tappe del mio percorso di potenziamento
+                                        muscolare, è anche possibile generare propri Moduli personalizzati, scegliendo
+                                        tra tutti gli esercizi di RUPE.
+                                        Vengono assegnati negli Sheets per selezionare gli esercizi che vorremo inserire
+                                        nel nostro workout.</li>
+                                    <li>I <strong>Workouts</strong> sono i piani di allenamento veri e propri dove
+                                        possiamo combinare i moduli scelti (o anche i singoli esercizi contenuti nei
+                                        moduli selezionati) per generare il piano di allenamento personalizzato.</li>
+                                </ul>
+                                <h4 class="mt-8">Panoramica su sviluppo, funzionamento e gestione dati</h4>
+                                <p class="text-gray-500 my-4">
+                                    Non è predisposto alcun tipo di registrazione o creazione di un account, tutte le
+                                    funzionalità di RUPE sono immediatamente disponibili senza alcuna autenticazione.
+                                    Viene sfruttata la memoria persistente del browser per il salvataggio di tutti i
+                                    dati, ne consegue che tutte le informazioni inserite dagli utilizzatori
+                                    dell'applicazione esistono solo localmente e solo nel browser specifico utilizzato
+                                    per la navigazione in questo sito, pertanto non possono essere visibili ad altri
+                                    utilizzatori dell'applicazione.
+                                    Questa scelta di sviluppo ha come punti di forza velocità, semplicità di utilizzo e
+                                    privacy, non essendoci comunicazione con un server i dati rimangono sempre in tuo
+                                    possesso e non vengono inviati ad alcuna infrastruttura, inoltre le interazioni al
+                                    sito risultano immediate.
+                                    Non essendoci implicata la creazione di un account, viene a mancare l'aspetto della
+                                    portabilità: i dati inseriti sono visibili solo tramite la specifica combinazione di
+                                    browser/dispositivo utilizzata per la navigazione;
+                                    tuttavia è presente sul sito la possibilità di esportare e quindi importare tutti i
+                                    programmi RUPE inseriti, proprio per ovviare a questa problematica, rendendo quindi
+                                    possibile il trasferimento di dati ad altri browser e/o dispositivi,
+                                    funzionalità utile anche per poter condividere i tuoi allenamenti con altre persone.
+                                    Per iniziare non ti resta che creare il tuo primo <a
+                                        @click="newsheetmodal = true">Sheet</a>, anche oggi è un buon giorno per
+                                    allenarsi! #climbyourcliff
+                                </p>
                             </div>
                         </div>
                         <div class="pb-12 relative" v-else-if="currentPage == 'my-programs'">
@@ -538,8 +625,8 @@
                                         </path>
                                     </svg>&nbsp;My sheets
                                 </h2>
-                                <div class="my-4 flex gap-4 flex-wrap">
-                                    <div v-if="mysheets.length" v-for="sheet in mysheets" class="min-w-25">
+                                <div class="my-4 flex gap-4 flex-wrap" v-if="mysheets && mysheets.length">
+                                    <div v-for="sheet in mysheets" class="min-w-25">
                                         <div
                                             class="p-4 max-w-sm border shadow-md border-gray-400 bg-gray-200 text-gray-600 sm:p-6">
                                             <a @click="setCurrentPage(sheet.key, 'sheet')" class="block">
@@ -562,8 +649,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="text-sand" v-else>No sheets created yet</p>
                                 </div>
+                                <p class="text-sand" v-else>No sheets created yet</p>
                             </div>
                         </div>
                         <div class="pb-12 relative" v-else-if="currentPage == 'rupe-modules'">
@@ -580,15 +667,29 @@
                                     <div class="block">
                                         <div class="block w-full p-2 sm:p-4 bg-gray-100 border border-gray-400 mb-6 shadow-lg"
                                             v-for="(module, moduleindex) in element.modules">
-                                            <button @click="toggleAccordion(module.key)" class="text-left flex w-full justify-between items-center space-x-3" :aria-expanded="openaccordion" :aria-controls="'collapse_' + moduleindex">
+                                            <button @click="toggleAccordion(module.key)"
+                                                class="text-left flex w-full justify-between items-center space-x-3"
+                                                :aria-expanded="openaccordion"
+                                                :aria-controls="'collapse_' + moduleindex">
                                                 <div>
-                                                    <h5 class="mb-2 text-lg sm:text-2xl font-medium tracking-tight text-sand">
+                                                    <h5
+                                                        class="mb-2 text-lg sm:text-2xl font-medium tracking-tight text-sand">
                                                         {{module.title}}</h5>
                                                     <p class="mb-0 font-normal text-sand">
                                                         {{module.description}}</p>
                                                 </div>
-                                                <svg class="w-6 h-6" v-show="openaccordion != module.key" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                                                <svg class="w-6 h-6" v-show="openaccordion == module.key" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                                                <svg class="w-6 h-6" v-show="openaccordion != module.key" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                </svg>
+                                                <svg class="w-6 h-6" v-show="openaccordion == module.key" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                                </svg>
                                             </button>
                                             <div v-show="openaccordion == module.key" :id="'collapse_' + moduleindex">
                                                 <ul class="mt-6">
@@ -612,7 +713,8 @@
                                                         </svg>
                                                     </span>
                                                 </button>
-                                                <p class="pt-4 text-sand" v-else>Get started by creating your first sheet
+                                                <p class="pt-4 text-sand" v-else>Get started by creating your first
+                                                    sheet
                                                 </p>
                                                 <form v-if="assigning == module.title" class="my-6 space-y-6" action="#"
                                                     @submit.prevent="assigntosheet">
@@ -621,7 +723,8 @@
                                                             class="block mb-2 text-sm font-medium text-gray-600">Sheets</label>
                                                         <select name="sheet"
                                                             class="border text-sm block w-full p-2.5 bg-gray-300 border-gray-400 placeholder-gray-400 text-black focus:ring-gray-500 focus:border-gray-500">
-                                                            <option v-for="(sheet, index) in mysheets" :value="sheet.key">
+                                                            <option v-for="(sheet, index) in mysheets"
+                                                                :value="sheet.key">
                                                                 {{sheet.title}}</option>
                                                         </select>
                                                         <input type="hidden" name="exindex" :value="exindex" />
@@ -649,8 +752,9 @@
                                                     <div class="mb-6">
                                                         <div class="pt-4 sm:pt-8">
                                                             <h3 class="text-black mb-6 text-lg font-bold lg:text-2xl">
-                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block" fill="none"
-                                                                    stroke="currentColor" viewBox="0 0 24 24"
+                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block"
+                                                                    fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                                         stroke-width="2"
@@ -665,7 +769,8 @@
                                                             <table class="w-full text-sm text-left text-gray-500">
                                                                 <tbody>
                                                                     <tr class="border-b bg-gray-100 border-gray-200">
-                                                                        <td scope="col" class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                        <td scope="col"
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
                                                                             Monday
                                                                         </td>
                                                                         <td :class="[currentDay == 1 ? 'bg-sand text-gray-900 font-bold' : '']"
@@ -678,7 +783,8 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="border-b bg-gray-100 border-gray-200">
-                                                                        <td scope="col" class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                        <td scope="col"
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
                                                                             Tuesday
                                                                         </td>
                                                                         <td :class="[currentDay == 2 ? 'bg-sand text-gray-900 font-bold' : '']"
@@ -691,7 +797,8 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="border-b bg-gray-100 border-gray-200">
-                                                                        <td scope="col" class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                        <td scope="col"
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
                                                                             Wednesday
                                                                         </td>
                                                                         <td :class="[currentDay == 3 ? 'bg-sand text-gray-900 font-bold' : '']"
@@ -704,7 +811,8 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="border-b bg-gray-100 border-gray-200">
-                                                                        <td scope="col" class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                        <td scope="col"
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
                                                                             Thursday
                                                                         </td>
                                                                         <td :class="[currentDay == 4 ? 'bg-sand text-gray-900 font-bold' : '']"
@@ -717,7 +825,8 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="border-b bg-gray-100 border-gray-200">
-                                                                        <td scope="col" class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                        <td scope="col"
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
                                                                             Friday
                                                                         </td>
                                                                         <td :class="[currentDay == 5 ? 'bg-sand text-gray-900 font-bold' : '']"
@@ -730,7 +839,8 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="border-b bg-gray-100 border-gray-200">
-                                                                        <td scope="col" class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                        <td scope="col"
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
                                                                             Saturday
                                                                         </td>
                                                                         <td :class="[currentDay == 6 ? 'bg-sand text-gray-900 font-bold' : '']"
@@ -743,7 +853,8 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="border-b bg-gray-100 border-gray-200">
-                                                                        <td scope="col" class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                        <td scope="col"
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
                                                                             Sunday
                                                                         </td>
                                                                         <td :class="[currentDay == 0 ? 'bg-sand text-gray-900 font-bold' : '']"
@@ -765,356 +876,487 @@
                                                     <div class="mb-6">
                                                         <div class="pt-4 sm:pt-8">
                                                             <h3 class="text-black mb-6 text-lg font-bold lg:text-2xl">
-                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>&nbsp;
+                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block"
+                                                                    fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+                                                                    </path>
+                                                                </svg>&nbsp;
                                                                 My workouts
                                                             </h3>
                                                         </div>
-                                                        <div v-if="myplans"
-                                                            class="bg-gray-100 max-w-6xl mb-6 border border-gray-400 shadow-lg"
-                                                            v-for="plan in myplans.filter( plan => plan.sheet == sheet.title )">
-                                                            <div>
-                                                                <div class="p-2 sm:p-4 mb-2 flex justify-between items-center bg-gray-200">
-                                                                    <div>
-                                                                        <form v-if="plantitleedit == plan.key"
-                                                                            @submit.prevent="planRenameForm">
-                                                                            <input type="text" id="plantitle_edit"
-                                                                                name="plantitle_edit"
-                                                                                class="text-md text-gray-900 block inline mr-1 p-2.5 bg-gray-200 placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
-                                                                                :value="plan.title"
-                                                                                :placeholder="plan.title">
-                                                                            <input type="hidden" name="plan"
-                                                                                :value="plan.key" />
-                                                                            <input type="submit"
-                                                                                class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
-                                                                                value="confirm">
-                                                                        </form>
-                                                                        <h5 class="text-lg sm:text-xl font-bold text-gray-900"
-                                                                            v-else>
-                                                                            <button @click="plantitleedit = plan.key">
-                                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline" fill="none"
-                                                                                    stroke="currentColor"
-                                                                                    viewBox="0 0 24 24"
-                                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path stroke-linecap="round"
-                                                                                        stroke-linejoin="round"
-                                                                                        stroke-width="2"
-                                                                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
-                                                                                    </path>
-                                                                                </svg>
-                                                                            </button>
-                                                                            {{plan.title}}
-                                                                        </h5>
+                                                        <div v-if="myplans">
+                                                            <div class="bg-gray-100 max-w-6xl mb-6 border border-gray-400 shadow-lg"
+                                                                v-for="plan in myplans.filter( plan => plan.sheet == sheet.title )">
+                                                                <div>
+                                                                    <div
+                                                                        class="p-2 sm:p-4 mb-2 flex justify-between items-center bg-gray-200">
+                                                                        <div>
+                                                                            <form v-if="plantitleedit == plan.key"
+                                                                                @submit.prevent="planRenameForm">
+                                                                                <input type="text" id="plantitle_edit"
+                                                                                    name="plantitle_edit"
+                                                                                    class="text-md text-gray-900 block inline mr-1 p-2.5 bg-gray-200 placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
+                                                                                    :value="plan.title"
+                                                                                    :placeholder="plan.title">
+                                                                                <input type="hidden" name="plan"
+                                                                                    :value="plan.key" />
+                                                                                <input type="submit"
+                                                                                    class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
+                                                                                    value="confirm">
+                                                                            </form>
+                                                                            <h5 class="text-lg sm:text-xl font-bold text-gray-900"
+                                                                                v-else>
+                                                                                <button
+                                                                                    @click="plantitleedit = plan.key">
+                                                                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 inline"
+                                                                                        fill="none"
+                                                                                        stroke="currentColor"
+                                                                                        viewBox="0 0 24 24"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path stroke-linecap="round"
+                                                                                            stroke-linejoin="round"
+                                                                                            stroke-width="2"
+                                                                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                                                                        </path>
+                                                                                    </svg>
+                                                                                </button>
+                                                                                {{plan.title}}
+                                                                            </h5>
+                                                                        </div>
+                                                                        <button @click="cleanresume(plan)">
+                                                                            <svg class="w-5 h-5 sm:w-6 sm:h-6 px-3 py-2 bg-gray-200 box-content"
+                                                                                fill="none" stroke="currentColor"
+                                                                                viewBox="0 0 24 24"
+                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                                                                                </path>
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                                                </path>
+                                                                            </svg>
+                                                                        </button>
                                                                     </div>
-                                                                    <button @click="cleanresume(plan)">
-                                                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 px-3 py-2 bg-gray-200 box-content"
-                                                                            fill="none" stroke="currentColor"
-                                                                            viewBox="0 0 24 24"
+                                                                    <div class="p-2 sm:p-4">
+                                                                        <div v-if="plan.exs">
+                                                                            <ul>
+                                                                                <li class="my-2 pb-2"
+                                                                                    v-for="(ex, index) in plan.exs">
+                                                                                    <div
+                                                                                        class="flex justify-between items-center gap-4">
+                                                                                        <div
+                                                                                            class="flex flex-col justify-evenly">
+                                                                                            <button
+                                                                                                @click="planmoveex(plan.key, index, 'up', sheet.title)">
+                                                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6"
+                                                                                                    fill="none"
+                                                                                                    stroke="currentColor"
+                                                                                                    viewBox="0 0 24 24"
+                                                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <path
+                                                                                                        stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        stroke-width="2"
+                                                                                                        d="M5 15l7-7 7 7">
+                                                                                                    </path>
+                                                                                                </svg>
+                                                                                            </button>
+                                                                                            <button
+                                                                                                @click="planmoveex(plan.key, index, 'down', sheet.title)">
+                                                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6"
+                                                                                                    fill="none"
+                                                                                                    stroke="currentColor"
+                                                                                                    viewBox="0 0 24 24"
+                                                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <path
+                                                                                                        stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        stroke-width="2"
+                                                                                                        d="M19 9l-7 7-7-7">
+                                                                                                    </path>
+                                                                                                </svg>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                        <div class="flex-1"
+                                                                                            v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
+                                                                                            <strong
+                                                                                                class="font-bold text-lg sm:text-xl">{{
+                                                                                                allexs.find( el => el.id
+                                                                                                == ex.id ).name
+                                                                                                }}</strong>
+                                                                                            <p
+                                                                                                class="hidden text-sm sm:block lg:text-lg">
+                                                                                                {{ allexs.find( el =>
+                                                                                                el.id == ex.id
+                                                                                                ).description }}</p>
+                                                                                            <p
+                                                                                                class="text-sm sm:text-lg">
+                                                                                                Reps:&nbsp;<strong
+                                                                                                    class="font-bold">{{
+                                                                                                    ex.reps
+                                                                                                    }}</strong></p>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <button
+                                                                                                @click="sheetplanexremove(index, plan.key)"
+                                                                                                class="inline-flex items-center py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">remove</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="mt-4 p-2 sm:mt-6 sm:p-4 border-t border-b border-gray-300">
+                                                                                        <div v-if="plan.rests && plan.rests.find( el => el.exi == index )"
+                                                                                            class="text-xl mb-4">
+                                                                                            Rest: <span
+                                                                                                class="font-bold">{{
+                                                                                                plan.rests.find( el =>
+                                                                                                el.exi == index ).rest
+                                                                                                }}</span>
+                                                                                        </div>
+                                                                                        <div class="flex items-center">
+                                                                                            <input
+                                                                                                :id="'restcheck'+plan.key"
+                                                                                                :name="'restcheck'+plan.key"
+                                                                                                type="radio"
+                                                                                                :value="index"
+                                                                                                class="w-4 h-4 text-gray-500 rounded focus:ring-gray-400 ring-offset-gray-200 focus:ring-2 bg-gray-300 border-gray-400"
+                                                                                                @change="setexrest">
+                                                                                            <label
+                                                                                                :for="'restcheck'+plan.key"
+                                                                                                class="ml-2 text-sm font-medium text-gray-900"><span
+                                                                                                    v-if="plan.rests && plan.rests.find( el => el.exi == index )">Change</span><span
+                                                                                                    v-else>Set</span>
+                                                                                                rest</label>
+                                                                                        </div>
+                                                                                        <form
+                                                                                            v-if="exrest && exrest == index"
+                                                                                            class="space-y-2"
+                                                                                            @submit.prevent="sheetplanaddrest">
+                                                                                            <input type="number"
+                                                                                                name="rest"
+                                                                                                placeholder="Rest"
+                                                                                                class="mr-2 border text-sm block inline p-1 bg-gray-300 border-gray-400 placeholder-gray-400 text-black focus:ring-gray-500 focus:border-gray-500" />
+                                                                                            <input type="hidden"
+                                                                                                name="ex"
+                                                                                                :value="index" />
+                                                                                            <input type="hidden"
+                                                                                                name="plan"
+                                                                                                :value="plan.key" />
+                                                                                            <input type="submit"
+                                                                                                class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-1.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
+                                                                                                value="confirm">
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div v-else>
+                                                                            <p class="pt-4 text-gray-800">No exercises
+                                                                                added yet
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 p-2 sm:mb-8 sm:p-4">
+                                                                    <button @click="setweekdaysmodal = plan.key"
+                                                                        class="bg-gray-500 text-white focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 shadow-lg">
+                                                                        Set weekdays&nbsp;
+                                                                        <svg class="w-4 h-4 inline-block" fill="none"
+                                                                            stroke="currentColor" viewBox="0 0 24 24"
                                                                             xmlns="http://www.w3.org/2000/svg">
                                                                             <path stroke-linecap="round"
                                                                                 stroke-linejoin="round" stroke-width="2"
-                                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                                                                            </path>
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                                            </path>
+                                                                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                                                                         </svg>
                                                                     </button>
-                                                                </div>
-                                                                <div class="p-2 sm:p-4">
-                                                                    <div v-if="plan.exs">
-                                                                        <ul>
-                                                                            <li class="my-2 pb-2"
-                                                                                v-for="(ex, index) in plan.exs">
-                                                                                <div class="flex justify-between items-center gap-4">
-                                                                                    <div class="flex flex-col justify-evenly">
-                                                                                        <button
-                                                                                            @click="planmoveex(plan.key, index, 'up', sheet.title)">
-                                                                                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none"
-                                                                                                stroke="currentColor"
-                                                                                                viewBox="0 0 24 24"
-                                                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                                                <path stroke-linecap="round"
-                                                                                                    stroke-linejoin="round"
-                                                                                                    stroke-width="2"
-                                                                                                    d="M5 15l7-7 7 7"></path>
-                                                                                            </svg>
-                                                                                        </button>
-                                                                                        <button
-                                                                                            @click="planmoveex(plan.key, index, 'down', sheet.title)">
-                                                                                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none"
-                                                                                                stroke="currentColor"
-                                                                                                viewBox="0 0 24 24"
-                                                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                                                <path stroke-linecap="round"
-                                                                                                    stroke-linejoin="round"
-                                                                                                    stroke-width="2"
-                                                                                                    d="M19 9l-7 7-7-7"></path>
-                                                                                            </svg>
-                                                                                        </button>
+                                                                    <!-- weekdays modal -->
+                                                                    <div class="section">
+                                                                        <div v-show="setweekdaysmodal == plan.key"
+                                                                            class="modal-mask">
+                                                                            <div class="modal-wrapper relative w-full">
+                                                                                <div
+                                                                                    class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
+                                                                                    <button type="button"
+                                                                                        @click="setweekdaysmodal = false"
+                                                                                        class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
+                                                                                        <svg class="w-5 h-5"
+                                                                                            fill="currentColor"
+                                                                                            viewBox="0 0 20 20"
+                                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                                            <path fill-rule="evenodd"
+                                                                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                                clip-rule="evenodd">
+                                                                                            </path>
+                                                                                        </svg>
+                                                                                    </button>
+                                                                                    <div
+                                                                                        class="py-6 px-6 lg:px-8 modal-inner">
+                                                                                        <form class="space-y-4"
+                                                                                            action="#"
+                                                                                            @submit.prevent="setplanweekdays">
+                                                                                            <h3
+                                                                                                class="mb-4 font-semibold text-gray-900">
+                                                                                                Set weekdays
+                                                                                            </h3>
+                                                                                            <p
+                                                                                                v-if="altw == plan.key || plan.weekdays[1].length">
+                                                                                                Week even</p>
+                                                                                            <ul
+                                                                                                class="items-center w-full text-sm font-medium border bg-gray-300 border-gray-400 text-black">
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'monday'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="1"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[0].includes('1')">
+                                                                                                        <label
+                                                                                                            :for="'monday'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Monday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'tuesday'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="2"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[0].includes('2')">
+                                                                                                        <label
+                                                                                                            :for="'tuesday'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Tuesday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'wednesday'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="3"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[0].includes('3')">
+                                                                                                        <label
+                                                                                                            :for="'wednesday'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Wednesday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'thursday'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="4"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[0].includes('4')">
+                                                                                                        <label
+                                                                                                            :for="'thursday'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Thursday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'friday'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="5"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[0].includes('5')">
+                                                                                                        <label
+                                                                                                            :for="'friday'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Friday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'saturday'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="6"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[0].includes('6')">
+                                                                                                        <label
+                                                                                                            :for="'saturday'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Saturday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'sunday'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="0"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[0].includes('0')">
+                                                                                                        <label
+                                                                                                            :for="'sunday'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Sunday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                            <p
+                                                                                                v-if="altw == plan.key || plan.weekdays[1].length">
+                                                                                                Week odd</p>
+                                                                                            <ul v-if="altw == plan.key || plan.weekdays[1].length"
+                                                                                                class="items-center w-full text-sm font-medium border bg-gray-300 border-gray-400 text-black">
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'monday_alt'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="1"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[1].includes('1')">
+                                                                                                        <label
+                                                                                                            :for="'monday_alt'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Monday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'tuesday_alt'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="2"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[1].includes('2')">
+                                                                                                        <label
+                                                                                                            :for="'tuesday_alt'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Tuesday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'wednesday_alt'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="3"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[1].includes('3')">
+                                                                                                        <label
+                                                                                                            :for="'wednesday_alt'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Wednesday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'thursday_alt'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="4"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[1].includes('4')">
+                                                                                                        <label
+                                                                                                            :for="'thursday_alt'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Thursday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'friday_alt'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="5"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[1].includes('5')">
+                                                                                                        <label
+                                                                                                            :for="'friday_alt'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Friday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-b border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'saturday_alt'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="6"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[1].includes('6')">
+                                                                                                        <label
+                                                                                                            :for="'saturday_alt'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Saturday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="w-full border-gray-400">
+                                                                                                    <div
+                                                                                                        class="flex items-center pl-3">
+                                                                                                        <input
+                                                                                                            :id="'sunday_alt'+plan.key"
+                                                                                                            type="checkbox"
+                                                                                                            value="0"
+                                                                                                            class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
+                                                                                                            :checked="plan.weekdays[1].includes('0')">
+                                                                                                        <label
+                                                                                                            :for="'sunday_alt'+plan.key"
+                                                                                                            class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Sunday</label>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                            <div
+                                                                                                class="flex items-center mb-4">
+                                                                                                <input
+                                                                                                    :id="'altwcheck'+plan.key"
+                                                                                                    :name="'altwcheck'+plan.key"
+                                                                                                    type="checkbox"
+                                                                                                    :value="plan.key"
+                                                                                                    :checked="plan.weekdays[1].length"
+                                                                                                    class="w-4 h-4 text-gray-500 rounded focus:ring-gray-400 ring-offset-gray-200 focus:ring-2 bg-gray-300 border-gray-400"
+                                                                                                    @change="setaltw">
+                                                                                                <label
+                                                                                                    :for="'altwcheck'+plan.key"
+                                                                                                    class="ml-2 text-sm font-medium text-gray-900">Alternate
+                                                                                                    week</label>
+                                                                                            </div>
+                                                                                            <input type="hidden"
+                                                                                                name="plan"
+                                                                                                :value="plan.key" />
+                                                                                            <button type="submit"
+                                                                                                class="text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-100 focus:ring-gray-200">Save</button>
+                                                                                        </form>
                                                                                     </div>
-                                                                                    <div class="flex-1" v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
-                                                                                        <strong class="font-bold text-lg sm:text-xl">{{ allexs.find( el => el.id == ex.id ).name }}</strong>
-                                                                                        <p class="hidden text-sm sm:block lg:text-lg">{{ allexs.find( el => el.id == ex.id ).description }}</p>
-                                                                                        <p class="text-sm sm:text-lg">
-                                                                                            Reps:&nbsp;<strong
-                                                                                                class="font-bold">{{ ex.reps
-                                                                                                }}</strong></p>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <button
-                                                                                            @click="sheetplanexremove(index, plan.key)"
-                                                                                            class="inline-flex items-center py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">remove</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="mt-4 p-2 sm:mt-6 sm:p-4 border-t border-b border-gray-300">
-                                                                                    <div v-if="plan.rests && plan.rests.find( el => el.exi == index )" class="text-xl mb-4">
-                                                                                        Rest: <span class="font-bold">{{ plan.rests.find( el => el.exi == index ).rest }}</span>
-                                                                                    </div>
-                                                                                    <div class="flex items-center">
-                                                                                        <input :id="'restcheck'+plan.key"
-                                                                                            :name="'restcheck'+plan.key" type="radio"
-                                                                                            :value="index"
-                                                                                            class="w-4 h-4 text-gray-500 rounded focus:ring-gray-400 ring-offset-gray-200 focus:ring-2 bg-gray-300 border-gray-400"
-                                                                                            @change="setexrest">
-                                                                                        <label :for="'restcheck'+plan.key"
-                                                                                            class="ml-2 text-sm font-medium text-gray-900"><span v-if="plan.rests && plan.rests.find( el => el.exi == index )">Change</span><span v-else>Set</span> rest</label>
-                                                                                    </div>
-                                                                                    <form v-if="exrest && exrest == index" class="space-y-2" @submit.prevent="sheetplanaddrest">
-                                                                                        <input type="number" name="rest" placeholder="Rest" class="mr-2 border text-sm block inline p-1 bg-gray-300 border-gray-400 placeholder-gray-400 text-black focus:ring-gray-500 focus:border-gray-500" />
-                                                                                        <input type="hidden" name="ex"
-                                                                                            :value="index" />
-                                                                                        <input type="hidden" name="plan"
-                                                                                            :value="plan.key" />
-                                                                                        <input type="submit"
-                                                                                            class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-1.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
-                                                                                            value="confirm">
-                                                                                    </form>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div v-else>
-                                                                        <p class="pt-4 text-gray-800">No exercises added yet
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="mb-3 p-2 sm:mb-8 sm:p-4">
-                                                                <button @click="setweekdaysmodal = plan.key" 
-                                                                    class="bg-gray-500 text-white focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 shadow-lg">
-                                                                    Set weekdays&nbsp;
-                                                                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                                                </button>
-                                                                <!-- weekdays modal -->
-                                                                <Transition name="modal">
-                                                                    <div v-if="setweekdaysmodal == plan.key" class="modal-mask">
-                                                                        <div class="modal-wrapper relative w-full">
-                                                                            <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
-                                                                                <button type="button" @click="setweekdaysmodal = false"
-                                                                                    class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
-                                                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <path fill-rule="evenodd"
-                                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                                                            clip-rule="evenodd"></path>
-                                                                                    </svg>
-                                                                                </button>
-                                                                                <div class="py-6 px-6 lg:px-8 modal-inner">
-                                                                                    <form class="space-y-4" action="#"
-                                                                                        @submit.prevent="setplanweekdays">
-                                                                                        <h3 class="mb-4 font-semibold text-gray-900">
-                                                                                            Set weekdays
-                                                                                        </h3>
-                                                                                        <p
-                                                                                            v-if="altw == plan.key || plan.weekdays[1].length">
-                                                                                            Week even</p>
-                                                                                        <ul
-                                                                                            class="items-center w-full text-sm font-medium border bg-gray-300 border-gray-400 text-black">
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'monday'+plan.key"
-                                                                                                        type="checkbox" value="1"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[0].includes('1')">
-                                                                                                    <label :for="'monday'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Monday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'tuesday'+plan.key"
-                                                                                                        type="checkbox" value="2"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[0].includes('2')">
-                                                                                                    <label :for="'tuesday'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Tuesday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'wednesday'+plan.key"
-                                                                                                        type="checkbox" value="3"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[0].includes('3')">
-                                                                                                    <label :for="'wednesday'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Wednesday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'thursday'+plan.key"
-                                                                                                        type="checkbox" value="4"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[0].includes('4')">
-                                                                                                    <label :for="'thursday'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Thursday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'friday'+plan.key"
-                                                                                                        type="checkbox" value="5"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[0].includes('5')">
-                                                                                                    <label :for="'friday'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Friday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'saturday'+plan.key"
-                                                                                                        type="checkbox" value="6"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[0].includes('6')">
-                                                                                                    <label :for="'saturday'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Saturday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li class="w-full border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'sunday'+plan.key"
-                                                                                                        type="checkbox" value="0"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[0].includes('0')">
-                                                                                                    <label :for="'sunday'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Sunday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                        <p
-                                                                                            v-if="altw == plan.key || plan.weekdays[1].length">
-                                                                                            Week odd</p>
-                                                                                        <ul v-if="altw == plan.key || plan.weekdays[1].length"
-                                                                                            class="items-center w-full text-sm font-medium border bg-gray-300 border-gray-400 text-black">
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'monday_alt'+plan.key"
-                                                                                                        type="checkbox" value="1"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[1].includes('1')">
-                                                                                                    <label :for="'monday_alt'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Monday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'tuesday_alt'+plan.key"
-                                                                                                        type="checkbox" value="2"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[1].includes('2')">
-                                                                                                    <label :for="'tuesday_alt'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Tuesday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'wednesday_alt'+plan.key"
-                                                                                                        type="checkbox" value="3"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[1].includes('3')">
-                                                                                                    <label :for="'wednesday_alt'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Wednesday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'thursday_alt'+plan.key"
-                                                                                                        type="checkbox" value="4"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[1].includes('4')">
-                                                                                                    <label :for="'thursday_alt'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Thursday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'friday_alt'+plan.key"
-                                                                                                        type="checkbox" value="5"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[1].includes('5')">
-                                                                                                    <label :for="'friday_alt'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Friday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="w-full border-b border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'saturday_alt'+plan.key"
-                                                                                                        type="checkbox" value="6"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[1].includes('6')">
-                                                                                                    <label :for="'saturday_alt'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Saturday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li class="w-full border-gray-400">
-                                                                                                <div class="flex items-center pl-3">
-                                                                                                    <input :id="'sunday_alt'+plan.key"
-                                                                                                        type="checkbox" value="0"
-                                                                                                        class="w-4 h-4 text-gray-500 focus:ring-gray-400 ring-offset-gray-300 focus:ring-2 bg-gray-400 border-gray-500"
-                                                                                                        :checked="plan.weekdays[1].includes('0')">
-                                                                                                    <label :for="'sunday_alt'+plan.key"
-                                                                                                        class="py-3 ml-2 w-full text-sm font-medium text-gray-600">Sunday</label>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                        <div class="flex items-center mb-4">
-                                                                                            <input :id="'altwcheck'+plan.key"
-                                                                                                :name="'altwcheck'+plan.key" type="checkbox"
-                                                                                                :value="plan.key"
-                                                                                                :checked="plan.weekdays[1].length"
-                                                                                                class="w-4 h-4 text-gray-500 rounded focus:ring-gray-400 ring-offset-gray-200 focus:ring-2 bg-gray-300 border-gray-400"
-                                                                                                @change="setaltw">
-                                                                                            <label :for="'altwcheck'+plan.key"
-                                                                                                class="ml-2 text-sm font-medium text-gray-900">Alternate
-                                                                                                week</label>
-                                                                                        </div>
-                                                                                        <input type="hidden" name="plan"
-                                                                                            :value="plan.key" />
-                                                                                        <button type="submit"
-                                                                                            class="text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-100 focus:ring-gray-200">Save</button>
-                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </Transition>
-                                                            </div>
-                                                            <div class="p-4 mt-5 pt-2 border-t border-gray-500">
-                                                                <button @click="removefromdb(plan.key, 'myplans')"
-                                                                    class="inline-flex items-center mt-5 py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">Delete</button>
+                                                                </div>
+                                                                <div class="p-4 mt-5 pt-2 border-t border-gray-500">
+                                                                    <button @click="removefromdb(plan.key, 'myplans')"
+                                                                        class="inline-flex items-center mt-5 py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">Delete</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="pb-6">
@@ -1142,8 +1384,9 @@
                                                     <div class="mb-6">
                                                         <div class="pt-4 sm:pt-8">
                                                             <h3 class="text-black mb-6 text-lg font-bold lg:text-2xl">
-                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block" fill="none"
-                                                                    stroke="currentColor" viewBox="0 0 24 24"
+                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block"
+                                                                    fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                                         stroke-width="2"
@@ -1179,18 +1422,26 @@
                                                                 <div class="mb-4 font-normal text-sand">
                                                                     {{module.description}}
                                                                     <ul>
-                                                                        <li v-for="ex in module.exs" class="mb-6 font-normal text-gray-500">
-                                                                            <div v-if="allexs && allexs.find( el => el.id == ex.id )">
-                                                                                <strong class="text-gray-800">{{ allexs.find( el => el.id == ex.id ).name }}</strong>
-                                                                                <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id ).description }}</p>
+                                                                        <li v-for="ex in module.exs"
+                                                                            class="mb-6 font-normal text-gray-500">
+                                                                            <div
+                                                                                v-if="allexs && allexs.find( el => el.id == ex.id )">
+                                                                                <strong class="text-gray-800">{{
+                                                                                    allexs.find( el => el.id == ex.id
+                                                                                    ).name }}</strong>
+                                                                                <p class="text-sm lg:text-lg">{{
+                                                                                    allexs.find( el => el.id == ex.id
+                                                                                    ).description }}</p>
                                                                                 <p class="text-sm sm:text-lg">
                                                                                     Reps:&nbsp;<strong
-                                                                                        class="text-gray-800">x{{ ex.reps
+                                                                                        class="text-gray-800">x{{
+                                                                                        ex.reps
                                                                                         }}</strong></p>
                                                                                 <button
                                                                                     @click="sheetplanadd(ex, sheet.title)"
                                                                                     class="cursor-pointer inline-flex items-center mt-3 mr-1 py-1 px-2 sm:mt-5 sm:mr-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">
-                                                                                    <svg class="w-4 h-4 inline" fill="none"
+                                                                                    <svg class="w-4 h-4 inline"
+                                                                                        fill="none"
                                                                                         stroke="currentColor"
                                                                                         viewBox="0 0 24 24"
                                                                                         xmlns="http://www.w3.org/2000/svg">
@@ -1216,8 +1467,9 @@
                                                     <div class="mb-6">
                                                         <div class="pt-4 sm:pt-8">
                                                             <h3 class="text-black mb-6 text-xl font-bold lg:text-2xl">
-                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block" fill="none"
-                                                                    stroke="currentColor" viewBox="0 0 24 24"
+                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block"
+                                                                    fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                                         stroke-width="2"
@@ -1299,7 +1551,7 @@
                                 </div>
                             </div>
                         </div>
-                    </Transition>
+                    </div>
                 </div>
                 <footer class="p-4 shadow md:flex md:items-center md:justify-between md:p-6">
                     <span class="text-sm sm:text-center text-gray-500 agumood">© 2022 <a href="."
@@ -1317,7 +1569,8 @@
                                 programs</a>
                         </li>
                         <li>
-                            <a @click="setCurrentPage('my-programs', 'page')" class="mr-4 hover:underline md:mr-6">my sheets</a>
+                            <a @click="setCurrentPage('my-programs', 'page')" class="mr-4 hover:underline md:mr-6">my
+                                sheets</a>
                         </li>
                         <li>
                             <a @click="clearDbData('mysheets')" class="mr-4 hover:underline md:mr-6">Clear sheets</a>
@@ -1332,8 +1585,8 @@
                 </footer>
             </div>
             <!-- add sheet modal -->
-            <Transition name="modal">
-                <div v-if="newsheetmodal" class="modal-mask">
+            <div class="section">
+                <div v-show="newsheetmodal" class="modal-mask">
                     <div class="modal-wrapper relative w-full">
                         <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
                             <button type="button" @click="newsheetmodal = false"
@@ -1363,10 +1616,10 @@
                         </div>
                     </div>
                 </div>
-            </Transition>
+            </div>
             <!-- add module modal -->
-            <Transition name="modal">
-                <div v-if="newmodulemodal" class="modal-mask">
+            <div class="section">
+                <div v-show="newmodulemodal" class="modal-mask">
                     <div class="modal-wrapper relative w-full">
                         <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
                             <button type="button" @click="newmodulemodal = false"
@@ -1384,7 +1637,8 @@
                                 <h3 v-else class="mb-4 text-xl font-medium text-black">
                                     Register new module</h3>
                                 <div class="modal-inner">
-                                    <form id="newModuleForm" class="space-y-6" action="#" @submit.prevent="addmoduletodb">
+                                    <form id="newModuleForm" class="space-y-6" action="#"
+                                        @submit.prevent="addmoduletodb">
                                         <div class="form-inner">
                                             <div>
                                                 <label for="mysheet"
@@ -1404,10 +1658,12 @@
                                                 <div class="flex" v-for="(modex, index) in editmodule.exs">
                                                     <select v-model="modex.id" :name="'exec_'+index"
                                                         class="exe-select border mb-3 text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black mr-3">
-                                                        <option v-for="(exl, index) in allexs" :value="exl.id">{{ exl.name
+                                                        <option v-for="(exl, index) in allexs" :value="exl.id">{{
+                                                            exl.name
                                                             }}</option>
                                                     </select>
-                                                    <input type="number" :value="modex.reps" :name="'exec_'+index+'_reps'"
+                                                    <input type="number" :value="modex.reps"
+                                                        :name="'exec_'+index+'_reps'"
                                                         class="border mb-3 text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black flex-1 w-24">
                                                 </div>
                                                 <a @click="appendinput(modalexec++)"
@@ -1431,10 +1687,10 @@
                         </div>
                     </div>
                 </div>
-            </Transition>
+            </div>
             <!-- resume modal -->
-            <Transition name="modal">
-                <div v-if="cleanplan" class="modal-mask">
+            <div class="section">
+                <div v-show="cleanplan" class="modal-mask">
                     <div class="modal-wrapper relative w-full">
                         <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-white modal-inner">
                             <button type="button" @click="cleanplan = null"
@@ -1455,14 +1711,19 @@
                                     <div v-if="cleanplan.exs && cleanplan.exs.length">
                                         <ul>
                                             <li class="mb-2" v-for="(ex, index) in cleanplan.exs">
-                                                <div class="flex-1" v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
-                                                    <strong class="font-bold">{{ allexs.find( el => el.id == ex.id ).name }}</strong>
-                                                    <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id ).description }}</p>
+                                                <div class="flex-1"
+                                                    v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
+                                                    <strong class="font-bold">{{ allexs.find( el => el.id == ex.id
+                                                        ).name }}</strong>
+                                                    <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id
+                                                        ).description }}</p>
                                                     <p class="text-lg font-bold">Reps:&nbsp;<strong
                                                             class="font-bold">x{{ ex.reps }}</strong></p>
                                                 </div>
-                                                <div v-if="cleanplan.rests && cleanplan.rests.find( el => el.exi == index )" class="my-4">
-                                                    Rest: <span class="font-bold">{{ cleanplan.rests.find( el => el.exi == index ).rest }}</span>
+                                                <div v-if="cleanplan.rests && cleanplan.rests.find( el => el.exi == index )"
+                                                    class="my-4">
+                                                    Rest: <span class="font-bold">{{ cleanplan.rests.find( el => el.exi
+                                                        == index ).rest }}</span>
                                                 </div>
                                             </li>
                                         </ul>
@@ -1482,14 +1743,19 @@
                                         <div v-if="plan.exs && plan.exs.length">
                                             <ul>
                                                 <li class="mb-2" v-for="(ex, index) in plan.exs">
-                                                    <div class="flex-1" v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
-                                                        <strong class="font-bold">{{ allexs.find( el => el.id == ex.id ).name }}</strong>
-                                                        <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id ).description }}</p>
+                                                    <div class="flex-1"
+                                                        v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
+                                                        <strong class="font-bold">{{ allexs.find( el => el.id == ex.id
+                                                            ).name }}</strong>
+                                                        <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id ==
+                                                            ex.id ).description }}</p>
                                                         <p class="text-lg font-bold">Reps:&nbsp;<strong
                                                                 class="font-bold">x{{ ex.reps }}</strong></p>
                                                     </div>
-                                                    <div v-if="plan.rests && plan.rests.find( el => el.exi == index )" class="my-4">
-                                                        Rest: <span class="font-bold">{{ plan.rests.find( el => el.exi == index ).rest }}</span>
+                                                    <div v-if="plan.rests && plan.rests.find( el => el.exi == index )"
+                                                        class="my-4">
+                                                        Rest: <span class="font-bold">{{ plan.rests.find( el => el.exi
+                                                            == index ).rest }}</span>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -1516,10 +1782,10 @@
                         </div>
                     </div>
                 </div>
-            </Transition>
+            </div>
             <!-- message modal -->
-            <Transition name="modal">
-                <div v-if="messagemodal" class="modal-mask">
+            <div class="section">
+                <div v-show="messagemodal" class="modal-mask">
                     <div class="modal-wrapper relative w-full">
                         <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
                             <button type="button" @click="messagemodal = false"
@@ -1539,20 +1805,35 @@
                         </div>
                     </div>
                 </div>
-            </Transition>
-            <Transition name="modal">
-                <div v-if="messagetoast" id="toast" class="mx-auto fixed bottom-5 left-0 z-50 flex items-center p-4 w-full max-w-xs shadow text-gray-400 bg-gray-800" role="alert">
-                    <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-gray-500 bg-sand rounded-lg">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path></svg>
+            </div>
+            <div class="section">
+                <div v-show="messagetoast" id="toast"
+                    class="mx-auto fixed bottom-5 left-0 z-50 flex items-center p-4 w-full max-w-xs shadow text-gray-400 bg-gray-800"
+                    role="alert">
+                    <div
+                        class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-gray-500 bg-sand rounded-lg">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
+                                clip-rule="evenodd"></path>
+                        </svg>
                         <span class="sr-only">Fire icon</span>
                     </div>
                     <div class="ml-3 text-sm font-normal">Added to workout</div>
-                    <button type="button" @click="messagetoast = false" class="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex h-8 w-8 text-gray-500 hover:text-white bg-gray-800 hover:bg-gray-700" data-dismiss-target="#toast" aria-label="Close">
+                    <button type="button" @click="messagetoast = false"
+                        class="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex h-8 w-8 text-gray-500 hover:text-white bg-gray-800 hover:bg-gray-700"
+                        data-dismiss-target="#toast" aria-label="Close">
                         <span class="sr-only">Close</span>
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
                     </button>
                 </div>
-            </Transition>
+            </div>
         </div>
     </div>
     <svg width="0" height="0">
@@ -1563,48 +1844,45 @@
         </filter>
     </svg>
 </body>
+<script src="https://unpkg.com/petite-vue"></script>
+<script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
 <script>
 
-    const { createApp } = Vue
+    PetiteVue.createApp(
+        {
+            db: [],
+            data: [],
+            mysheets: [],
+            mymodules: [],
+            myplans: [],
+            modulesbysheet: [],
+            defmodules: [],
+            allexs: [],
+            currentPage: 'home',
+            currentNavType: 'page',
+            modal: '',
+            assigning: null,
+            goalform: null,
+            modalexec: 0,
+            moduleformtype: 'add',
+            newsheetmodal: false,
+            newmodulemodal: false,
+            setweekdaysmodal: false,
+            messagemodal: false,
+            messagetoast: false,
+            editmodule: {},
+            plantochange: '',
+            mobilemenuopen: false,
+            currentDay: '',
+            todayworkout: false,
+            weekType: false,
+            altw: false,
+            exrest: false,
+            openaccordion: false,
+            cleanplan: false,
+            plantitleedit: false,
+            drawer: false,
 
-    createApp({
-        data() {
-            return {
-                db: [],
-                data: [],
-                mysheets: [],
-                mymodules: [],
-                myplans: [],
-                modulesbysheet: [],
-                defmodules: [],
-                allexs: [],
-                currentPage: 'home',
-                currentNavType: 'page',
-                modal: '',
-                assigning: null,
-                goalform: null,
-                modalexec: 0,
-                moduleformtype: 'add',
-                newsheetmodal: false,
-                newmodulemodal: false,
-                setweekdaysmodal: false,
-                messagemodal: false,
-                messagetoast: false,
-                editmodule: {},
-                plantochange: '',
-                mobilemenuopen: false,
-                currentDay: '',
-                todayworkout: false,
-                weekType: false,
-                altw: false,
-                exrest: false,
-                openaccordion: false,
-                cleanplan: false,
-                plantitleedit: false,
-                drawer: false
-            }
-        },
-        methods: {
             async setupData() {
 
                 await fetch('data.json')
@@ -1653,12 +1931,12 @@
                     edgeOffset: '',
                     backdropClasses: 'bg-gray-900 bg-opacity-80 fixed inset-0 z-30',
                     onHide: () => {
-                        if(document.querySelector('[drawer-backdrop]')) document.querySelector('[drawer-backdrop]').classList.add('hidden')
+                        if (document.querySelector('[drawer-backdrop]')) document.querySelector('[drawer-backdrop]').classList.add('hidden')
                     },
                     onShow: () => {
-                        if(document.querySelector('[drawer-backdrop]')) document.querySelector('[drawer-backdrop]').classList.remove('hidden')
+                        if (document.querySelector('[drawer-backdrop]')) document.querySelector('[drawer-backdrop]').classList.remove('hidden')
                     },
-                    onToggle: () => {}
+                    onToggle: () => { }
                 };
 
                 this.drawer = new Drawer(targetEl, options);
@@ -1676,9 +1954,7 @@
                     }
                 }
 
-                setTimeout(() => {
-                    document.getElementById('main').classList.remove('loading')
-                }, 500);
+                document.querySelector('body').classList.remove('loading')
             },
             async dbSetup() {
                 return new Promise((resolve, reject) => {
@@ -1856,7 +2132,7 @@
                     fileReader.readAsText(file)
                 })
             },
-            async clearDbData(trans){
+            async clearDbData(trans) {
                 let objectStore = await this.getobjectstore(trans, 'readwrite')
 
                 const objectStoreRequest = objectStore.clear();
@@ -1871,6 +2147,7 @@
                     newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
                     history.pushState(null, '', newRelativePathQuery);
                 }
+
                 this.currentPage = page
                 window.scrollTo(0, 0);
                 //goal form close
@@ -1903,7 +2180,7 @@
                     this.exrest = false
             },
             toggleAccordion(key) {
-                if(this.openaccordion == key)
+                if (this.openaccordion == key)
                     this.openaccordion = false
                 else
                     this.openaccordion = key
@@ -2167,7 +2444,7 @@
                 let exindex = event.target.ex.value
                 let plan = event.target.plan.value
 
-                console.log(rest+'-'+exindex+'-'+plan)
+                console.log(rest + '-' + exindex + '-' + plan)
 
                 let objectStore = await this.getobjectstore('myplans', 'readwrite')
 
@@ -2280,7 +2557,7 @@
 
             },
             async getTodayWorkout() {
-                return this.myplans.filter( plan => plan.weekdays[this.weekType].includes(this.currentDay.toString()) )
+                return this.myplans.filter(plan => plan.weekdays[this.weekType].includes(this.currentDay.toString()))
             },
             async newSheet(event) {
                 if (event.target && event.target.mysheet.value) {
@@ -2384,7 +2661,7 @@
                         console.log('error!!')
                     };
 
-                    if(trans == 'mysheets'){
+                    if (trans == 'mysheets') {
                         await this.removeplansbysheet(key)
                     }
                     this.mysheets = await this.getsheets()
@@ -2400,7 +2677,7 @@
                 objectStore.openCursor().onsuccess = e => {
                     let cursor = e.target.result;
                     if (cursor) {
-                        if(cursor.value.sheet == sheet){
+                        if (cursor.value.sheet == sheet) {
                             cursor.delete()
                         }
 
@@ -2668,12 +2945,13 @@
 
                 document.querySelector('#newModuleForm .form-inner-excs').append(row)
             }
-        },
-        mounted() {
-            this.setupData()
+
         }
-    }).mount('#app')
+
+    ).mount('#app')
+
+
 
 </script>
-<script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
+
 </html>
