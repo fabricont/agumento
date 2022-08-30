@@ -187,6 +187,32 @@
         ul li a:hover {
             transition: .3s ease-out;
         }
+
+        .r-show{
+            animation: .5s display forwards;
+        }
+        .r-leave{
+            animation: .5s leave forwards;
+        }
+        @keyframes display{
+            0%{
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100%{
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+        @keyframes leave{
+            0%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0;
+                transform: translateX(20px);
+            }
+        }
     </style>
 </head>
 
@@ -311,7 +337,7 @@
                 <!-- Content -->
                 <div class="container mx-auto px-2 sm:px-4 sm:py-8 min-h-screen">
                     <div class="section">
-                        <div class="pb-12 relative" v-if="currentPage == 'home'">
+                        <div class="pb-12 relative r-page" v-if="currentPage == 'home'" v-effect="$el.classList.add('r-show')">
                             <section>
                                 <div class="pt-8 pb-2 lg:py-12">
                                     <a v-if="todayworkout && todayworkout.length" @click="cleanresume(todayworkout)"
@@ -560,7 +586,7 @@
                                 <p class="text-sand" v-else>No sheets created yet</p>
                             </div>
                         </div>
-                        <div class="pb-12 relative" v-else-if="currentPage == 'about'">
+                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'about'" v-effect="$el.classList.add('r-show')">
                             <div class="container mx-auto py-8">
                                 <h2 class="text-black mb-2 text-2xl font-bold lg:text-3xl md:mb-2">
                                     About / How it works
@@ -615,7 +641,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="pb-12 relative" v-else-if="currentPage == 'my-programs'">
+                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'my-programs'" v-effect="$el.classList.add('r-show')">
                             <div class="container mx-auto py-8">
                                 <h2 class="text-black mb-4 text-lg font-bold lg:text-3xl">
                                     <svg class="w-5 h-5 sm:w-8 sm:h-8 inline-block" fill="none" stroke="currentColor"
@@ -653,7 +679,7 @@
                                 <p class="text-sand" v-else>No sheets created yet</p>
                             </div>
                         </div>
-                        <div class="pb-12 relative" v-else-if="currentPage == 'rupe-modules'">
+                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'rupe-modules'" v-effect="$el.classList.add('r-show')">
                             <div>
                                 <div class="mb-16" v-for="(element, exindex) in data.plans">
                                     <div class="my-8">
@@ -739,7 +765,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pb-12 relative" v-else>
+                        <div class="pb-12 relative r-page" v-effect="$el.classList.add('r-show')" v-else>
                             <div v-for="sheet in mysheets">
                                 <div v-if="currentPage == sheet.key">
                                     <div class="container mx-auto py-8">
@@ -1806,7 +1832,7 @@
                     </div>
                 </div>
             </div>
-            <div class="section">
+            <div class="section" v-effect="$el.classList.add('r-show')">
                 <div v-show="messagetoast" id="toast"
                     class="mx-auto fixed bottom-5 left-0 z-50 flex items-center p-4 w-full max-w-xs shadow text-gray-400 bg-gray-800"
                     role="alert">
@@ -1844,7 +1870,6 @@
         </filter>
     </svg>
 </body>
-<script src="https://unpkg.com/petite-vue"></script>
 <script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
 <script>
 
@@ -2148,14 +2173,22 @@
                     history.pushState(null, '', newRelativePathQuery);
                 }
 
-                this.currentPage = page
-                window.scrollTo(0, 0);
-                //goal form close
-                this.goalform = false
-                //clean plan modal close
-                this.cleanplan = false
-                //resp menu close
-                this.drawer.hide()
+                if(page !== this.currentPage){
+                    document.querySelector('.r-show').classList.add('r-leave')
+                    document.querySelector('.r-show').classList.remove('r-show')
+                    setTimeout(() => {
+                        this.currentPage = page
+                        window.scrollTo(0, 0);
+                    }, 500);
+                    
+                    //goal form close
+                    this.goalform = false
+                    //clean plan modal close
+                    this.cleanplan = false
+                    //resp menu close
+                    this.drawer.hide()
+                }
+                
             },
             assignmodule(module) {
                 if (this.assigning == module) {
@@ -2557,7 +2590,7 @@
 
             },
             async getTodayWorkout() {
-                return this.myplans.filter(plan => plan.weekdays[this.weekType].includes(this.currentDay.toString()))
+                return this.myplans.filter(plan => plan.weekdays[this.weekType].includes(this.currentDay.toString()) || (!plan.weekdays[1] && plan.weekdays[0].includes(this.currentDay.toString())))
             },
             async newSheet(event) {
                 if (event.target && event.target.mysheet.value) {
