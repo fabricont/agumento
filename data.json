@@ -82,7 +82,8 @@
 							"id": "sq7",
 							"name": "Squats",
 							"description": "warmup, cardio",
-							"reps": "25-50"
+							"reps": "25-50",
+							"weighted": true
 						},
 						{
 							"id": "nrc8",
@@ -133,25 +134,29 @@
 							"id": "pu11",
 							"name": "Push ups",
 							"description": "corpo linea unica, portare il petto al suolo",
-							"reps": "8-10"
+							"reps": "8-10",
+							"weighted": true
 						},
 						{
 							"id": "dpu12",
 							"name": "Diamond push ups",
 							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
-							"reps": "5"
+							"reps": "5",
+							"weighted": true
 						},
 						{
 							"id": "epu13",
 							"name": "Elevated push ups",
 							"description": "Posizione dei piedi sopraelevata per aumentare la difficoltà",
-							"reps": "5-8"
+							"reps": "5-8",
+							"weighted": true
 						},
 						{
 							"id": "ptp14",
 							"name": "Push ups to plank",
 							"description": "transizione da push up a posizione di plank, scendendo alternando le braccia",
-							"reps": "5 (per braccio)"
+							"reps": "5 (per braccio)",
+							"weighted": true
 						}
 					]
 				},
@@ -164,31 +169,36 @@
 							"id": "spu15",
 							"name": "Slow push ups",
 							"description": "push ups ad esecuzione lenta, discesa dai 2-5\" salita veloce",
-							"reps": "10-12"
+							"reps": "10-12",
+							"weighted": true
 						},
 						{
 							"id": "dpu12",
 							"name": "Diamond push ups",
 							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
-							"reps": "10-12"
+							"reps": "10-12",
+							"weighted": true
 						},
 						{
 							"id": "ppu16",
 							"name": "Pike push ups",
 							"description": "posizione a V rovesciata per potenziare le spalle ",
-							"reps": "8-10"
+							"reps": "8-10",
+							"weighted": true
 						},
 						{
 							"id": "ds17",
 							"name": "Dips",
 							"description": "potenziamento pettorali e spalle",
-							"reps": "10-12"
+							"reps": "10-12",
+							"weighted": true
 						},
 						{
 							"id": "dpu18",
 							"name": "Deep push ups",
 							"description": "push ups profondi, utilizzare appoggi per poter superare con il petto il punto di appoggio delle mani",
-							"reps": "10-12"
+							"reps": "10-12",
+							"weighted": true
 						}
 					]
 				},
@@ -201,31 +211,36 @@
 							"id": "dspu19",
 							"name": "Deep slow push ups",
 							"description": "push ups profondi ad esecuzione lenta, discesa dai 2-5\" salita veloce",
-							"reps": "12"
+							"reps": "12",
+							"weighted": true
 						},
 						{
 							"id": "dpu12",
 							"name": "Diamond push ups",
 							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
-							"reps": "12"
+							"reps": "12",
+							"weighted": true
 						},
 						{
 							"id": "epu13",
 							"name": "Elevated push ups",
 							"description": "Posizione dei piedi sopraelevata per aumentare la difficoltà",
-							"reps": "12"
+							"reps": "12",
+							"weighted": true
 						},
 						{
 							"id": "eppu20",
 							"name": "Elevated pike push ups",
 							"description": "piedi posizionati in posizione soprelevata per aumentare peso sulle spalle",
-							"reps": "8-10"
+							"reps": "8-10",
+							"weighted": true
 						},
 						{
 							"id": "ppu16",
 							"name": "Pike push ups",
 							"description": "posizione a V rovesciata per potenziare le spalle ",
-							"reps": "12"
+							"reps": "12",
+							"weighted": true
 						}
 					]
 				},
@@ -238,31 +253,36 @@
 							"id": "dspu19",
 							"name": "Deep slow push ups",
 							"description": "push ups profondi ad esecuzione lenta, discesa dai 2-5\" salita veloce",
-							"reps": "12"
+							"reps": "12",
+							"weighted": true
 						},
 						{
 							"id": "dpu12",
 							"name": "Diamond push ups",
 							"description": "posizione mani ravvicinata, o formare diamante con le mani (toccando pollice e indice)",
-							"reps": "12"
+							"reps": "12",
+							"weighted": true
 						},
 						{
 							"id": "rpu20",
 							"name": "Rings push ups",
 							"description": "push ups profondi su anelli per attivare maggiormente il muscolo pettorale",
-							"reps": "10-12"
+							"reps": "10-12",
+							"weighted": true
 						},
 						{
 							"id": "whspu21",
 							"name": "Wall HSPU",
 							"description": "flessione verticale con appoggio al muro, petto al muro",
-							"reps": "3-6"
+							"reps": "3-6",
+							"weighted": true
 						},
 						{
 							"id": "rd22",
 							"name": "Ring dips",
 							"description": "affondi agli anelli, potenziamento muscolare generale",
-							"reps": "6-8"
+							"reps": "6-8",
+							"weighted": true
 						}
 					]
 				},
@@ -275,25 +295,29 @@
 							"id": "fpu23",
 							"name": "Finger push ups",
 							"description": "push ups eseguito sulle dita",
-							"reps": "5-12"
+							"reps": "5-12",
+							"weighted": true
 						},
 						{
 							"id": "fpu24",
 							"name": "Fist push ups",
 							"description": "push ups eseguito sui pugni",
-							"reps": "12"
+							"reps": "12",
+							"weighted": true
 						},
 						{
 							"id": "pppu25",
 							"name": "Pseudo planche push ups",
 							"description": "push up eseguito con mani all'altezza dei fianchi posizionate con inclinazione a 45°",
-							"reps": "10-12"
+							"reps": "10-12",
+							"weighted": true
 						},
 						{
 							"id": "oapu26",
 							"name": "One arm push ups",
 							"description": "push up sul singolo braccio",
-							"reps": "3-5 (per braccio)"
+							"reps": "3-5 (per braccio)",
+							"weighted": true
 						}
 					]
 				}
@@ -313,7 +337,8 @@
 							"id": "apu27",
 							"name": "Australian pull ups",
 							"description": "trazioni alla sbarra con inclinazione variabile, piedi a terra",
-							"reps": "8-10"
+							"reps": "8-10",
+							"weighted": true
 						},
 						{
 							"id": "sm28",
@@ -325,7 +350,8 @@
 							"id": "cgapu29",
 							"name": "Close grip australian pull ups",
 							"description": "australian pull ups con mani ravvicinate",
-							"reps": "8-10"
+							"reps": "8-10",
+							"weighted": true
 						},
 						{
 							"id": "rp30",
@@ -395,7 +421,8 @@
 							"id": "sq7",
 							"name": "Squats",
 							"description": "warmup, cardio",
-							"reps": "50"
+							"reps": "50",
+							"weighted": true
 						},
 						{
 							"id": "nrc34",

@@ -188,7 +188,7 @@
             transition: .3s ease-out;
         }
 
-        .r-show{
+        .r-display{
             animation: .5s display forwards;
         }
         .r-leave{
@@ -337,10 +337,10 @@
                 <!-- Content -->
                 <div class="container mx-auto px-2 sm:px-4 sm:py-8 min-h-screen">
                     <div class="section">
-                        <div class="pb-12 relative r-page" v-if="currentPage == 'home'" v-effect="$el.classList.add('r-show')">
+                        <div class="pb-12 relative r-page" v-if="currentPage == 'home'" v-effect="$el.classList.add('r-display')">
                             <section>
                                 <div class="pt-8 pb-2 lg:py-12">
-                                    <a v-if="todayworkout && todayworkout.length" @click="cleanresume(todayworkout)"
+                                    <a v-if="todayworkout && todayworkout.length" @click="cleanresume(todayworkout);modalopen = true"
                                         class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm bg-gray-800 text-white hover:bg-gray-700"
                                         role="alert">
                                         <div
@@ -586,7 +586,7 @@
                                 <p class="text-sand" v-else>No sheets created yet</p>
                             </div>
                         </div>
-                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'about'" v-effect="$el.classList.add('r-show')">
+                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'about'" v-effect="$el.classList.add('r-display')">
                             <div class="container mx-auto py-8">
                                 <h2 class="text-black mb-2 text-2xl font-bold lg:text-3xl md:mb-2">
                                     About / How it works
@@ -641,7 +641,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'my-programs'" v-effect="$el.classList.add('r-show')">
+                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'my-programs'" v-effect="$el.classList.add('r-display')">
                             <div class="container mx-auto py-8">
                                 <h2 class="text-black mb-4 text-lg font-bold lg:text-3xl">
                                     <svg class="w-5 h-5 sm:w-8 sm:h-8 inline-block" fill="none" stroke="currentColor"
@@ -679,7 +679,7 @@
                                 <p class="text-sand" v-else>No sheets created yet</p>
                             </div>
                         </div>
-                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'rupe-modules'" v-effect="$el.classList.add('r-show')">
+                        <div class="pb-12 relative r-page" v-else-if="currentPage == 'rupe-modules'" v-effect="$el.classList.add('r-display')">
                             <div>
                                 <div class="mb-16" v-for="(element, exindex) in data.plans">
                                     <div class="my-8">
@@ -765,7 +765,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pb-12 relative r-page" v-effect="$el.classList.add('r-show')" v-else>
+                        <div class="pb-12 relative r-page" v-effect="$el.classList.add('r-display')" v-else>
                             <div v-for="sheet in mysheets">
                                 <div v-if="currentPage == sheet.key">
                                     <div class="container mx-auto py-8">
@@ -787,7 +787,7 @@
                                                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                                                     </path>
                                                                 </svg>
-                                                                Week schedule
+                                                                Week schedule <small>(current week {{ weekType === 1 ? 'odd' : 'even' }})</small>
                                                             </h3>
                                                         </div>
                                                         <div v-if="myplans.filter( plan => plan.sheet == sheet.title ).length"
@@ -952,7 +952,7 @@
                                                                                 {{plan.title}}
                                                                             </h5>
                                                                         </div>
-                                                                        <button @click="cleanresume(plan)">
+                                                                        <button @click="cleanresume(plan);modalopen=true">
                                                                             <svg class="w-5 h-5 sm:w-6 sm:h-6 px-3 py-2 bg-gray-200 box-content"
                                                                                 fill="none" stroke="currentColor"
                                                                                 viewBox="0 0 24 24"
@@ -969,6 +969,19 @@
                                                                                 </path>
                                                                             </svg>
                                                                         </button>
+                                                                    </div>
+                                                                    <div class="p-2 sm:p-4">
+                                                                        <p>Workout repetitions: 
+                                                                            <strong v-if="plan.nexec">{{plan.nexec}}</strong>
+                                                                            <strong v-else>1</strong>
+                                                                        </p>
+                                                                        <div v-if="!plan.weekdays[1] && !plan.weekdays[1].length">
+                                                                            <p>Weekdays (even): <span v-for="day in plan.weekdays[0]"><strong>{{weektexts[day]}}&nbsp;</strong></span></p>
+                                                                            <p>Weekdays (odd): <span v-for="day in plan.weekdays[1]"><strong>{{weektexts[day]}}&nbsp;</strong></span></p>
+                                                                        </div>
+                                                                        <div v-else>
+                                                                            <p>Weekdays: <span v-for="day in plan.weekdays[0]"><strong>{{weektexts[day]}}&nbsp;</strong></span></p>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="p-2 sm:p-4">
                                                                         <div v-if="plan.exs">
@@ -1028,6 +1041,14 @@
                                                                                                     class="font-bold">{{
                                                                                                     ex.reps
                                                                                                     }}</strong></p>
+                                                                                            <p v-if="ex.weight">
+                                                                                                Weight added: <strong>{{ex.weight}}</strong>
+                                                                                            </p>
+                                                                                            <p v-if="allexs.find( el => el.id == ex.id ).weighted">
+                                                                                                <button 
+                                                                                                    class="inline-flex items-center my-2 py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300"
+                                                                                                    @click="addweightmodal = [ex.id, allexs.find( el => el.id == ex.id ).name, plan.key]"><span v-if="!ex.weight">Add</span><span v-else>Change</span>&nbsp;weight</button>
+                                                                                            </p>
                                                                                         </div>
                                                                                         <div>
                                                                                             <button
@@ -1378,6 +1399,30 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <button @click="planrepetitionform = plan.key"
+                                                                        class="bg-gray-500 text-white focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 shadow-lg">
+                                                                        Set workout repetitions&nbsp;
+                                                                        <svg class="w-4 h-4 inline-block" fill="none"
+                                                                            stroke="currentColor" viewBox="0 0 24 24"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <path stroke-linecap="round"
+                                                                                stroke-linejoin="round" stroke-width="2"
+                                                                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                                                        </svg>
+                                                                    </button>
+                                                                    <form v-if="planrepetitionform == plan.key"
+                                                                        @submit.prevent="setPlanRepetition">
+                                                                        <input type="number" id="plan_reps"
+                                                                            name="plan_reps"
+                                                                            class="text-md text-gray-900 block inline mr-1 p-2.5 bg-gray-200 placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
+                                                                            :value="plan.title"
+                                                                            :placeholder="plan.nexec">
+                                                                        <input type="hidden" name="plan"
+                                                                            :value="plan.key" />
+                                                                        <input type="submit"
+                                                                            class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
+                                                                            value="confirm">
+                                                                    </form>
                                                                 </div>
                                                                 <div class="p-4 mt-5 pt-2 border-t border-gray-500">
                                                                     <button @click="removefromdb(plan.key, 'myplans')"
@@ -1716,10 +1761,10 @@
             </div>
             <!-- resume modal -->
             <div class="section">
-                <div v-show="cleanplan" class="modal-mask">
+                <div v-if="cleanplan && modalopen" class="modal-mask">
                     <div class="modal-wrapper relative w-full">
                         <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-white modal-inner">
-                            <button type="button" @click="cleanplan = null"
+                            <button type="button" @click="modalopen = false"
                                 class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -1728,38 +1773,43 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </button>
-                            <div v-if="!cleanplan.length" class="py-6 px-6 lg:px-8">
+                            <div v-if="cleanplan && !cleanplan.length" class="py-6 px-6 lg:px-8">
                                 <h3 class="mb-4 text-xl font-medium text-black">
                                     {{cleanplan.title}}
                                 </h3>
                                 <hr />
                                 <div class="my-6">
                                     <div v-if="cleanplan.exs && cleanplan.exs.length">
-                                        <ul>
-                                            <li class="mb-2" v-for="(ex, index) in cleanplan.exs">
-                                                <div class="flex-1"
-                                                    v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
-                                                    <strong class="font-bold">{{ allexs.find( el => el.id == ex.id
-                                                        ).name }}</strong>
-                                                    <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id
-                                                        ).description }}</p>
-                                                    <p class="text-lg font-bold">Reps:&nbsp;<strong
-                                                            class="font-bold">x{{ ex.reps }}</strong></p>
-                                                </div>
-                                                <div v-if="cleanplan.rests && cleanplan.rests.find( el => el.exi == index )"
-                                                    class="my-4">
-                                                    Rest: <span class="font-bold">{{ cleanplan.rests.find( el => el.exi
-                                                        == index ).rest }}</span>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        <div v-for="index in parseInt(cleanplan.nexec)" class="mb-3">
+                                            <strong class="block mt-6 mb-3">Repetition: {{index}}</strong>
+                                            <ul>
+                                                <li class="mb-2" v-for="(ex, index) in cleanplan.exs">
+                                                    <div class="flex-1"
+                                                        v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
+                                                        <strong class="font-bold">{{ allexs.find( el => el.id == ex.id
+                                                            ).name }}</strong>
+                                                        <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id == ex.id
+                                                            ).description }}</p>
+                                                        <p class="text-lg font-bold">Reps:&nbsp;<strong
+                                                                class="font-bold">x{{ ex.reps }}</strong></p>
+                                                        <p v-if="ex.weight" class="text-lg font-bold">Added weight:&nbsp;<strong
+                                                                class="font-bold">x{{ ex.weight }}</strong></p>
+                                                    </div>
+                                                    <div v-if="cleanplan.rests && cleanplan.rests.find( el => el.exi == index )"
+                                                        class="my-4">
+                                                        Rest: <span class="font-bold">{{ cleanplan.rests.find( el => el.exi
+                                                            == index ).rest }}</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                     <div v-else>
                                         <p class="pt-4 text-gray-800">No exercises added yet</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="py-6 px-6 lg:px-8" v-else>
+                            <div class="py-6 px-6 lg:px-8" v-else-if="cleanplan.length">
                                 <div v-for="plan in cleanplan">
                                     <h3 class="mb-4 text-xl font-medium text-black">
                                         {{plan.title}}
@@ -1767,24 +1817,27 @@
                                     <hr />
                                     <div class="my-6">
                                         <div v-if="plan.exs && plan.exs.length">
-                                            <ul>
-                                                <li class="mb-2" v-for="(ex, index) in plan.exs">
-                                                    <div class="flex-1"
-                                                        v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
-                                                        <strong class="font-bold">{{ allexs.find( el => el.id == ex.id
-                                                            ).name }}</strong>
-                                                        <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id ==
-                                                            ex.id ).description }}</p>
-                                                        <p class="text-lg font-bold">Reps:&nbsp;<strong
-                                                                class="font-bold">x{{ ex.reps }}</strong></p>
-                                                    </div>
-                                                    <div v-if="plan.rests && plan.rests.find( el => el.exi == index )"
-                                                        class="my-4">
-                                                        Rest: <span class="font-bold">{{ plan.rests.find( el => el.exi
-                                                            == index ).rest }}</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            <div v-for="index in parseInt(plan.nexec)">
+                                                <strong class="block mt-6 mb-3">Repetition: {{index}}</strong>
+                                                <ul>
+                                                    <li class="mb-2" v-for="(ex, index) in plan.exs">
+                                                        <div class="flex-1"
+                                                            v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
+                                                            <strong class="font-bold">{{ allexs.find( el => el.id == ex.id
+                                                                ).name }}</strong>
+                                                            <p class="text-sm lg:text-lg">{{ allexs.find( el => el.id ==
+                                                                ex.id ).description }}</p>
+                                                            <p class="text-lg font-bold">Reps:&nbsp;<strong
+                                                                    class="font-bold">x{{ ex.reps }}</strong></p>
+                                                        </div>
+                                                        <div v-if="plan.rests && plan.rests.find( el => el.exi == index )"
+                                                            class="my-4">
+                                                            Rest: <span class="font-bold">{{ plan.rests.find( el => el.exi
+                                                                == index ).rest }}</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                         <div v-else>
                                             <p class="pt-4 text-gray-800">No exercises added yet</p>
@@ -1804,6 +1857,41 @@
                                         </span>
                                     </button>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- add weight modal -->
+            <div class="section">
+                <div v-if="addweightmodal && addweightmodal.length" class="modal-mask">
+                    <div class="modal-wrapper relative w-full">
+                        <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
+                            <button type="button" @click="addweightmodal = false"
+                                class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div class="py-6 px-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-black">Add weight</h3>
+                                <form class="space-y-6" action="#" @submit.prevent="addWeighttoex">
+                                    <div>
+                                        <p>Exercise: <strong>{{addweightmodal[1]}}</strong></p>
+                                        <label for="addw"
+                                            class="block mb-2 text-sm font-medium text-gray-600">Weight</label>
+                                        <input type="hidden" name="exid" :value="addweightmodal[0]" />
+                                        <input type="hidden" name="plan" :value="addweightmodal[2]" />
+                                        <input type="number" name="addw" id="addw"
+                                            class="border text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black"
+                                            required>
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-100 focus:ring-gray-200">Confirm</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -1832,7 +1920,7 @@
                     </div>
                 </div>
             </div>
-            <div class="section" v-effect="$el.classList.add('r-show')">
+            <div class="section" v-effect="$el.classList.add('r-display')">
                 <div v-show="messagetoast" id="toast"
                     class="mx-auto fixed bottom-5 left-0 z-50 flex items-center p-4 w-full max-w-xs shadow text-gray-400 bg-gray-800"
                     role="alert">
@@ -1893,6 +1981,8 @@
             newsheetmodal: false,
             newmodulemodal: false,
             setweekdaysmodal: false,
+            planrepetitionform: false,
+            addweightmodal: false,
             messagemodal: false,
             messagetoast: false,
             editmodule: {},
@@ -1907,6 +1997,8 @@
             cleanplan: false,
             plantitleedit: false,
             drawer: false,
+            modalopen: false,
+            weektexts: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 
             async setupData() {
 
@@ -1924,7 +2016,9 @@
                 this.data.plans.map(plan => {
                     plan.modules.map(module => {
                         module.exs.map(ex => {
-                            this.allexs.push(ex)
+                            if(!this.allexs.find(el => el.id == ex.id)){
+                                this.allexs.push(ex)
+                            }
                         })
                     })
                 });
@@ -2174,8 +2268,8 @@
                 }
 
                 if(page !== this.currentPage){
-                    document.querySelector('.r-show').classList.add('r-leave')
-                    document.querySelector('.r-show').classList.remove('r-show')
+                    document.querySelector('.r-display').classList.add('r-leave')
+                    document.querySelector('.r-display').classList.remove('r-display')
                     setTimeout(() => {
                         this.currentPage = page
                         window.scrollTo(0, 0);
@@ -2292,7 +2386,7 @@
 
                     let objectStore = await this.getobjectstore('myplans', 'readwrite')
 
-                    let request = objectStore.add({ title: 'My new workout', sheet: event.target.mysheet.value, exs: [], rests: [], weekdays: [[], []] });
+                    let request = objectStore.add({ title: 'My new workout', sheet: event.target.mysheet.value, exs: [], rests: [], weekdays: [[], []], nexec: 1 });
                     let message = ''
 
                     request.onsuccess = async event => {
@@ -2363,6 +2457,39 @@
 
                 this.myplans = await this.getplans()
                 this.plantitleedit = false
+
+            },
+            async setPlanRepetition(event){
+
+                let plankey = event.target.plan.value
+                let planreps = event.target.plan_reps.value
+
+                let objectStore = await this.getobjectstore('myplans', 'readwrite')
+
+                let request = objectStore.get(plankey);
+
+                request.onsuccess = async event => {
+                    objectStore.openCursor().onsuccess = function (event) {
+                        const cursor = event.target.result;
+                        if (cursor) {
+                            if (cursor.key == plankey) {
+                                const updateData = cursor.value;
+
+                                updateData.nexec = planreps
+
+                                const request = cursor.update(updateData);
+                                request.onsuccess = function () {
+                                    console.log('updated successfully');
+                                };
+
+                            }
+                            cursor.continue();
+                        }
+                    }
+                }
+
+                this.myplans = await this.getplans()
+                this.planrepetitionform = false
 
             },
             async setplanweekdays(event) {
@@ -2589,8 +2716,43 @@
                 }
 
             },
+            async addWeighttoex(event) {
+
+                let plankey = event.target.plan.value
+                let exid = event.target.exid.value
+                let weight = event.target.addw.value
+
+                let objectStore = await this.getobjectstore('myplans', 'readwrite')
+
+                let request = objectStore.get(plankey);
+
+                request.onsuccess = async event => {
+                    objectStore.openCursor().onsuccess = function (event) {
+                        const cursor = event.target.result;
+                        if (cursor) {
+                            if (cursor.key == plankey) {
+                                const updateData = cursor.value;
+
+                                let updex = updateData.exs.find( el => el.id == exid )
+                                updex.weight = weight
+
+                                const request = cursor.update(updateData);
+                                request.onsuccess = function () {
+                                    console.log('updated successfully');
+                                };
+
+                            }
+                            cursor.continue();
+                        }
+                    }
+                }
+
+                this.myplans = await this.getplans()
+                this.plantitleedit = false
+
+            },
             async getTodayWorkout() {
-                return this.myplans.filter(plan => plan.weekdays[this.weekType].includes(this.currentDay.toString()) || (!plan.weekdays[1] && plan.weekdays[0].includes(this.currentDay.toString())))
+                return this.myplans.filter(plan => plan.weekdays[this.weekType].includes(this.currentDay.toString()) || (!plan.weekdays[1].length && plan.weekdays[0].includes(this.currentDay.toString())))
             },
             async newSheet(event) {
                 if (event.target && event.target.mysheet.value) {
