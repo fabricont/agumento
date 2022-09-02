@@ -772,6 +772,7 @@
                                         <h2 class="capitalize text-black mb-2 md:mb-8 text-2xl font-bold lg:text-4xl">
                                             {{sheet.title}}
                                         </h2>
+                                        <div><button @click="downloadlocal(sheet)">Download local</button></div>
                                         <div>
                                             <div v-if="sheet.assignedModules && sheet.assignedModules.length">
                                                 <div class="">
@@ -975,7 +976,7 @@
                                                                             <strong v-if="plan.nexec">{{plan.nexec}}</strong>
                                                                             <strong v-else>1</strong>
                                                                         </p>
-                                                                        <div v-if="!plan.weekdays[1] && !plan.weekdays[1].length">
+                                                                        <div v-if="plan.weekdays[1].length">
                                                                             <p>Weekdays (even): <span v-for="day in plan.weekdays[0]"><strong>{{weektexts[day]}}&nbsp;</strong></span></p>
                                                                             <p>Weekdays (odd): <span v-for="day in plan.weekdays[1]"><strong>{{weektexts[day]}}&nbsp;</strong></span></p>
                                                                         </div>
@@ -2251,6 +2252,200 @@
                     fileReader.readAsText(file)
                 })
             },
+            async downloadlocal(sheet){
+                if (this.db) {
+
+                    let plans = this.myplans.filter( plan => plan.sheet == sheet.title )
+
+                    let doc = document.implementation.createHTMLDocument(sheet.title)
+
+                    let page_head = doc.createElement("head")
+                    let meta = doc.createElement("meta")
+                    meta.name = 'viewport'
+                    meta.content = 'width=device-width, initial-scale=1'
+                    let style = doc.createElement("style")
+                    style.innerHTML = '*{font-family:system-ui}body>div{max-width:500px;margin:0 auto}table,th,td{border:1px solid black;border-collapse:collapse}table{width:100%}th,td{text-align:left;padding:.5rem}.current_day{background-color:yellow}';
+
+                    let script = doc.createElement("script")
+                    script.innerHTML = 'const today=new Date();let currentDay=today.getDay();Date.prototype.getWeek=function(){var date=new Date(this.getTime());date.setHours(0,0,0,0);date.setDate(date.getDate()+3-(date.getDay()+6)%7);let week1=new Date(date.getFullYear(),0,4);return 1+Math.round(((date.getTime()-week1.getTime())/86400000-3+(week1.getDay()+6)%7)/7)};let weekType=today.getWeek()%2==0?0:1;document.querySelector(".weekday_"+currentDay).classList.add("current_day")'
+
+                    page_head.appendChild(meta)
+                    page_head.appendChild(style)
+
+                    try {
+                        doc.body.appendChild(page_head)
+                    } catch (e) {
+                        console.log(e)
+                    }
+
+                    let container = doc.createElement("div")
+
+                    let title = doc.createElement("h1")
+                    title.textContent = sheet.key
+                    container.appendChild(title)
+                    
+                    let weekevents = []
+                    let week_plan = doc.createElement("table")
+
+                    let week_tr_6 = doc.createElement("tr")
+                    let week_td_60 = doc.createElement("td")
+                    week_td_60.textContent = 'Sunday'
+                    let week_td_61 = doc.createElement("td")
+                    week_td_61.textContent = ''
+                    week_td_61.classList.add('weekday_0')
+
+                    week_tr_6.appendChild(week_td_60)
+                    week_tr_6.appendChild(week_td_61)
+                    week_plan.appendChild(week_tr_6)
+                    weekevents.push(week_td_61)
+
+                    let week_tr_0 = doc.createElement("tr")
+                    let week_td_00 = doc.createElement("td")
+                    week_td_00.textContent = 'Monday'
+                    let week_td_01 = doc.createElement("td")
+                    week_td_01.textContent = ''
+                    week_td_01.classList.add('weekday_1')
+
+                    week_tr_0.appendChild(week_td_00)
+                    week_tr_0.appendChild(week_td_01)
+                    week_plan.appendChild(week_tr_0)
+                    weekevents.push(week_td_01)
+
+                    let week_tr_1 = doc.createElement("tr")
+                    let week_td_10 = doc.createElement("td")
+                    week_td_10.textContent = 'Tuesday'
+                    let week_td_11 = doc.createElement("td")
+                    week_td_11.textContent = ''
+                    week_td_11.classList.add('weekday_2')
+
+                    week_tr_1.appendChild(week_td_10)
+                    week_tr_1.appendChild(week_td_11)
+                    week_plan.appendChild(week_tr_1)
+                    weekevents.push(week_td_11)
+
+                    let week_tr_2 = doc.createElement("tr")
+                    let week_td_20 = doc.createElement("td")
+                    week_td_20.textContent = 'Wednesday'
+                    let week_td_21 = doc.createElement("td")
+                    week_td_21.textContent = ''
+                    week_td_21.classList.add('weekday_3')
+
+                    week_tr_2.appendChild(week_td_20)
+                    week_tr_2.appendChild(week_td_21)
+                    week_plan.appendChild(week_tr_2)
+                    weekevents.push(week_td_21)
+
+                    let week_tr_3 = doc.createElement("tr")
+                    let week_td_30 = doc.createElement("td")
+                    week_td_30.textContent = 'Thursday'
+                    let week_td_31 = doc.createElement("td")
+                    week_td_31.textContent = ''
+                    week_td_31.classList.add('weekday_4')
+
+                    week_tr_3.appendChild(week_td_30)
+                    week_tr_3.appendChild(week_td_31)
+                    week_plan.appendChild(week_tr_3)
+                    weekevents.push(week_td_31)
+
+                    let week_tr_4 = doc.createElement("tr")
+                    let week_td_40 = doc.createElement("td")
+                    week_td_40.textContent = 'Friday'
+                    let week_td_41 = doc.createElement("td")
+                    week_td_41.textContent = ''
+                    week_td_41.classList.add('weekday_5')
+
+                    week_tr_4.appendChild(week_td_40)
+                    week_tr_4.appendChild(week_td_41)
+                    week_plan.appendChild(week_tr_4)
+                    weekevents.push(week_td_41)
+
+                    let week_tr_5 = doc.createElement("tr")
+                    let week_td_50 = doc.createElement("td")
+                    week_td_50.textContent = 'Saturday'
+                    let week_td_51 = doc.createElement("td")
+                    week_td_51.textContent = ''
+                    week_td_51.classList.add('weekday_6')
+
+                    week_tr_5.appendChild(week_td_50)
+                    week_tr_5.appendChild(week_td_51)
+                    week_plan.appendChild(week_tr_5)
+                    weekevents.push(week_td_51)
+
+                    container.appendChild(week_plan)
+                    
+                    let t_plans = doc.createElement("div")
+                    plans.map( plan => {
+
+                        div = doc.createElement("div")
+                        t_plan = doc.createElement("h3")
+                        t_plan.textContent = plan.title
+                        div.appendChild(t_plan)
+                        p_plan = doc.createElement("p")
+                        p_plan.textContent = 'Weekdays: ' + plan.weekdays[0].join(',')
+                        div.appendChild(p_plan)
+
+                        plan.weekdays[0].map( day => weekevents[parseInt(day)].textContent += plan.title )
+
+                        table_plan = doc.createElement("table")
+                        thead_el = doc.createElement("thead")
+                        thead_tr = doc.createElement("tr")
+                        thead_th_1 = doc.createElement("th")
+                        thead_th_1.textContent = 'Exercise'
+                        thead_th_2 = doc.createElement("th")
+                        thead_th_2.textContent = 'Reps'
+                        thead_tr.appendChild(thead_th_1)
+                        thead_tr.appendChild(thead_th_2)
+                        thead_el.appendChild(thead_tr)
+                        table_plan.appendChild(thead_el)
+                        tbody_el = doc.createElement("tbody")
+
+                        plan.exs.map( ex => {
+                            
+                            tr_el = doc.createElement("tr")
+
+                            td_el_1 = doc.createElement("td")
+                            td_el_1.textContent = this.allexs.find( el => el.id == ex.id ).name
+
+                            td_el_2 = doc.createElement("td")
+                            td_el_2.textContent = ex.reps
+
+                            tr_el.appendChild(td_el_1)
+                            tr_el.appendChild(td_el_2)
+                            tbody_el.appendChild(tr_el)
+
+                        })
+                        
+                        table_plan.appendChild(tbody_el)
+
+                        div.appendChild(table_plan)
+                        t_plans.appendChild(div)
+
+                    } )
+
+                    container.appendChild(t_plans)
+                    container.appendChild(script)
+
+                    try {
+                        doc.body.appendChild(container)
+                    } catch (e) {
+                        console.log(e)
+                    }
+
+                    const blob = new Blob([doc.documentElement.innerHTML], {
+                        type: 'text/html'
+                    });
+                    
+                    const docUrl = window.URL.createObjectURL(blob); 
+                    
+                    const aclick = document.createElement('a');
+                    aclick.href = docUrl;
+                    aclick.download = sheet.title + '.html';
+                    aclick.click();
+                    
+                    window.URL.revokeObjectURL(docUrl);
+
+                }
+            },
             async clearDbData(trans) {
                 let objectStore = await this.getobjectstore(trans, 'readwrite')
 
@@ -2902,6 +3097,27 @@
                             cursor.continue();
                         }
                     };
+
+                });
+            },
+            async getsheet(sheetkey) {
+                return new Promise((resolve, reject) => {
+                    let transaction = this.db.transaction(['mymodules'], 'readonly');
+                    transaction.oncomplete = e => {
+                        resolve(sheet);
+                    };
+
+                    let objectStore = transaction.objectStore('mymodules');
+                    const request = objectStore.get(sheetkey);
+                    let sheet = {};
+
+                    request.onerror = () => {
+                        console.log('The parameter is not a valid key.');
+                    }
+
+                    request.onsuccess = () => {
+                        sheet = request.result
+                    }
 
                 });
             },
