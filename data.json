@@ -681,6 +681,19 @@
 							"weighted": true
 						}
 					]
+				},
+				{
+					"key": "core-extra",
+					"title": "Core extra",
+					"description": "potenziamento addominale extra",
+					"exs": [
+						{
+							"id": "df48.1",
+							"name": "Dragon flag",
+							"description": "esecuzione lenta e controllata",
+							"reps": "3-5"
+						}
+					]
 				}
 			]
 		},
@@ -711,7 +724,8 @@
 							"id": "ass35",
 							"name": "ATG split squats",
 							"description": "potenziameno ginocchia e muscolo femorale",
-							"reps": "5 (per gamba)"
+							"reps": "5 (per gamba)",
+							"weighted": true
 						},
 						{
 							"id": "olcr36",
@@ -749,7 +763,8 @@
 							"id": "ass35",
 							"name": "ATG split squats",
 							"description": "potenziameno ginocchia e muscolo femorale",
-							"reps": "5-8 (per gamba)"
+							"reps": "5-8 (per gamba)",
+							"weighted": true
 						},
 						{
 							"id": "olcr36",
@@ -780,7 +795,8 @@
 							"id": "ass35",
 							"name": "ATG split squats",
 							"description": "potenziameno ginocchia e muscolo femorale",
-							"reps": "5-8 (per gamba)"
+							"reps": "5-8 (per gamba)",
+							"weighted": true
 						},
 						{
 							"id": "ass50",
@@ -799,25 +815,42 @@
 							"id": "fnrc51",
 							"name": "Full Nordic reverse curl",
 							"description": "esecuzione nordic reverse fino schiena a terra",
-							"reps": "5-8"
+							"reps": "5-8",
+							"weighted": true
 						},
 						{
 							"id": "ps52",
 							"name": "Pistol squat",
 							"description": "potenziamento per singola gamba",
-							"reps": "5 (per gamba)"
+							"reps": "5 (per gamba)",
+							"weighted": true
 						},
 						{
 							"id": "ass35",
 							"name": "ATG split squats",
 							"description": "potenziameno ginocchia e muscolo femorale",
-							"reps": "5-8 (per gamba)"
+							"reps": "5-8 (per gamba)",
+							"weighted": true
 						},
 						{
 							"id": "olcr36",
 							"name": "Sissy squat",
 							"description": "potenziamento del ginocchio",
-							"reps": "3-5"
+							"reps": "3-5",
+							"weighted": true
+						}
+					]
+				},
+				{
+					"key": "legs-extra",
+					"title": "Legs extra",
+					"description": "potenziamento gambe extra",
+					"exs": [
+						{
+							"id": "stn53",
+							"name": "Sissy to nordic",
+							"description": "esecuzione sissi squat con transizione in full nordic reverse curl",
+							"reps": "5-8"
 						}
 					]
 				}
