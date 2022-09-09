@@ -121,6 +121,18 @@
             /*background-color: #ffcb00!important;*/
             background-color: #dfff45 !important;
         }
+        .bg-steel{
+            /*background: linear-gradient(to right top, rgb(17, 24, 39), rgb(75, 85, 99) 79.69%);*/
+        }
+        .bg-steel:after{
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top:0;
+            left:0;
+            background: linear-gradient(45deg, transparent calc(100% - 5px), white 90%), linear-gradient(135deg, transparent calc(100% - 5px), white 90% 100%),linear-gradient(-45deg, transparent calc(100% - 5px), white 90% 100%), linear-gradient(-135deg, transparent calc(100% - 5px), white 90% 100%);
+        }
 
         .text-rupe {
             color: #dfff45 !important;
@@ -189,19 +201,17 @@
         }
 
         .r-display{
-            animation: .5s display forwards;
+            animation: .3s display forwards;
         }
         .r-leave{
-            animation: .5s leave forwards;
+            animation: .3s leave forwards;
         }
         @keyframes display{
             0%{
                 opacity: 0;
-                transform: translateX(-20px);
             }
             100%{
                 opacity: 1;
-                transform: translateX(0px);
             }
         }
         @keyframes leave{
@@ -210,7 +220,6 @@
             }
             100%{
                 opacity: 0;
-                transform: translateX(20px);
             }
         }
     </style>
@@ -363,7 +372,7 @@
                                     <h1 id="main-heading"
                                         class="mb-4 text-2xl font-bold tracking-tight leading-none md:text-5xl lg:text-6xl text-black">
                                         Get your <span
-                                            class="text-transparent bg-clip-text bg-gradient-to-r to-lime-400 from-cyan-500">Workouts</span>
+                                            class="relative inline-block bg-slate-800 px-2 py-1 text-rupe bg-steel">Workouts</span>
                                         done</h1>
                                     <p class="mb-3 sm:mb-8 text-md font-normal text-gray-600 max-w-xl lg:text-xl">
                                         RUPE helps you planning your workout, create your custom training program or
@@ -406,14 +415,23 @@
                                 <p class="text-gray-600 mb-6">
                                     Create your sheet and assign modules to build your custom training program
                                 </p>
-                                <div v-if="mysheets && mysheets.length" class="my-4 flex gap-4 flex-wrap">
+                                <div v-if="mysheets && mysheets.length" class="my-4 mb-12 flex gap-4 flex-wrap">
                                     <div v-for="sheet in mysheets" class="min-w-25">
                                         <div
-                                            class="p-4 max-w-sm border shadow-md border-gray-400 bg-gray-200 text-gray-600 sm:p-6">
-                                            <a @click="setCurrentPage(sheet.key, 'sheet')" class="block">
+                                            class="relative p-4 max-w-sm bg-slate-800 bg-steel sm:p-6">
+                                            <a @click="setCurrentPage(sheet.key, 'sheet')" class="relative block z-10 text-white">
                                                 <h5
-                                                    class="text-lg sm:text-2xl font-normal capitalize tracking-tight text-gray-900 inline-block mb-1 sm:mb-3 text-sand">
+                                                    class="text-lg sm:text-2xl font-normal capitalize tracking-tight text-rupe inline-block mb-1 sm:mb-3">
                                                     {{sheet.title}}</h5>
+                                                <div class="pt-2">
+                                                    <p class="text-md mb-2 font-bold">Workouts:</p>
+                                                    <ul v-if="myplans.filter( plan => plan.sheet == sheet.title ).length"
+                                                        class="list-square">
+                                                        <li class="font-medium" v-for="plan in myplans.filter( plan => plan.sheet == sheet.title )">
+                                                            {{plan.title}}</li>
+                                                    </ul>
+                                                    <p class="text-white" v-else>No workouts created yet</p>
+                                                </div>
                                                 <div class="pt-2">
                                                     <p class="text-md mb-2 font-bold">Assigned modules:</p>
                                                     <ul v-if="sheet.assignedModules && sheet.assignedModules.length"
@@ -421,10 +439,10 @@
                                                         <li class="font-medium" v-for="module in sheet.assignedModules">
                                                             {{module}}</li>
                                                     </ul>
-                                                    <p class="text-black" v-else>No modules assigned yet</p>
+                                                    <p class="text-white" v-else>No modules assigned yet</p>
                                                 </div>
                                             </a>
-                                            <div class="mt-5 pt-2 border-t border-gray-500">
+                                            <div class="relative block z-10 mt-5 pt-2 border-t border-gray-500">
                                                 <span @click="removefromdb(sheet.key, 'mysheets')"
                                                     class="cursor-pointer inline-flex items-center mt-1 py-1 px-2 sm:mt-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">Delete</span>
                                             </div>
@@ -654,22 +672,31 @@
                                 <div class="my-4 flex gap-4 flex-wrap" v-if="mysheets && mysheets.length">
                                     <div v-for="sheet in mysheets" class="min-w-25">
                                         <div
-                                            class="p-4 max-w-sm border shadow-md border-gray-400 bg-gray-200 text-gray-600 sm:p-6">
-                                            <a @click="setCurrentPage(sheet.key, 'sheet')" class="block">
+                                            class="relative p-4 max-w-sm bg-slate-800 bg-steel sm:p-6">
+                                            <a @click="setCurrentPage(sheet.key, 'sheet')" class="relative block z-10 text-white">
                                                 <h5
-                                                    class="text-2xl font-normal capitalize tracking-tight text-gray-900 inline-block mb-3 text-sand">
+                                                    class="text-lg sm:text-2xl font-normal capitalize tracking-tight text-rupe inline-block mb-1 sm:mb-3">
                                                     {{sheet.title}}</h5>
                                                 <div class="pt-2">
-                                                    <p class="mb-2 font-bold">Assigned modules:</p>
+                                                    <p class="text-md mb-2 font-bold">Workouts:</p>
+                                                    <ul v-if="myplans.filter( plan => plan.sheet == sheet.title ).length"
+                                                        class="list-square">
+                                                        <li class="font-medium" v-for="plan in myplans.filter( plan => plan.sheet == sheet.title )">
+                                                            {{plan.title}}</li>
+                                                    </ul>
+                                                    <p class="text-white" v-else>No workouts created yet</p>
+                                                </div>
+                                                <div class="pt-2">
+                                                    <p class="text-md mb-2 font-bold">Assigned modules:</p>
                                                     <ul v-if="sheet.assignedModules && sheet.assignedModules.length"
                                                         class="list-square">
                                                         <li class="font-medium" v-for="module in sheet.assignedModules">
                                                             {{module}}</li>
                                                     </ul>
-                                                    <p class="text-black" v-else>No modules assigned yet</p>
+                                                    <p class="text-white" v-else>No modules assigned yet</p>
                                                 </div>
                                             </a>
-                                            <div class="mt-5 pt-2 border-t border-gray-500">
+                                            <div class="relative block z-10 mt-5 pt-2 border-t border-gray-500">
                                                 <span @click="removefromdb(sheet.key, 'mysheets')"
                                                     class="cursor-pointer inline-flex items-center mt-1 py-1 px-2 sm:mt-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">Delete</span>
                                             </div>
@@ -772,7 +799,6 @@
                                         <h2 class="capitalize text-black mb-2 md:mb-8 text-2xl font-bold lg:text-4xl">
                                             {{sheet.title}}
                                         </h2>
-                                        <div><button @click="downloadlocal(sheet)">Download local</button></div>
                                         <div>
                                             <div v-if="sheet.assignedModules && sheet.assignedModules.length">
                                                 <div class="">
@@ -795,13 +821,13 @@
                                                             class="overflow-x-auto relative shadow-md">
                                                             <table class="w-full text-sm text-left text-gray-500">
                                                                 <tbody>
-                                                                    <tr class="border-b bg-gray-100 border-gray-200">
+                                                                    <tr class="border-b bg-gray-700 border-gray-400">
                                                                         <td scope="col"
-                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-slate-800 text-rupe">
                                                                             Monday
                                                                         </td>
                                                                         <td :class="[currentDay == 1 ? 'bg-sand text-gray-900 font-bold' : '']"
-                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full">
+                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full text-white">
                                                                             <ul>
                                                                                 <li
                                                                                     v-for="plan in myplans.filter( plan => plan.sheet == sheet.title && (plan.weekdays[weekType].includes('1') || plan.weekdays[0].includes('1') && !plan.weekdays[1].length) )">
@@ -809,13 +835,13 @@
                                                                             </ul>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="border-b bg-gray-100 border-gray-200">
+                                                                    <tr class="border-b bg-gray-700 border-gray-400">
                                                                         <td scope="col"
-                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-slate-800 text-rupe">
                                                                             Tuesday
                                                                         </td>
                                                                         <td :class="[currentDay == 2 ? 'bg-sand text-gray-900 font-bold' : '']"
-                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full">
+                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full text-white">
                                                                             <ul>
                                                                                 <li
                                                                                     v-for="plan in myplans.filter( plan => plan.sheet == sheet.title && (plan.weekdays[weekType].includes('2') || plan.weekdays[0].includes('2') && !plan.weekdays[1].length) )">
@@ -823,13 +849,13 @@
                                                                             </ul>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="border-b bg-gray-100 border-gray-200">
+                                                                    <tr class="border-b bg-gray-700 border-gray-400">
                                                                         <td scope="col"
-                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-slate-800 text-rupe">
                                                                             Wednesday
                                                                         </td>
                                                                         <td :class="[currentDay == 3 ? 'bg-sand text-gray-900 font-bold' : '']"
-                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full">
+                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full text-white">
                                                                             <ul>
                                                                                 <li
                                                                                     v-for="plan in myplans.filter( plan => plan.sheet == sheet.title && (plan.weekdays[weekType].includes('3') || plan.weekdays[0].includes('3') && !plan.weekdays[1].length) )">
@@ -837,13 +863,13 @@
                                                                             </ul>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="border-b bg-gray-100 border-gray-200">
+                                                                    <tr class="border-b bg-gray-700 border-gray-400">
                                                                         <td scope="col"
-                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-slate-800 text-rupe">
                                                                             Thursday
                                                                         </td>
                                                                         <td :class="[currentDay == 4 ? 'bg-sand text-gray-900 font-bold' : '']"
-                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full">
+                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full text-white">
                                                                             <ul>
                                                                                 <li
                                                                                     v-for="plan in myplans.filter( plan => plan.sheet == sheet.title && (plan.weekdays[weekType].includes('4') || plan.weekdays[0].includes('4') && !plan.weekdays[1].length) )">
@@ -851,13 +877,13 @@
                                                                             </ul>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="border-b bg-gray-100 border-gray-200">
+                                                                    <tr class="border-b bg-gray-700 border-gray-400">
                                                                         <td scope="col"
-                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-slate-800 text-rupe">
                                                                             Friday
                                                                         </td>
                                                                         <td :class="[currentDay == 5 ? 'bg-sand text-gray-900 font-bold' : '']"
-                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full">
+                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full text-white">
                                                                             <ul>
                                                                                 <li
                                                                                     v-for="plan in myplans.filter( plan => plan.sheet == sheet.title && (plan.weekdays[weekType].includes('5') || plan.weekdays[0].includes('5') && !plan.weekdays[1].length) )">
@@ -865,13 +891,13 @@
                                                                             </ul>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="border-b bg-gray-100 border-gray-200">
+                                                                    <tr class="border-b bg-gray-700 border-gray-400">
                                                                         <td scope="col"
-                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-slate-800 text-rupe">
                                                                             Saturday
                                                                         </td>
                                                                         <td :class="[currentDay == 6 ? 'bg-sand text-gray-900 font-bold' : '']"
-                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full">
+                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full text-white">
                                                                             <ul>
                                                                                 <li
                                                                                     v-for="plan in myplans.filter( plan => plan.sheet == sheet.title && (plan.weekdays[weekType].includes('6') || plan.weekdays[0].includes('6') && !plan.weekdays[1].length) )">
@@ -879,13 +905,13 @@
                                                                             </ul>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="border-b bg-gray-100 border-gray-200">
+                                                                    <tr class="border-b bg-gray-700 border-gray-400">
                                                                         <td scope="col"
-                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-gray-600 text-gray-200">
+                                                                            class="py-2 px-3 sm:py-3 sm:px-6 bg-slate-800 text-rupe">
                                                                             Sunday
                                                                         </td>
                                                                         <td :class="[currentDay == 0 ? 'bg-sand text-gray-900 font-bold' : '']"
-                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full">
+                                                                            class="py-2 px-3 sm:py-4 sm:px-6 w-full text-white">
                                                                             <ul>
                                                                                 <li
                                                                                     v-for="plan in myplans.filter( plan => plan.sheet == sheet.title && (plan.weekdays[weekType].includes('0') || plan.weekdays[0].includes('0') && !plan.weekdays[1].length) )">
@@ -919,13 +945,13 @@
                                                                 v-for="plan in myplans.filter( plan => plan.sheet == sheet.title )">
                                                                 <div>
                                                                     <div
-                                                                        class="p-2 sm:p-4 mb-2 flex justify-between items-center bg-gray-200">
+                                                                        class="p-2 sm:p-4 mb-2 flex justify-between items-center bg-slate-800">
                                                                         <div>
                                                                             <form v-if="plantitleedit == plan.key"
                                                                                 @submit.prevent="planRenameForm">
                                                                                 <input type="text" id="plantitle_edit"
                                                                                     name="plantitle_edit"
-                                                                                    class="text-md text-gray-900 block inline mr-1 p-2.5 bg-gray-200 placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
+                                                                                    class="text-md text-rupe block inline mr-1 p-2.5 bg-gray-200 placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
                                                                                     :value="plan.title"
                                                                                     :placeholder="plan.title">
                                                                                 <input type="hidden" name="plan"
@@ -934,11 +960,11 @@
                                                                                     class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
                                                                                     value="confirm">
                                                                             </form>
-                                                                            <h5 class="text-lg sm:text-xl font-bold text-gray-900"
+                                                                            <h5 class="text-lg sm:text-xl font-bold text-rupe"
                                                                                 v-else>
                                                                                 <button
                                                                                     @click="plantitleedit = plan.key">
-                                                                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 inline"
+                                                                                    <svg class="w-5 h-5 mr-2 sm:w-6 sm:h-6 inline"
                                                                                         fill="none"
                                                                                         stroke="currentColor"
                                                                                         viewBox="0 0 24 24"
@@ -954,7 +980,7 @@
                                                                             </h5>
                                                                         </div>
                                                                         <button @click="cleanresume(plan);modalopen=true">
-                                                                            <svg class="w-5 h-5 sm:w-6 sm:h-6 px-3 py-2 bg-gray-200 box-content"
+                                                                            <svg class="w-5 h-5 sm:w-6 sm:h-6 px-3 py-2 bg-slate-700 text-rupe box-content"
                                                                                 fill="none" stroke="currentColor"
                                                                                 viewBox="0 0 24 24"
                                                                                 xmlns="http://www.w3.org/2000/svg">
@@ -985,7 +1011,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="p-2 sm:p-4">
-                                                                        <div v-if="plan.exs">
+                                                                        <div v-if="plan.exs && plan.exs.length">
                                                                             <ul>
                                                                                 <li class="my-2 pb-2"
                                                                                     v-for="(ex, index) in plan.exs">
@@ -1041,7 +1067,9 @@
                                                                                                 Reps:&nbsp;<strong
                                                                                                     class="font-bold">{{
                                                                                                     ex.reps
-                                                                                                    }}</strong></p>
+                                                                                                    }}</strong>
+                                                                                                <button class="inline-flex items-center mx-2 py-0.5 px-0.5 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300" @click="editplanexrepsmodal = [ex.id, allexs.find( el => el.id == ex.id ).name, plan.key]">Edit reps</button>
+                                                                                                </p>
                                                                                             <p v-if="ex.weight">
                                                                                                 Weight added: <strong>{{ex.weight}}</strong>
                                                                                             </p>
@@ -1067,39 +1095,7 @@
                                                                                                 el.exi == index ).rest
                                                                                                 }}</span>
                                                                                         </div>
-                                                                                        <div class="flex items-center">
-                                                                                            <input
-                                                                                                :id="'restcheck'+plan.key"
-                                                                                                :name="'restcheck'+plan.key"
-                                                                                                type="radio"
-                                                                                                :value="index"
-                                                                                                class="w-4 h-4 text-gray-500 rounded focus:ring-gray-400 ring-offset-gray-200 focus:ring-2 bg-gray-300 border-gray-400"
-                                                                                                @change="setexrest">
-                                                                                            <label
-                                                                                                :for="'restcheck'+plan.key"
-                                                                                                class="ml-2 text-sm font-medium text-gray-900"><span
-                                                                                                    v-if="plan.rests && plan.rests.find( el => el.exi == index )">Change</span><span
-                                                                                                    v-else>Set</span>
-                                                                                                rest</label>
-                                                                                        </div>
-                                                                                        <form
-                                                                                            v-if="exrest && exrest == index"
-                                                                                            class="space-y-2"
-                                                                                            @submit.prevent="sheetplanaddrest">
-                                                                                            <input type="number"
-                                                                                                name="rest"
-                                                                                                placeholder="Rest"
-                                                                                                class="mr-2 border text-sm block inline p-1 bg-gray-300 border-gray-400 placeholder-gray-400 text-black focus:ring-gray-500 focus:border-gray-500" />
-                                                                                            <input type="hidden"
-                                                                                                name="ex"
-                                                                                                :value="index" />
-                                                                                            <input type="hidden"
-                                                                                                name="plan"
-                                                                                                :value="plan.key" />
-                                                                                            <input type="submit"
-                                                                                                class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-1.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
-                                                                                                value="confirm">
-                                                                                        </form>
+                                                                                        <button class="inline-flex items-center mx-2 py-0.5 px-0.5 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300" @click="setrestmodal = [index, allexs.find( el => el.id == ex.id ).name, plan.key]">Set rest</button>
                                                                                     </div>
                                                                                 </li>
                                                                             </ul>
@@ -1108,6 +1104,7 @@
                                                                             <p class="pt-4 text-gray-800">No exercises
                                                                                 added yet
                                                                             </p>
+                                                                            <button @click="document.getElementById('myplans').value = plan.key;document.getElementById('module-into-view').scrollIntoView({behavior: 'smooth'})">Add exercises</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1453,7 +1450,7 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-6">
+                                                    <div id="module-into-view" class="mb-6">
                                                         <div class="pt-4 sm:pt-8">
                                                             <h3 class="text-black mb-6 text-lg font-bold lg:text-2xl">
                                                                 <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block"
@@ -1616,8 +1613,23 @@
                                                 </div>
                                             </div>
                                             <div v-else>
-                                                <p class="pt-4 text-sand">No modules assigned yet</p>
+                                                <p class="mb-8 pt-4 text-sand">No modules assigned yet</p>
+                                                <button type="button" @click="setCurrentPage('rupe-modules', 'page')"
+                                                    class="bg-sand text-black focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 sm:px-5 sm:py-2.5 text-center shadow-lg mr-4"
+                                                    type="button">
+                                                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z">
+                                                        </path>
+                                                    </svg>
+                                                    RUPE modules
+                                                </button>
                                             </div>
+                                        </div>
+                                        <div class="my-12">
+                                            <hr />
+                                            <button class="inline-flex items-center mt-5 py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300" @click="downloadlocal(sheet)">Download local</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1863,6 +1875,41 @@
                     </div>
                 </div>
             </div>
+            <!-- edit reps modal -->
+            <div class="section">
+                <div v-if="editplanexrepsmodal && editplanexrepsmodal.length" class="modal-mask">
+                    <div class="modal-wrapper relative w-full">
+                        <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
+                            <button type="button" @click="editplanexrepsmodal = false"
+                                class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div class="py-6 px-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-black">Edit reps</h3>
+                                <form class="space-y-6" action="#" @submit.prevent="editplanexreps">
+                                    <div>
+                                        <p>Exercise: <strong>{{editplanexrepsmodal[1]}}</strong></p>
+                                        <label for="editreps"
+                                            class="block mb-2 text-sm font-medium text-gray-600">Reps</label>
+                                        <input type="number" name="editreps" id="editreps"
+                                            class="border text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black"
+                                            required>
+                                        <input type="hidden" name="exid" :value="editplanexrepsmodal[0]" />
+                                        <input type="hidden" name="plan" :value="editplanexrepsmodal[2]" />
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-100 focus:ring-gray-200">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- add weight modal -->
             <div class="section">
                 <div v-if="addweightmodal && addweightmodal.length" class="modal-mask">
@@ -1884,11 +1931,46 @@
                                         <p>Exercise: <strong>{{addweightmodal[1]}}</strong></p>
                                         <label for="addw"
                                             class="block mb-2 text-sm font-medium text-gray-600">Weight</label>
-                                        <input type="hidden" name="exid" :value="addweightmodal[0]" />
-                                        <input type="hidden" name="plan" :value="addweightmodal[2]" />
                                         <input type="number" name="addw" id="addw"
                                             class="border text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black"
                                             required>
+                                        <input type="hidden" name="exid" :value="addweightmodal[0]" />
+                                        <input type="hidden" name="plan" :value="addweightmodal[2]" />
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-100 focus:ring-gray-200">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- set rest modal -->
+            <div class="section">
+                <div v-if="setrestmodal && setrestmodal.length" class="modal-mask">
+                    <div class="modal-wrapper relative w-full">
+                        <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
+                            <button type="button" @click="setrestmodal = false"
+                                class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div class="py-6 px-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-black">Set rest</h3>
+                                <form class="space-y-6" action="#" @submit.prevent="sheetplanaddrest">
+                                    <div>
+                                        <p>Exercise: <strong>{{setrestmodal[1]}}</strong></p>
+                                        <label for="rest"
+                                            class="block mb-2 text-sm font-medium text-gray-600">Rest</label>
+                                        <input type="number" name="rest" id="rest"
+                                            class="border text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black"
+                                            required>
+                                        <input type="hidden" name="exindex" :value="setrestmodal[0]" />
+                                        <input type="hidden" name="plan" :value="setrestmodal[2]" />
                                     </div>
                                     <button type="submit"
                                         class="w-full text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-100 focus:ring-gray-200">Confirm</button>
@@ -1983,7 +2065,9 @@
             newmodulemodal: false,
             setweekdaysmodal: false,
             planrepetitionform: false,
+            editplanexrepsmodal: false,
             addweightmodal: false,
+            setrestmodal : false,
             messagemodal: false,
             messagetoast: false,
             editmodule: {},
@@ -1993,7 +2077,6 @@
             todayworkout: false,
             weekType: false,
             altw: false,
-            exrest: false,
             openaccordion: false,
             cleanplan: false,
             plantitleedit: false,
@@ -2465,10 +2548,12 @@
                 if(page !== this.currentPage){
                     document.querySelector('.r-display').classList.add('r-leave')
                     document.querySelector('.r-display').classList.remove('r-display')
+
+                    window.scrollTo(0, 0);
+
                     setTimeout(() => {
                         this.currentPage = page
-                        window.scrollTo(0, 0);
-                    }, 500);
+                    }, 300);
                     
                     //goal form close
                     this.goalform = false
@@ -2494,12 +2579,6 @@
                     this.altw = evt.target.value
                 else
                     this.altw = false
-            },
-            setexrest(evt) {
-                if (evt.target.checked)
-                    this.exrest = evt.target.value
-                else
-                    this.exrest = false
             },
             toggleAccordion(key) {
                 if (this.openaccordion == key)
@@ -2796,10 +2875,8 @@
             async sheetplanaddrest(event) {
 
                 let rest = event.target.rest.value
-                let exindex = event.target.ex.value
+                let exindex = event.target.exindex.value
                 let plan = event.target.plan.value
-
-                console.log(rest + '-' + exindex + '-' + plan)
 
                 let objectStore = await this.getobjectstore('myplans', 'readwrite')
 
@@ -2834,6 +2911,41 @@
 
                 this.mysheets = await this.getsheets()
                 this.myplans = await this.getplans()
+
+            },
+            async editplanexreps(event) {
+
+                let plankey = event.target.plan.value
+                let exid = event.target.exid.value
+                let reps = event.target.editreps.value
+
+                let objectStore = await this.getobjectstore('myplans', 'readwrite')
+
+                let request = objectStore.get(plankey);
+
+                request.onsuccess = async event => {
+                    objectStore.openCursor().onsuccess = function (event) {
+                        const cursor = event.target.result;
+                        if (cursor) {
+                            if (cursor.key == plankey) {
+                                const updateData = cursor.value;
+
+                                let updex = updateData.exs.find( el => el.id == exid )
+                                updex.reps = reps
+
+                                const request = cursor.update(updateData);
+                                request.onsuccess = function () {
+                                    console.log('updated successfully');
+                                };
+
+                            }
+                            cursor.continue();
+                        }
+                    }
+                }
+
+                this.myplans = await this.getplans()
+                this.plantitleedit = false
 
             },
             async sheetplanexremove(index, plan) {
