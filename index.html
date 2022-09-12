@@ -1016,86 +1016,84 @@
                                                                                 <li class="my-2 pb-2"
                                                                                     v-for="(ex, index) in plan.exs">
                                                                                     <div
-                                                                                        class="flex justify-between items-center gap-4">
+                                                                                        class="block gap-4">
                                                                                         <div
-                                                                                            class="flex flex-col justify-evenly">
-                                                                                            <button
-                                                                                                @click="planmoveex(plan.key, index, 'up', sheet.title)">
-                                                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6"
-                                                                                                    fill="none"
-                                                                                                    stroke="currentColor"
-                                                                                                    viewBox="0 0 24 24"
-                                                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                                                    <path
-                                                                                                        stroke-linecap="round"
-                                                                                                        stroke-linejoin="round"
-                                                                                                        stroke-width="2"
-                                                                                                        d="M5 15l7-7 7 7">
-                                                                                                    </path>
-                                                                                                </svg>
-                                                                                            </button>
-                                                                                            <button
-                                                                                                @click="planmoveex(plan.key, index, 'down', sheet.title)">
-                                                                                                <svg class="w-5 h-5 sm:w-6 sm:h-6"
-                                                                                                    fill="none"
-                                                                                                    stroke="currentColor"
-                                                                                                    viewBox="0 0 24 24"
-                                                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                                                    <path
-                                                                                                        stroke-linecap="round"
-                                                                                                        stroke-linejoin="round"
-                                                                                                        stroke-width="2"
-                                                                                                        d="M19 9l-7 7-7-7">
-                                                                                                    </path>
-                                                                                                </svg>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                        <div class="flex-1"
-                                                                                            v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
-                                                                                            <strong
-                                                                                                class="font-bold text-lg sm:text-xl">{{
-                                                                                                allexs.find( el => el.id
-                                                                                                == ex.id ).name
-                                                                                                }}</strong>
-                                                                                            <p
-                                                                                                class="hidden text-sm sm:block lg:text-lg">
-                                                                                                {{ allexs.find( el =>
-                                                                                                el.id == ex.id
-                                                                                                ).description }}</p>
-                                                                                            <p
-                                                                                                class="text-sm sm:text-lg">
-                                                                                                Reps:&nbsp;<strong
-                                                                                                    class="font-bold">{{
-                                                                                                    ex.reps
-                                                                                                    }}</strong>
-                                                                                                <button class="inline-flex items-center mx-2 py-0.5 px-0.5 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300" @click="editplanexrepsmodal = [ex.id, allexs.find( el => el.id == ex.id ).name, plan.key]">Edit reps</button>
+                                                                                            class="flex justify-between items-center gap-4">
+                                                                                            <div class="flex-1"
+                                                                                                v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
+                                                                                                <p>
+                                                                                                    <strong
+                                                                                                        class="font-bold text-lg sm:text-xl">{{
+                                                                                                        allexs.find( el => el.id
+                                                                                                        == ex.id ).name
+                                                                                                        }}
+                                                                                                    </strong>
+                                                                                                    <small>x{{ ex.reps }}</small>
                                                                                                 </p>
-                                                                                            <p v-if="ex.weight">
-                                                                                                Weight added: <strong>{{ex.weight}}</strong>
-                                                                                            </p>
-                                                                                            <p v-if="allexs.find( el => el.id == ex.id ).weighted">
-                                                                                                <button 
-                                                                                                    class="inline-flex items-center my-2 py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300"
-                                                                                                    @click="addweightmodal = [ex.id, allexs.find( el => el.id == ex.id ).name, plan.key]"><span v-if="!ex.weight">Add</span><span v-else>Change</span>&nbsp;weight</button>
-                                                                                            </p>
+                                                                                                
+                                                                                                <p v-if="ex.weight">
+                                                                                                    Weight added: <strong>{{ex.weight}}</strong>
+                                                                                                </p>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <div class="inline-flex rounded-md shadow-sm" role="group">
+                                                                                                    <button 
+                                                                                                        type="button" 
+                                                                                                        class="inline-flex items-center py-1 px-2 text-sm font-small text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                                                                                                        @click="planmoveex(plan.key, index, 'up', sheet.title)">
+                                                                                                        <svg class="w-4 h-4 sm:w-6 sm:h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                                                                                                    </button>
+                                                                                                    <button
+                                                                                                        type="button" 
+                                                                                                        class="inline-flex items-center py-1 px-2 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                                                                                                        @click="planmoveex(plan.key, index, 'down', sheet.title)"
+                                                                                                        >
+                                                                                                        <svg class="w-4 h-4 sm:w-6 sm:h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                                <div class="inline-flex rounded-md shadow-sm" role="group">
+                                                                                                    <button 
+                                                                                                        type="button" 
+                                                                                                        class="inline-flex items-center py-1 px-2 text-sm font-small text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                                                                                                        @click="editingex ? editingex = false : editingex = '_'+index+plan.key">
+                                                                                                        <svg class="w-4 h-4 sm:w-6 sm:h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                                                                    </button>
+                                                                                                    <button
+                                                                                                        type="button" 
+                                                                                                        class="inline-flex items-center py-1 px-2 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                                                                                                        @click="sheetplanexremove(index, plan.key)"
+                                                                                                        ><svg class="w-4 h-4 sm:w-6 sm:h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div>
-                                                                                            <button
-                                                                                                @click="sheetplanexremove(index, plan.key)"
-                                                                                                class="inline-flex items-center py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">remove</button>
+                                                                                        <div v-if="editingex === '_'+index+plan.key" class="w-full p-4 bg-gray-800 inline-flex justify-center rounded-md shadow-sm my-2 sm:my-0" role="group">
+                                                                                            <button 
+                                                                                                type="button" 
+                                                                                                class="inline-flex items-center py-1 px-2 text-sm font-small text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                                                                                                @click="editplanexrepsmodal = [ex.id, allexs.find( el => el.id == ex.id ).name, plan.key]">Edit reps</button>
+                                                                                            <button 
+                                                                                                v-if="allexs.find( el => el.id == ex.id ).weighted"
+                                                                                                type="button" 
+                                                                                                class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                                                                                                @click="addweightmodal = [index, allexs.find( el => el.id == ex.id ).name, plan.key]"><span v-if="!ex.weight">Add</span><span v-else>Change</span>&nbsp;weight</button>
+                                                                                            <button 
+                                                                                                type="button" 
+                                                                                                class="inline-flex items-center py-1 px-2 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700" 
+                                                                                                @click="setrestmodal = [index, allexs.find( el => el.id == ex.id ).name, plan.key]">Set rest</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div
-                                                                                        class="mt-4 p-2 sm:mt-6 sm:p-4 border-t border-b border-gray-300">
-                                                                                        <div v-if="plan.rests && plan.rests.find( el => el.exi == index )"
-                                                                                            class="text-xl mb-4">
+                                                                                        v-if="plan.rests && plan.rests.find( el => el.exi == index )"
+                                                                                        class="mt-2 pl-4 p-1 sm:mt-6 sm:p-4 bg-gray-800 text-white">
+                                                                                        <div
+                                                                                            class="text-lg">
                                                                                             Rest: <span
                                                                                                 class="font-bold">{{
                                                                                                 plan.rests.find( el =>
                                                                                                 el.exi == index ).rest
                                                                                                 }}</span>
                                                                                         </div>
-                                                                                        <button class="inline-flex items-center mx-2 py-0.5 px-0.5 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300" @click="setrestmodal = [index, allexs.find( el => el.id == ex.id ).name, plan.key]">Set rest</button>
                                                                                     </div>
                                                                                 </li>
                                                                             </ul>
@@ -1104,22 +1102,34 @@
                                                                             <p class="pt-4 text-gray-800">No exercises
                                                                                 added yet
                                                                             </p>
-                                                                            <button @click="document.getElementById('myplans').value = plan.key;document.getElementById('module-into-view').scrollIntoView({behavior: 'smooth'})">Add exercises</button>
+                                                                            <button @click="plantochange=plan.key;document.getElementById('myplans').value=plan.key;document.getElementById('module-into-view').scrollIntoView({behavior:'smooth'})">Add exercises</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 p-2 sm:mb-8 sm:p-4">
-                                                                    <button @click="setweekdaysmodal = plan.key"
-                                                                        class="bg-gray-500 text-white focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 shadow-lg">
-                                                                        Set weekdays&nbsp;
-                                                                        <svg class="w-4 h-4 inline-block" fill="none"
-                                                                            stroke="currentColor" viewBox="0 0 24 24"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                                                        </svg>
-                                                                    </button>
+                                                                    <div class="inline-flex rounded-md shadow-sm" role="group">
+                                                                        <button 
+                                                                            type="button" 
+                                                                            @click="plantochange=plan.key;document.getElementById('myplans').value=plan.key;document.getElementById('module-into-view').scrollIntoView({behavior:'smooth'})"
+                                                                            class="inline-flex items-center py-1 px-2 text-sm font-small text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                                                                            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                                                            Add exercise
+                                                                        </button>
+                                                                        <button 
+                                                                            type="button" 
+                                                                            @click="setweekdaysmodal = plan.key"
+                                                                            class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                                                                            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                                                            Set weekdays
+                                                                        </button>
+                                                                        <button 
+                                                                            type="button" 
+                                                                            @click="planrepetitionmodal = [plan.title, plan.key, plan.nexec]"
+                                                                            class="inline-flex items-center py-1 px-2 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                                                                            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                                            Set workout repetitions
+                                                                        </button>
+                                                                    </div>
                                                                     <!-- weekdays modal -->
                                                                     <div class="section">
                                                                         <div v-show="setweekdaysmodal == plan.key"
@@ -1397,30 +1407,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <button @click="planrepetitionform = plan.key"
-                                                                        class="bg-gray-500 text-white focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 shadow-lg">
-                                                                        Set workout repetitions&nbsp;
-                                                                        <svg class="w-4 h-4 inline-block" fill="none"
-                                                                            stroke="currentColor" viewBox="0 0 24 24"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round" stroke-width="2"
-                                                                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                                                        </svg>
-                                                                    </button>
-                                                                    <form v-if="planrepetitionform == plan.key"
-                                                                        @submit.prevent="setPlanRepetition">
-                                                                        <input type="number" id="plan_reps"
-                                                                            name="plan_reps"
-                                                                            class="text-md text-gray-900 block inline mr-1 p-2.5 bg-gray-200 placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
-                                                                            :value="plan.title"
-                                                                            :placeholder="plan.nexec">
-                                                                        <input type="hidden" name="plan"
-                                                                            :value="plan.key" />
-                                                                        <input type="submit"
-                                                                            class="inline text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-300 focus:ring-gray-200"
-                                                                            value="confirm">
-                                                                    </form>
                                                                 </div>
                                                                 <div class="p-4 mt-5 pt-2 border-t border-gray-500">
                                                                     <button @click="removefromdb(plan.key, 'myplans')"
@@ -1480,56 +1466,64 @@
                                                                     {{plan.title}}</option>
                                                             </select>
                                                         </div>
-                                                        <div class="flex gap-4 flex-wrap flex-col sm:flex-row">
-                                                            <div class="p-3 sm:p-6 h-full max-w-sm bg-gray-100 border border-gray-400 shadow-md flex-1"
-                                                                v-for="module in defmodules.filter(mod => sheet.assignedModules.includes(mod.title)).concat(mymodules.filter(mod => sheet.assignedModules.includes(mod.title)))">
-                                                                <a href="#">
-                                                                    <h5
-                                                                        class="mb-4 text-lg sm:text-2xl font-medium tracking-tight text-sand">
-                                                                        {{module.title}}</h5>
-                                                                </a>
-                                                                <div class="mb-4 font-normal text-sand">
-                                                                    {{module.description}}
-                                                                    <ul>
-                                                                        <li v-for="ex in module.exs"
-                                                                            class="mb-6 font-normal text-gray-500">
-                                                                            <div
-                                                                                v-if="allexs && allexs.find( el => el.id == ex.id )">
-                                                                                <strong class="text-gray-800">{{
-                                                                                    allexs.find( el => el.id == ex.id
-                                                                                    ).name }}</strong>
-                                                                                <p class="text-sm lg:text-lg">{{
-                                                                                    allexs.find( el => el.id == ex.id
-                                                                                    ).description }}</p>
-                                                                                <p class="text-sm sm:text-lg">
-                                                                                    Reps:&nbsp;<strong
-                                                                                        class="text-gray-800">x{{
-                                                                                        ex.reps
-                                                                                        }}</strong></p>
-                                                                                <button
-                                                                                    @click="sheetplanadd(ex, sheet.title)"
-                                                                                    class="cursor-pointer inline-flex items-center mt-3 mr-1 py-1 px-2 sm:mt-5 sm:mr-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">
-                                                                                    <svg class="w-4 h-4 inline"
-                                                                                        fill="none"
-                                                                                        stroke="currentColor"
-                                                                                        viewBox="0 0 24 24"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <path stroke-linecap="round"
-                                                                                            stroke-linejoin="round"
-                                                                                            stroke-width="2"
-                                                                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-                                                                                        </path>
-                                                                                    </svg>
-                                                                                    &nbsp; Add to workout
-                                                                                </button>
-                                                                            </div>
+                                                        <div class="block">
+                                                            <div class="block w-full p-2 sm:p-4 bg-gray-100 border border-gray-400 mb-6 shadow-lg"
+                                                                v-for="(module, moduleindex) in defmodules.filter(mod => sheet.assignedModules.includes(mod.title)).concat(mymodules.filter(mod => sheet.assignedModules.includes(mod.title)))">
+                                                                <button @click="toggleAccordion(module.key)"
+                                                                    class="text-left flex w-full justify-between items-center space-x-3"
+                                                                    :aria-expanded="openaccordion"
+                                                                    :aria-controls="'collapse_' + moduleindex">
+                                                                    <div>
+                                                                        <h5
+                                                                            class="mb-2 text-lg sm:text-2xl font-medium tracking-tight text-sand">
+                                                                            {{module.title}}</h5>
+                                                                        <p class="mb-0 font-normal text-sand">
+                                                                            {{module.description}}</p>
+                                                                    </div>
+                                                                    <svg class="w-6 h-6" v-show="openaccordion != module.key" fill="none"
+                                                                        stroke="currentColor" viewBox="0 0 24 24"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                                            stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                                    </svg>
+                                                                    <svg class="w-6 h-6" v-show="openaccordion == module.key" fill="none"
+                                                                        stroke="currentColor" viewBox="0 0 24 24"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                                            stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                                                    </svg>
+                                                                </button>
+                                                                <div v-show="openaccordion == module.key" :id="'collapse_' + moduleindex">
+                                                                    <ul class="mt-6">
+                                                                        <li v-for="ex in module.exs" class="mb-3 font-normal text-gray-500">
+                                                                            <strong class="text-lg text-gray-800">{{ ex.name }}</strong>
+                                                                            <p class="text-sm lg:text-lg">{{ ex.description }}</p>
+                                                                            <p class="text-lg font-bold">Reps:&nbsp;<strong
+                                                                                    class="text-gray-800">{{ ex.reps }}</strong></p>
+                                                                            <button
+                                                                                @click="sheetplanadd(ex, sheet.title)"
+                                                                                class="cursor-pointer inline-flex items-center mt-3 mr-1 py-1 px-2 sm:mt-5 sm:mr-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">
+                                                                                <svg class="w-4 h-4 inline"
+                                                                                    fill="none"
+                                                                                    stroke="currentColor"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"
+                                                                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                                                                                    </path>
+                                                                                </svg>
+                                                                                &nbsp; Add to workout
+                                                                            </button>
                                                                         </li>
                                                                     </ul>
+                                                                    <hr />
+                                                                    <a @click="deletemodule(sheet.key, module.title)"
+                                                                        class="inline-flex items-center mt-5 py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">
+                                                                        Remove from sheet
+                                                                    </a>
                                                                 </div>
-                                                                <a @click="deletemodule(sheet.key, module.title)"
-                                                                    class="inline-flex items-center mt-5 py-1 px-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">
-                                                                    Delete
-                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1980,6 +1974,42 @@
                     </div>
                 </div>
             </div>
+            <!-- set workout repetitions modal -->
+            <div class="section">
+                <div v-if="planrepetitionmodal && planrepetitionmodal.length" class="modal-mask">
+                    <div class="modal-wrapper relative w-full">
+                        <div class="modal-container relative max-w-md h-full md:h-auto shadow bg-gray-300">
+                            <button type="button" @click="planrepetitionmodal = false"
+                                class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div class="py-6 px-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-black">Set workout repetitions</h3>
+                                <form class="space-y-6" action="#" @submit.prevent="setPlanRepetition">
+                                    <div>
+                                        <p>Workout: <strong>{{planrepetitionmodal[0]}}</strong></p>
+                                        <label for="plan_reps"
+                                            class="block mb-2 text-sm font-medium text-gray-600">Repetitions</label>
+                                        <input type="number" name="plan_reps" id="plan_reps"
+                                            class="border text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black"
+                                            :value="planrepetitionmodal[2]"
+                                            :placeholder="planrepetitionmodal[2]"
+                                            required>
+                                        <input type="hidden" name="plan" :value="planrepetitionmodal[1]" />
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-200 hover:bg-gray-100 focus:ring-gray-200">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- message modal -->
             <div class="section">
                 <div v-show="messagemodal" class="modal-mask">
@@ -2003,19 +2033,19 @@
                     </div>
                 </div>
             </div>
-            <div class="section" v-effect="$el.classList.add('r-display')">
+            <!-- toast message -->
+            <div class="section">
                 <div v-show="messagetoast" id="toast"
-                    class="mx-auto fixed bottom-5 left-0 z-50 flex items-center p-4 w-full max-w-xs shadow text-gray-400 bg-gray-800"
+                    class="mx-auto fixed z-50 bottom-5 left-0 z-50 flex items-center p-4 w-full max-w-xs shadow text-gray-400 bg-gray-800"
                     role="alert">
                     <div
                         class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-gray-500 bg-sand rounded-lg">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
-                                clip-rule="evenodd"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
-                        <span class="sr-only">Fire icon</span>
+                        <span class="sr-only">Thunder icon</span>
                     </div>
                     <div class="ml-3 text-sm font-normal">Added to workout</div>
                     <button type="button" @click="messagetoast = false"
@@ -2064,10 +2094,11 @@
             newsheetmodal: false,
             newmodulemodal: false,
             setweekdaysmodal: false,
-            planrepetitionform: false,
+            planrepetitionmodal: false,
             editplanexrepsmodal: false,
             addweightmodal: false,
             setrestmodal : false,
+            editingex: false,
             messagemodal: false,
             messagetoast: false,
             editmodule: {},
@@ -2763,7 +2794,7 @@
                 }
 
                 this.myplans = await this.getplans()
-                this.planrepetitionform = false
+                this.planrepetitionmodal = false
 
             },
             async setplanweekdays(event) {
@@ -3040,7 +3071,7 @@
                             if (cursor.key == plankey) {
                                 const updateData = cursor.value;
 
-                                let updex = updateData.exs.find( el => el.id == exid )
+                                let updex = updateData.exs[parseInt(exid)]
                                 updex.weight = weight
 
                                 const request = cursor.update(updateData);
