@@ -1016,7 +1016,7 @@
                                                                     </div>
                                                                     <div class="p-2 sm:p-4">
                                                                         <div v-if="plan.exs && plan.exs.length">
-                                                                            <ul id="items" v-effect="Sortable.create($el,{swap:true,swapClass:'highlighted',animation:150,onUpdate:function(evt){planmoveex(plan.key, evt.oldIndex, evt.newIndex, sheet.title)}})">
+                                                                            <ul id="items" v-effect="Sortable.create($el,{swap:true,delay:400,delayOnTouchOnly:true,swapClass:'highlighted',animation:150,onUpdate:function(evt){planmoveex(plan.key, evt.oldIndex, evt.newIndex, sheet.title)}})">
                                                                                 <li class="cursor-move my-2 p-0.5"
                                                                                     v-for="(ex, index) in plan.exs">
                                                                                     <div
@@ -1025,7 +1025,7 @@
                                                                                             class="flex justify-between items-center gap-4">
                                                                                             <div class="flex-1"
                                                                                                 v-if="ex.id && allexs && allexs.find( el => el.id == ex.id )">
-                                                                                                <p>
+                                                                                                <p v-if="!ex.supset">
                                                                                                     <strong
                                                                                                         class="font-bold text-lg sm:text-xl">{{
                                                                                                         allexs.find( el => el.id
@@ -1034,7 +1034,12 @@
                                                                                                     </strong>
                                                                                                     <small>x{{ ex.reps }}</small>
                                                                                                 </p>
-                                                                                                
+                                                                                                <p v-if="ex.supset">
+                                                                                                    <strong v-if="ex.supset"><small>(superset)</small></strong>
+                                                                                                    <strong class="font-bold text-lg sm:text-xl" v-for="superex in ex.supset">
+                                                                                                        {{ allexs.find( el => el.id == superex.id ).name }}&nbsp;<small>x{{superex.reps}}</small>
+                                                                                                    </strong>
+                                                                                                </p>
                                                                                                 <p v-if="ex.weight">
                                                                                                     Weight added: <strong>{{ex.weight}}</strong>
                                                                                                 </p>
@@ -1059,7 +1064,7 @@
                                                                                                     <button 
                                                                                                         type="button" 
                                                                                                         class="inline-flex items-center py-1 px-2 text-sm font-small text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
-                                                                                                        @click="editingex ? editingex = false : editingex = '_'+index+plan.key">
+                                                                                                        @click="editingex && editingex == '_'+index+plan.key ? editingex = false : editingex = '_'+index+plan.key">
                                                                                                         <svg class="w-4 h-4 sm:w-6 sm:h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                                                                                     </button>
                                                                                                     <button
@@ -1072,7 +1077,8 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div v-if="editingex === '_'+index+plan.key" class="w-full p-4 bg-gray-800 inline-flex justify-center rounded-md shadow-sm my-2 sm:my-0" role="group">
-                                                                                            <button 
+                                                                                            <button
+                                                                                                v-if="!ex.supset"
                                                                                                 type="button" 
                                                                                                 class="inline-flex items-center py-1 px-2 text-sm font-small text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
                                                                                                 @click="editplanexrepsmodal = [index, allexs.find( el => el.id == ex.id ).name, plan.key]">Edit reps</button>
@@ -1231,7 +1237,7 @@
                                                                             <p class="text-lg font-bold">Reps:&nbsp;<strong
                                                                                     class="text-gray-800">{{ ex.reps }}</strong></p>
                                                                             <button
-                                                                                @click="sheetplanadd(ex, sheet.title)"
+                                                                                @click="sheetplanadd(ex)"
                                                                                 class="cursor-pointer inline-flex items-center mt-3 mr-1 py-1 px-2 sm:mt-5 sm:mr-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">
                                                                                 <svg class="w-4 h-4 inline"
                                                                                     fill="none"
@@ -1255,6 +1261,36 @@
                                                                     </a>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <button 
+                                                            type="button" 
+                                                            class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                                                            @click="supersetmodal = [defmodules.filter(mod => sheet.assignedModules.includes(mod.title)).concat(mymodules.filter(mod => sheet.assignedModules.includes(mod.title))), sheet.title]">Create superset</button>
+                                                        <div v-if="sheet.supersets && sheet.supersets.length">
+                                                            <ul class="mt-6">
+                                                                <li v-for="(supset, index) in sheet.supersets" class="mb-3 font-normal text-gray-500">
+                                                                    <strong class="text-lg text-gray-800">#{{ index }}</strong>
+                                                                    <ul>
+                                                                        <li v-for="ex in supset">{{ allexs.find( el => el.id == ex.id ).name }}<small>&nbsp;<strong>reps:</strong>{{ ex.reps }}</small></li>
+                                                                    </ul>
+                                                                    <button
+                                                                        @click="sheetplanadd(supset, 'superset')"
+                                                                        class="cursor-pointer inline-flex items-center mt-3 mr-1 py-1 px-2 sm:mt-5 sm:mr-2 sm:py-2 sm:px-4 text-sm font-medium border focus:z-10 focus:ring-4 focus:outline-none focus:text-gray-600 bg-gray-200 text-gray-500 border-gray-400 hover:text-black hover:bg-gray-300 focus:ring-gray-300">
+                                                                        <svg class="w-4 h-4 inline"
+                                                                            fill="none"
+                                                                            stroke="currentColor"
+                                                                            viewBox="0 0 24 24"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <path stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                stroke-width="2"
+                                                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                                                                            </path>
+                                                                        </svg>
+                                                                        &nbsp; Add to workout
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </div>
                                                     <div class="mb-6">
@@ -1977,6 +2013,59 @@
                     </div>
                 </div>
             </div>
+            <!-- add superset modal -->
+            <div class="section">
+                <div v-if="supersetmodal && supersetmodal.length" v-effect="supersetmodal[0].map( mod => mod.exs.map( ex => mexs.push(ex) ) )" class="modal-mask">
+                    <div class="modal-wrapper relative w-full">
+                        <div class="modal-container relative max-w-md h-auto shadow bg-gray-300">
+                            <button type="button" @click="supersetmodal = false"
+                                class="absolute top-3 right-2.5 text-gray-500 bg-transparent text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-black">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div class="py-6 px-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-black">
+                                    New superset</h3>
+                                <div class="modal-inner">
+                                    <form id="supersetForm" class="space-y-6" action="#"
+                                        @submit.prevent="addsuperset">
+                                        <div class="form-inner">
+                                            <div class="form-inner-excs py-4">
+                                                <label for="mysheet"
+                                                    class="block mb-2 text-sm font-medium text-gray-600">Exercises</label>
+                                            </div>
+                                            <div>
+                                                <div class="flex">
+                                                    <select name="superexlist"
+                                                        class="exe-select border mb-3 text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black mr-3">
+                                                        <option v-for="(ex, index) in mexs" :value="ex.id">{{
+                                                            ex.name
+                                                            }}</option>
+                                                    </select>
+                                                    <input type="number"
+                                                        name="superexlist_reps"
+                                                        class="border mb-3 text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 bg-gray-400 border-gray-500 placeholder-gray-400 text-black flex-1 w-24">
+                                                </div>
+                                                <a @click="supersetappendinput(modalexec++, mexs)"
+                                                    class="inline-flex items-center mt-5 py-2 px-3 text-md font-medium text-center text-black bg-gray-400 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300">
+                                                    Add exercise
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="sheet" :value="supersetmodal[1]" />
+                                        <button type="submit"
+                                            class="w-full text-black focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center bg-gray-400 hover:bg-gray-300 focus:ring-gray-200">Assign</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- set workout repetitions modal -->
             <div class="section">
                 <div v-if="planrepetitionmodal && planrepetitionmodal.length" class="modal-mask">
@@ -2102,6 +2191,8 @@
             editplanexrepsmodal: false,
             addweightmodal: false,
             setrestmodal : false,
+            supersetmodal: false,
+            mexs: [],
             editingex: false,
             messagemodal: false,
             messagetoast: false,
@@ -2668,7 +2759,7 @@
                 }
 
             },
-            async sheetplanadd(ex) {
+            async sheetplanadd(ex, type="simple") {
 
                 if (this.plantochange) {
 
@@ -2685,12 +2776,24 @@
                                 if (cursor.key === parseInt(plan)) {
                                     const updateData = cursor.value;
 
-                                    if (!updateData.exs) {
-                                        updateData.exs = []
-                                        updateData.exs.push({ id: ex.id, reps: ex.reps })
-                                    } else {
-                                        updateData.exs.push({ id: ex.id, reps: ex.reps })
+                                    if(type == 'simple'){
+                                        if (!updateData.exs) {
+                                            updateData.exs = []
+                                            updateData.exs.push({ id: ex.id, reps: ex.reps })
+                                        } else {
+                                            updateData.exs.push({ id: ex.id, reps: ex.reps })
+                                        }
+                                    } else if(type == 'superset'){
+                                        let supset = []
+                                        ex.map( el => supset.push({id: el.id, reps: el.reps}) )
+                                        if (!updateData.exs) {
+                                            updateData.exs = []
+                                            updateData.exs.push({ id: ex[0].id, supset: supset })
+                                        } else {
+                                            updateData.exs.push({ id: ex[0].id, supset: supset })
+                                        }
                                     }
+                                    
 
                                     const request = cursor.update(updateData);
                                     request.onsuccess = function () {
@@ -2835,6 +2938,58 @@
                 this.myplans = await this.getplans()
                 this.plantitleedit = false
 
+            },
+            async addsuperset(event){
+
+                let key = event.target.sheet.value
+
+                let supersetlist = []
+                allexs = this.allexs;
+                [...event.target.elements].map(el => {
+                    if (el.classList.contains('exe-select')) {
+                        if (el.value)
+                            supersetlist.push({ id: el.value, reps: document.getElementsByName(el.name + '_reps')[0].value })
+                    }
+                });
+
+                if (key !== undefined) {
+
+                    let objectStore = await this.getobjectstore('mysheets', 'readwrite')
+
+                    let request = objectStore.get(key);
+                    let keycheck = null
+
+                    request.onsuccess = event => {
+                        //let titleKey = event.target.result.title
+                        objectStore.openCursor().onsuccess = function (event) {
+                            const cursor = event.target.result;
+                            if (cursor) {
+                                if (cursor.key === key) {
+                                    const updateData = cursor.value;
+
+                                    if (!updateData.supersets) {
+                                        updateData.supersets = []
+                                        updateData.supersets.push(supersetlist)
+                                    } else {
+                                        updateData.supersets.push(supersetlist)
+                                    }
+
+                                    const request = cursor.update(updateData);
+                                    request.onsuccess = function () {
+                                         message = 'Module assigned'
+                                    };
+
+                                };
+                                cursor.continue();
+                            } else {
+                                console.log('end cursor');
+                            }
+                        };
+                    }
+
+                    this.mysheets = await this.getsheets()
+                }
+                
             },
             async sheetplanexremove(index, plan) {
                 let objectStore = await this.getobjectstore('myplans', 'readwrite')
@@ -3363,6 +3518,38 @@
                 row.append(reps)
 
                 document.querySelector('#newModuleForm .form-inner-excs').append(row)
+            },
+            supersetappendinput(count, mexs) {
+
+                let row = document.createElement('div')
+                row.classList.add('flex')
+
+                let input = document.createElement('select')
+                input.setAttribute('name', 'exec_' + count)
+                input.classList.add('exe-select', 'border', 'mb-3', 'text-sm', 'focus:ring-gray-500', 'focus:border-gray-500', 'block', 'w-full', 'p-2.5', 'bg-gray-400', 'border-gray-500', 'placeholder-gray-400', 'text-black', 'mr-3')
+
+                let temp = document.createElement('option')
+                temp.setAttribute('value', '')
+                temp.textContent = '---'
+                input.append(temp)
+
+                mexs.map((ex, index) => {
+                    temp = document.createElement('option')
+                    temp.setAttribute('value', ex.id)
+                    temp.textContent = ex.name
+                    input.append(temp)
+                })
+
+                let reps = document.createElement('input')
+                reps.setAttribute('type', 'number')
+                reps.setAttribute('value', '5')
+                reps.setAttribute('name', 'exec_' + count + '_reps')
+                reps.classList.add('border', 'mb-3', 'text-sm', 'focus:ring-gray-500', 'focus:border-gray-500', 'block', 'w-full', 'p-2.5', 'bg-gray-400', 'border-gray-500', 'placeholder-gray-400', 'text-black', 'flex-1', 'w-24')
+
+                row.append(input)
+                row.append(reps)
+
+                document.querySelector('#supersetForm .form-inner-excs').append(row)
             }
 
         }
